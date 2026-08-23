@@ -11,16 +11,17 @@ import { AccountLifecycle } from "./features/account-lifecycle/page/AccountLifec
 import { VipClients } from "./features/vip-clients/page/VipClients";
 import { TransactionLedger } from "./features/transaction-ledger/page/TransactionLedger";
 import { FeeManagement } from "./features/fee-management/page/FeeManagement";
+import { SettlementRecon } from "./features/settlement-recon/page/SettlementRecon";
 
-const PAGES = ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger", "fees"];
+const PAGES = ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger", "fees", "settlement"];
 
 function AdminApp() {
   const getInitialPage = () => {
     const hashPage = window.location.hash.replace("#", "");
-    return PAGES.includes(hashPage) ? hashPage : "fees";
+    return PAGES.includes(hashPage) ? hashPage : "settlement";
   };
   // Open the page currently under construction in preview; hash navigation still works afterward.
-  const [page, setPage] = useState("fees");
+  const [page, setPage] = useState("settlement");
   const [signal, setSignal] = useState<{ action: string; n: number }>({ action: "", n: 0 });
 
   const fire = (action: ShellAction) => setSignal((s) => ({ action, n: s.n + 1 }));
@@ -50,6 +51,7 @@ function AdminApp() {
       {page === "vip" && <VipClients signal={signal} onNavigate={navigate} />}
       {page === "ledger" && <TransactionLedger signal={signal} onNavigate={navigate} />}
       {page === "fees" && <FeeManagement signal={signal} onNavigate={navigate} />}
+      {page === "settlement" && <SettlementRecon signal={signal} onNavigate={navigate} />}
     </AdminShell>
   );
 }
