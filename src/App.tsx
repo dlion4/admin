@@ -79,7 +79,7 @@ const PAGES = [
 function AdminApp() {
   const getInitialPage = () => {
     const hashPage = window.location.hash.replace("#", "");
-    return PAGES.includes(hashPage) ? hashPage : "aml";
+    return PAGES.includes(hashPage) ? hashPage : "recurring";
   };
   const [page, setPage] = useState(getInitialPage);
   const [signal, setSignal] = useState<{ action: string; n: number }>({ action: "", n: 0 });

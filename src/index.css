@@ -456,6 +456,19 @@ html[data-pm-theme="dark"] .pm-drawer-head,
 html[data-pm-theme="dark"] .pm-table-foot,
 html[data-pm-theme="dark"] .pm-tabs { border-color: var(--pm-border); }
 
+/* ---------------- Page 20 · service portfolio extras ---------------- */
+.pm-chain-arrow { color: #98a2b3; font-size: .7rem; margin: 0 .15rem; flex: none; }
+.pm-chain-chip {
+  font-size: .68rem; font-weight: 600; padding: .14rem .5rem; border-radius: 99px; border: 1px solid var(--pm-border); background: #fff; white-space: nowrap;
+}
+.pm-chain-chip.internal { background: #eef8ff; border-color: #cfe6ff; color: #175cd3; }
+.pm-chain-chip.processor { background: #f4f1ff; border-color: #ded4ff; color: #5925dc; }
+.pm-chain-chip.external { background: #fff5e6; border-color: #fde3b8; color: #b54708; }
+html[data-pm-theme="dark"] .pm-chain-chip { background: #131d2e; border-color: var(--pm-border); }
+html[data-pm-theme="dark"] .pm-chain-chip.internal { background: #0c1e33; color: #7cc0ff; }
+html[data-pm-theme="dark"] .pm-chain-chip.processor { background: #1a1533; color: #b3a1ff; }
+html[data-pm-theme="dark"] .pm-chain-chip.external { background: #2c2007; color: #fdb022; }
+
 /* mobile */
 .pm-backdrop-mobile { display: none; }
 @media (max-width: 991.98px) {
