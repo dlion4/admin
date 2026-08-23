@@ -37,7 +37,7 @@ export const NAV: NavGroup[] = [
       { id: "settlement", page: 11, label: "Settlement & Reconciliation", icon: "bi-arrow-left-right", ready: true, badge: 3, summary: "Daily settlement files, matching engine and break resolution.", sections: ["Settlement queue", "Daily reconciliation", "Breaks board", "Suspense ledger", "Statements", "Bank accounts", "Engine config", "Exception playbook"] },
       { id: "liquidity", page: 12, label: "Liquidity & Pools", icon: "bi-droplet-half", ready: true, badge: 2, summary: "Float pools, prefunding and utilisation ceilings.", sections: ["Pool balances", "Inter-pool transfers", "Sweep rules", "Alert thresholds", "Forecast", "Reserves", "Cash flow", "Stress test"] },
       { id: "withdrawals", page: 13, label: "Withdrawal Controls", icon: "bi-box-arrow-up", ready: true, badge: 12, summary: "Withdrawal limits, velocity rules and manual approval queue.", sections: ["Global limits", "Pool access rules", "Anti-fraud controls", "High-value queue", "User overrides", "Blocked log", "Analytics", "Audit trail", "Rule simulator"] },
-      { id: "tax", page: 14, label: "Tax & Compliance Reporting", icon: "bi-receipt-cutoff", summary: "Excise duty, VAT, withholding tax and CBK returns.", sections: ["KRA iTax", "Excise duty", "VAT", "CBK returns", "Filing calendar"] },
+      { id: "tax", page: 14, label: "Tax & Compliance Reporting", icon: "bi-receipt-cutoff", ready: true, badge: 4, summary: "Excise duty, VAT, withholding tax and CBK returns.", sections: ["Tax configuration", "Tax pools", "Filing schedule", "User tax summaries", "Remittances", "Correspondence", "Compliance calendar", "Audit trail"] },
     ],
   },
   {
