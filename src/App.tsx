@@ -81,7 +81,7 @@ function AdminApp() {
     const hashPage = window.location.hash.replace("#", "");
     return PAGES.includes(hashPage) ? hashPage : "recurring";
   };
-  const [page, setPage] = useState("recurring");
+  const [page, setPage] = useState(getInitialPage);
   const [signal, setSignal] = useState<{ action: string; n: number }>({ action: "", n: 0 });
 
   const fire = (action: ShellAction) => setSignal((s) => ({ action, n: s.n + 1 }));
@@ -93,7 +93,6 @@ function AdminApp() {
   }, []);
 
   useEffect(() => {
-    window.history.replaceState(null, "", "#recurring");
     const onHashChange = () => setPage(getInitialPage());
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
