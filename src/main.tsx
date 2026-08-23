@@ -5,6 +5,7 @@ import "./features/card-programs/styles/cards.css";
 import "./features/utility-services/styles/utility.css";
 import "./features/partner-directory/styles/partner.css";
 import "./features/partner-onboarding/styles/onboarding.css";
+import "./features/investor-dashboard/styles/investor.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
