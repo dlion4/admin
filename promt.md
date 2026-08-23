@@ -4,7 +4,7 @@ https://github.com/dlion4/admin
 
 https://github.com/dlion4/admin/src/index.css
 
-
+add custome styles for the pages if need be to avoid broken new sections introduced
 use this to get the refined theme and fonts, cards, modals and design i used for the page 1 to 14
 https://github.com/dlion4/admin
 
