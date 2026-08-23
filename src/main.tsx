@@ -8,6 +8,7 @@ import "./features/partner-onboarding/styles/onboarding.css";
 import "./features/investor-dashboard/styles/investor.css";
 import "./features/investor-reports/styles/reports.css";
 import "./features/admin-management/styles/admin.css";
+import "./features/permissions-roles/styles/roles.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
