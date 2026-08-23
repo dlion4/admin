@@ -18,6 +18,7 @@ import "./features/broadcast/styles/broadcast.css";
 import "./features/support-queue/styles/support.css";
 import "./features/terms-conditions/styles/legal.css";
 import "./features/privacy-policy/styles/privacy.css";
+import "./features/compliance-docs/styles/compliance.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
