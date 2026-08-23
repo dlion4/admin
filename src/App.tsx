@@ -12,16 +12,17 @@ import { VipClients } from "./features/vip-clients/page/VipClients";
 import { TransactionLedger } from "./features/transaction-ledger/page/TransactionLedger";
 import { FeeManagement } from "./features/fee-management/page/FeeManagement";
 import { SettlementRecon } from "./features/settlement-recon/page/SettlementRecon";
+import { LiquidityPools } from "./features/liquidity-pools/page/LiquidityPools";
 
-const PAGES = ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger", "fees", "settlement"];
+const PAGES = ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger", "fees", "settlement", "liquidity"];
 
 function AdminApp() {
   const getInitialPage = () => {
     const hashPage = window.location.hash.replace("#", "");
-    return PAGES.includes(hashPage) ? hashPage : "settlement";
+    return PAGES.includes(hashPage) ? hashPage : "liquidity";
   };
   // Open the page currently under construction in preview; hash navigation still works afterward.
-  const [page, setPage] = useState("settlement");
+  const [page, setPage] = useState("liquidity");
   const [signal, setSignal] = useState<{ action: string; n: number }>({ action: "", n: 0 });
 
   const fire = (action: ShellAction) => setSignal((s) => ({ action, n: s.n + 1 }));
@@ -33,7 +34,7 @@ function AdminApp() {
   }, []);
 
   useEffect(() => {
-    window.history.replaceState(null, "", "#fees");
+    window.history.replaceState(null, "", "#liquidity");
     const onHashChange = () => setPage(getInitialPage());
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
@@ -52,6 +53,7 @@ function AdminApp() {
       {page === "ledger" && <TransactionLedger signal={signal} onNavigate={navigate} />}
       {page === "fees" && <FeeManagement signal={signal} onNavigate={navigate} />}
       {page === "settlement" && <SettlementRecon signal={signal} onNavigate={navigate} />}
+      {page === "liquidity" && <LiquidityPools signal={signal} onNavigate={navigate} />}
     </AdminShell>
   );
 }
