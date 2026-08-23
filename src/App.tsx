@@ -10,26 +10,33 @@ import { KycVerification } from "./features/kyc-verification/page/KycVerificatio
 import { AccountLifecycle } from "./features/account-lifecycle/page/AccountLifecycle";
 import { VipClients } from "./features/vip-clients/page/VipClients";
 import { TransactionLedger } from "./features/transaction-ledger/page/TransactionLedger";
+import { FeeManagement } from "./features/fee-management/page/FeeManagement";
+import { SettlementRecon } from "./features/settlement-recon/page/SettlementRecon";
+import { LiquidityPools } from "./features/liquidity-pools/page/LiquidityPools";
+import { WithdrawalControls } from "./features/withdrawal-controls/page/WithdrawalControls";
+import { TaxCompliance } from "./features/tax-compliance/page/TaxCompliance";
+
+const PAGES = ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger", "fees", "settlement", "liquidity", "withdrawals", "tax"];
 
 function AdminApp() {
   const getInitialPage = () => {
     const hashPage = window.location.hash.replace("#", "");
-    return ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger"].includes(hashPage) ? hashPage : "ledger";
+    return PAGES.includes(hashPage) ? hashPage : "tax";
   };
   // Open the page currently under construction in preview; hash navigation still works afterward.
-  const [page, setPage] = useState("ledger");
+  const [page, setPage] = useState("tax");
   const [signal, setSignal] = useState<{ action: string; n: number }>({ action: "", n: 0 });
 
   const fire = (action: ShellAction) => setSignal((s) => ({ action, n: s.n + 1 }));
   const navigate = useCallback((nextPage: string) => {
     setPage(nextPage);
-    if (["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger"].includes(nextPage)) {
+    if (PAGES.includes(nextPage)) {
       window.history.replaceState(null, "", `#${nextPage}`);
     }
   }, []);
 
   useEffect(() => {
-    window.history.replaceState(null, "", "#ledger");
+    window.history.replaceState(null, "", "#tax");
     const onHashChange = () => setPage(getInitialPage());
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
@@ -46,6 +53,11 @@ function AdminApp() {
       {page === "lifecycle" && <AccountLifecycle signal={signal} onNavigate={navigate} />}
       {page === "vip" && <VipClients signal={signal} onNavigate={navigate} />}
       {page === "ledger" && <TransactionLedger signal={signal} onNavigate={navigate} />}
+      {page === "fees" && <FeeManagement signal={signal} onNavigate={navigate} />}
+      {page === "settlement" && <SettlementRecon signal={signal} onNavigate={navigate} />}
+      {page === "liquidity" && <LiquidityPools signal={signal} onNavigate={navigate} />}
+      {page === "withdrawals" && <WithdrawalControls signal={signal} onNavigate={navigate} />}
+      {page === "tax" && <TaxCompliance signal={signal} onNavigate={navigate} />}
     </AdminShell>
   );
 }
