@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate-routes": "node src/scripts/validate-routes.mjs"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
