@@ -22,6 +22,7 @@ import "./features/compliance-docs/styles/compliance.css";
 import "./features/document-templates/styles/templates.css";
 import "./features/analytics-dashboard/styles/analytics.css";
 import "./features/api-health/styles/health.css";
+import "./features/incident-response/styles/incident.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
