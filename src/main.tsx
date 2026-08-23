@@ -14,6 +14,7 @@ import "./features/system-config/styles/system.css";
 import "./features/api-integrations/styles/api.css";
 import "./features/feature-flags/styles/flags.css";
 import "./features/notifications/styles/notifications.css";
+import "./features/broadcast/styles/broadcast.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
