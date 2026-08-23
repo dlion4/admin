@@ -79,9 +79,9 @@ const PAGES = [
 function AdminApp() {
   const getInitialPage = () => {
     const hashPage = window.location.hash.replace("#", "");
-    return PAGES.includes(hashPage) ? hashPage : "tax";
+    return PAGES.includes(hashPage) ? hashPage : "fraud";
   };
-  const [page, setPage] = useState("tax");
+  const [page, setPage] = useState(getInitialPage);
   const [signal, setSignal] = useState<{ action: string; n: number }>({ action: "", n: 0 });
 
   const fire = (action: ShellAction) => setSignal((s) => ({ action, n: s.n + 1 }));
@@ -93,7 +93,6 @@ function AdminApp() {
   }, []);
 
   useEffect(() => {
-    window.history.replaceState(null, "", "#tax");
     const onHashChange = () => setPage(getInitialPage());
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
