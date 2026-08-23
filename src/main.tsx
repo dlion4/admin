@@ -15,6 +15,7 @@ import "./features/api-integrations/styles/api.css";
 import "./features/feature-flags/styles/flags.css";
 import "./features/notifications/styles/notifications.css";
 import "./features/broadcast/styles/broadcast.css";
+import "./features/support-queue/styles/support.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
