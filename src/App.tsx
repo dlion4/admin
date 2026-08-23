@@ -13,8 +13,9 @@ import { TransactionLedger } from "./features/transaction-ledger/page/Transactio
 import { FeeManagement } from "./features/fee-management/page/FeeManagement";
 import { SettlementRecon } from "./features/settlement-recon/page/SettlementRecon";
 import { LiquidityPools } from "./features/liquidity-pools/page/LiquidityPools";
+import { WithdrawalControls } from "./features/withdrawal-controls/page/WithdrawalControls";
 
-const PAGES = ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger", "fees", "settlement", "liquidity"];
+const PAGES = ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger", "fees", "settlement", "liquidity", "withdrawals"];
 
 function AdminApp() {
   const getInitialPage = () => {
@@ -34,7 +35,7 @@ function AdminApp() {
   }, []);
 
   useEffect(() => {
-    window.history.replaceState(null, "", "#liquidity");
+    window.history.replaceState(null, "", "#withdrawals");
     const onHashChange = () => setPage(getInitialPage());
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
@@ -54,6 +55,7 @@ function AdminApp() {
       {page === "fees" && <FeeManagement signal={signal} onNavigate={navigate} />}
       {page === "settlement" && <SettlementRecon signal={signal} onNavigate={navigate} />}
       {page === "liquidity" && <LiquidityPools signal={signal} onNavigate={navigate} />}
+      {page === "withdrawals" && <WithdrawalControls signal={signal} onNavigate={navigate} />}
     </AdminShell>
   );
 }
