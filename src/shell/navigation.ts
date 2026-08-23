@@ -33,7 +33,7 @@ export const NAV: NavGroup[] = [
     id: "finance", label: "TRANSACTIONS & FINANCE", icon: "bi-cash-stack",
     pages: [
       { id: "ledger", page: 9, label: "Transaction Ledger", icon: "bi-journal-text", ready: true, summary: "Immutable double-entry ledger across every rail.", sections: ["Ledger search", "Reversals", "Holds", "Batch processing", "Journal export"] },
-      { id: "fees", page: 10, label: "Fee & Charge Management", icon: "bi-percent", summary: "Fee schedules, tiers, overrides and promotional pricing.", sections: ["Fee schedules", "Tier bands", "Overrides", "Simulation", "Effective dating"] },
+      { id: "fees", page: 10, label: "Fee & Charge Management", icon: "bi-percent", ready: true, summary: "Fee schedules, tiers, overrides and promotional pricing.", sections: ["Fee schedule registry", "Volume tier matrix", "Waivers & overrides", "Impact simulator", "Approval pipeline", "Partner splits", "Forecast", "Audit trail"] },
       { id: "settlement", page: 11, label: "Settlement & Reconciliation", icon: "bi-arrow-left-right", badge: 3, summary: "Daily settlement files, matching engine and break resolution.", sections: ["Settlement runs", "Unmatched breaks", "Bank statements", "Approvals"] },
       { id: "liquidity", page: 12, label: "Liquidity & Pools", icon: "bi-droplet-half", summary: "Float pools, prefunding and utilisation ceilings.", sections: ["Pool balances", "Utilisation", "Top-up requests", "Sweep rules"] },
       { id: "withdrawals", page: 13, label: "Withdrawal Controls", icon: "bi-box-arrow-up", summary: "Withdrawal limits, velocity rules and manual approval queue.", sections: ["Global limits", "Per-tier limits", "High-value queue", "Velocity rules"] },

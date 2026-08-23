@@ -10,26 +10,29 @@ import { KycVerification } from "./features/kyc-verification/page/KycVerificatio
 import { AccountLifecycle } from "./features/account-lifecycle/page/AccountLifecycle";
 import { VipClients } from "./features/vip-clients/page/VipClients";
 import { TransactionLedger } from "./features/transaction-ledger/page/TransactionLedger";
+import { FeeManagement } from "./features/fee-management/page/FeeManagement";
+
+const PAGES = ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger", "fees"];
 
 function AdminApp() {
   const getInitialPage = () => {
     const hashPage = window.location.hash.replace("#", "");
-    return ["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger"].includes(hashPage) ? hashPage : "ledger";
+    return PAGES.includes(hashPage) ? hashPage : "fees";
   };
   // Open the page currently under construction in preview; hash navigation still works afterward.
-  const [page, setPage] = useState("ledger");
+  const [page, setPage] = useState("fees");
   const [signal, setSignal] = useState<{ action: string; n: number }>({ action: "", n: 0 });
 
   const fire = (action: ShellAction) => setSignal((s) => ({ action, n: s.n + 1 }));
   const navigate = useCallback((nextPage: string) => {
     setPage(nextPage);
-    if (["dashboard", "monitor", "kpi", "user-directory", "user-detail", "kyc", "lifecycle", "vip", "ledger"].includes(nextPage)) {
+    if (PAGES.includes(nextPage)) {
       window.history.replaceState(null, "", `#${nextPage}`);
     }
   }, []);
 
   useEffect(() => {
-    window.history.replaceState(null, "", "#ledger");
+    window.history.replaceState(null, "", "#fees");
     const onHashChange = () => setPage(getInitialPage());
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
@@ -46,6 +49,7 @@ function AdminApp() {
       {page === "lifecycle" && <AccountLifecycle signal={signal} onNavigate={navigate} />}
       {page === "vip" && <VipClients signal={signal} onNavigate={navigate} />}
       {page === "ledger" && <TransactionLedger signal={signal} onNavigate={navigate} />}
+      {page === "fees" && <FeeManagement signal={signal} onNavigate={navigate} />}
     </AdminShell>
   );
 }
