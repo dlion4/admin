@@ -95,10 +95,10 @@ export function Modal({
 /* ============================== Drawer ============================== */
 export function Drawer({
   open, onClose, title, subtitle, icon = "bi-layout-sidebar-inset-reverse", tone = "green",
-  wide, children, footer, headExtra,
+  wide, half, children, footer, headExtra,
 }: {
   open: boolean; onClose: () => void; title: string; subtitle?: string; icon?: string;
-  tone?: ModalTone; wide?: boolean; children: ReactNode; footer?: ReactNode; headExtra?: ReactNode;
+  tone?: ModalTone; wide?: boolean; half?: boolean; children: ReactNode; footer?: ReactNode; headExtra?: ReactNode;
 }) {
   useEffect(() => {
     if (!open) return;
@@ -112,7 +112,7 @@ export function Drawer({
   return createPortal(
     <div className="pm-page-content">
       <div className="pm-drawer-overlay" onClick={onClose} />
-      <aside className={`pm-drawer ${wide ? "wide" : ""}`} role="dialog" aria-modal="true" aria-label={title}>
+      <aside className={`pm-drawer ${wide ? "wide" : ""} ${half ? "half" : ""}`} role="dialog" aria-modal="true" aria-label={title}>
         <div className="pm-drawer-head">
           <div className="pm-modal-ico" style={{ background: t.bg, color: t.fg }}><i className={`bi ${icon}`} /></div>
           <div className="flex-grow-1">

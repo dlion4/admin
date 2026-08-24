@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Modal, Drawer, Steps, Badge, TwoFactorField, useToast } from "../../../components/ui";
 import { jsonDownload, kes, num, initials, avatarColor } from "../../../lib/format";
-import type { User, SavedView, Tier, KycStatus, AccountStatus } from "../data/userData";
+import type { User, SavedView, Tier, KycStatus, AccountStatus, ColumnDef } from "../data/userData";
+import { COLUMNS } from "../data/userData";
 
 const tierTone = (t: Tier) => t === "VIP" ? "violet" : t === "Business" ? "blue" : t === "Agent" ? "amber" : "grey";
 const kycTone = (k: KycStatus) => k === "Verified" ? "green" : k === "Pending" ? "amber" : k === "Rejected" ? "red" : k === "Expired" ? "grey" : "blue";
@@ -390,7 +391,7 @@ export function ColumnConfigModal({ open, onClose, columns, onChange }: {
   open: boolean; onClose: () => void; columns: string[]; onChange: (cols: string[]) => void;
 }) {
   const { push } = useToast();
-  const { COLUMNS: allCols } = require("../data/userData") as { COLUMNS: ColumnDef[] };
+  const allCols = COLUMNS;
   const toggle = (k: string) => onChange(columns.includes(k) ? columns.filter((c) => c !== k) : [...columns, k]);
   return (
     <Modal open={open} onClose={onClose} tone="ink" icon="bi-layout-three-columns" size="sm"

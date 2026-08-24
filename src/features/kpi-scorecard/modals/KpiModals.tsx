@@ -4,7 +4,7 @@ import {
 } from "../../../components/ui";
 import { csvDownload, kes, num } from "../../../lib/format";
 import type { KPI, OKR, Department, BoardPack, TargetChange } from "../data/kpiData";
-import { fmt as fmtKpi, COHORT } from "../data/kpiData";
+import { fmt as fmtKpi, COHORT, KPI_LIST } from "../data/kpiData";
 
 /* ============================ 1. KPI detail drawer ============================ */
 export function KpiDrawer({ kpi, onClose, onEditTarget }: {
@@ -701,7 +701,6 @@ export function CompareModal({ open, onClose }: { open: boolean; onClose: () => 
 
 /* ============================ 13. RAG filter summary modal ============================ */
 export function RagDetailModal({ rag, onClose }: { rag: "green" | "amber" | "red" | null; onClose: () => void }) {
-  const { KPI_LIST } = require("../data/kpiData");
   const list = KPI_LIST.filter((k: KPI) => k.rag === rag);
   if (!rag) return null;
   return (

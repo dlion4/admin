@@ -1,5 +1,5 @@
 use this project to continue building the pages
-so far completed pages 1 to 14
+so far completed pages 1 to 14, page 20, 21 and 22
 https://github.com/dlion4/admin
 
 https://github.com/dlion4/admin/src/index.css
@@ -8,19 +8,33 @@ add custome styles for the pages if need be to avoid broken new sections introdu
 use this to get the refined theme and fonts, cards, modals and design i used for the page 1 to 14
 https://github.com/dlion4/admin
 
-the dashboard pages to build
+the dashboard pages to build are in here:
 https://github.com/dlion4/admin/blob/main/PAYMO_ADMIN_DASHBOARD_LAYOUT%20V2.md
 
- naming the page accordingly and designed a responsive page using bootstrap latest version and customer styles for extensive theme and styling
+naming the page accordingly and designed a responsive page using bootstrap latest version and customer styles for extensive theme and styling
 
 use the instructions and guide in this file: https://github.com/dlion4/admin/blob/main/instruction-admin.md
 
-design the follwoing page by page to match this theme and formatting of design ui ux ...for a superperfect theme and design match these thee of these pages https://github.com/dlion4/admin
+design the follwoing page by page to match this theme and formatting of design ui ux ...for a superperfect theme and design match these thee of these pages https://github.com/dlion4/admin specificaly (
+src/features/service-portfolioService Portfolio )
+
+Product Configuration (src/features/product-config)
+
+Recurring Services) are the perfcetly build page copy the design and aplly to the next pages you are building for consistency
 
 avoid too much line graphs in small cards..use well styled drawer, drop down and pop ups look at the business-dashboard pages in the repo and the attached images and customize accordingly..use 20+ modals, multistep wizards, multistep modals etc and use comprehensive tables where data needed to be observed and modals and pop ups..re design the two pages accordingly and the shell layout make it collapsible and extendible when collapsed it reveals the icons only like the page of the business-dashboard pages
 
-match the theme and color and design like the business pages and then the modals ..the drawers the pop ups the colors the fonts ..everything etc ...make the page professional dont over crowd small cards..use the business pages as my perfect sample and the data you want to design in the super admin app make it comprehensive and use aloot of data instead of 10 mock datas...use  like 15 or more for clear perspective etc..use 19+ modals and wizards and multistep modals and wizards etc no dead ends..no blank buttons no blank urs ..use modals use pop up dont link everything with a  toasts if they lead no where...like i click a button its just says opening the page of this and this without really opening is a shoddy way of designing..make events and urls complete 
+match the theme and color and design like the business pages and then the modals ..the drawers the pop ups the colors the fonts ..everything etc ...make the page professional dont over crowd small cards..use the page
+(
+Service Portfolio
+
+Product Configuration
+
+Recurring Services) pages as my perfect sample and the data you want to design in the super admin app make it comprehensive and use aloot of data instead of 10 mock datas...use  like 15 or more for clear perspective etc..use 19+ modals and wizards and multistep modals and wizards etc no dead ends..no blank buttons no blank urs ..use modals use pop up dont link everything with a  toasts if they lead no where...like i click a button its just says opening the page of this and this without really opening is a shoddy way of designing..make events and urls complete 
 avoid too many toasts pop ups use few necessary one to avoid adding a toast to a blank button or url
 no placeholders  no blank buttons
 
 now move to page the next page building and designing in the same manner and design ui/ux theme and font using the sane advancements and admin super user permissions and  powers
+
+
+https://github.com/dlion4/admin/PAYMO_ADMIN_DASHBOARD_LAYOUT V2.md
