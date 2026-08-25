@@ -188,7 +188,7 @@ export const BATCHES: BatchJob[] = [
 export const LEDGER_AUDIT: LedgerAudit[] = Array.from({ length: 20 }, (_, i) => ({
   id: `AUD-${88450 - i}`,
   time: i < 3 ? `${2 + i * 4} min ago` : i < 10 ? `${15 + i * 6} min ago` : `${1 + Math.floor(i / 5)}h ago`,
-  admin: ["Joseph Mwangi", "Sarah Kamau", "Mary Wanjiku", "David Kiplagat", "James Odhiambo"][i % 5],
+  admin: ["Jeckonia Kwasa", "Sarah Kamau", "Mary Wanjiku", "David Kiplagat", "James Odhiambo"][i % 5],
   action: ["Reversed transaction", "Placed hold", "Released hold", "Approved batch", "Exported journal", "Adjusted entry", "Flagged for SAR", "Settled break"][i % 8],
   target: `TXN-${882900 - i * 11}`,
   detail: [

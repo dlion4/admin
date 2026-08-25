@@ -118,7 +118,7 @@ export function FreezeAccountWizard({ open, onClose }: { open: boolean; onClose:
               <div className="pm-kv"><span className="k">Reason</span><span className="v">{FREEZE_REASONS.find((r) => r.id === reason)?.label}</span></div>
               <div className="pm-kv"><span className="k">Scope</span><span className="v">{Object.entries(scope).filter(([, v]) => v).map(([k]) => k).join(", ")}</span></div>
               <div className="pm-kv"><span className="k">Customer notified</span><span className="v">{notify ? "Yes — SMS + push" : "No"}</span></div>
-              <div className="pm-kv"><span className="k">Authorised by</span><span className="v">Joseph Mwangi · Tier 0</span></div>
+              <div className="pm-kv"><span className="k">Authorised by</span><span className="v">Jeckonia Kwasa · Tier 0</span></div>
             </div>
             <div className="pm-note" style={{ borderColor: "#cfe6ff", background: "#eff8ff", color: "#175cd3" }}>
               <i className="bi bi-info-circle me-1" />An unfreeze requires Super Admin or Compliance Officer approval and is logged separately.
@@ -141,7 +141,7 @@ export function FreezeAccountWizard({ open, onClose }: { open: boolean; onClose:
 /* ============================ 2. Alert detail drawer ============================ */
 export function AlertDrawer({ alert, onClose, onAction }: { alert: Alert | null; onClose: () => void; onAction: (a: string, alert: Alert) => void }) {
   const { push } = useToast();
-  const [assignee, setAssignee] = useState("Joseph Mwangi");
+  const [assignee, setAssignee] = useState("Jeckonia Kwasa");
   const [comment, setComment] = useState("");
   if (!alert) return null;
   const tone = alert.priority === "critical" ? "red" : alert.priority === "warning" ? "amber" : "blue";
@@ -186,7 +186,7 @@ export function AlertDrawer({ alert, onClose, onAction }: { alert: Alert | null;
         <div className="p-3">
           <label className="form-label">Owner</label>
           <select className="form-select mb-3" value={assignee} onChange={(e) => setAssignee(e.target.value)}>
-            {["Joseph Mwangi", "Sarah Kamau", "James Odhiambo", "Mary Wanjiku", "David Kiplagat", "Faith Chebet"].map((a) => <option key={a}>{a}</option>)}
+            {["Jeckonia Kwasa", "Sarah Kamau", "James Odhiambo", "Mary Wanjiku", "David Kiplagat", "Faith Chebet"].map((a) => <option key={a}>{a}</option>)}
           </select>
           <label className="form-label">Investigation note</label>
           <textarea className="form-control" rows={3} value={comment} onChange={(e) => setComment(e.target.value)} placeholder="What did you find?" />
@@ -254,7 +254,7 @@ export function ActivityDrawer({ item, onClose }: { item: Activity | null; onClo
             Reversal creates a compensating entry. The original record is never deleted.
           </div>
           <div className="pm-kv"><span className="k">Original actor</span><span className="v">{item.admin}</span></div>
-          <div className="pm-kv"><span className="k">Reversed by</span><span className="v">Joseph Mwangi</span></div>
+          <div className="pm-kv"><span className="k">Reversed by</span><span className="v">Jeckonia Kwasa</span></div>
         </div>
         <div className="pm-modal-foot">
           <button className="btn btn-outline-secondary btn-sm" onClick={() => setReverting(false)}>Cancel</button>
@@ -281,7 +281,7 @@ export function TaskModal({ task, onClose, onSave }: { task: Task | null; onClos
         <div className="row g-2 mb-3">
           <div className="col-6"><label className="form-label">Owner</label>
             <select className="form-select" value={draft.assigned} onChange={(e) => setDraft({ ...draft, assigned: e.target.value })}>
-              {["Joseph Mwangi", "Sarah Kamau", "James Odhiambo", "Mary Wanjiku", "David Kiplagat", "Faith Chebet", "Platform Team", "Risk Team", "Legal", "Comms", "Grace Wanjiru"].map((a) => <option key={a}>{a}</option>)}
+              {["Jeckonia Kwasa", "Sarah Kamau", "James Odhiambo", "Mary Wanjiku", "David Kiplagat", "Faith Chebet", "Platform Team", "Risk Team", "Legal", "Comms", "Grace Wanjiru"].map((a) => <option key={a}>{a}</option>)}
             </select></div>
           <div className="col-6"><label className="form-label">Priority</label>
             <select className="form-select" value={draft.priority} onChange={(e) => setDraft({ ...draft, priority: e.target.value as Task["priority"] })}>
@@ -300,7 +300,7 @@ export function TaskModal({ task, onClose, onSave }: { task: Task | null; onClos
         <div className="pm-card pm-card-pad">
           <div className="pm-eyebrow mb-2">Activity</div>
           <div className="pm-timeline">
-            <div className="pm-tl-item done"><div style={{ fontWeight: 700, fontSize: ".8rem" }}>Task created</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>12 Aug 2026 · Joseph Mwangi</div></div>
+            <div className="pm-tl-item done"><div style={{ fontWeight: 700, fontSize: ".8rem" }}>Task created</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>12 Aug 2026 · Jeckonia Kwasa</div></div>
             <div className="pm-tl-item done"><div style={{ fontWeight: 700, fontSize: ".8rem" }}>Assigned to {task.assigned}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>13 Aug 2026</div></div>
             <div className={`pm-tl-item ${task.progress > 0 ? "warn" : ""}`}><div style={{ fontWeight: 700, fontSize: ".8rem" }}>Progress {task.progress}%</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>Last update 2 days ago</div></div>
             <div className="pm-tl-item"><div style={{ fontWeight: 700, fontSize: ".8rem" }}>Due {task.due}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{task.priority} priority</div></div>
@@ -323,7 +323,7 @@ export function TaskModal({ task, onClose, onSave }: { task: Task | null; onClos
 /* ============================ 5. New task modal ============================ */
 export function NewTaskModal({ open, onClose, onCreate }: { open: boolean; onClose: () => void; onCreate: (t: Task) => void }) {
   const { push } = useToast();
-  const [f, setF] = useState({ task: "", due: "2026-09-15", assigned: "Joseph Mwangi", priority: "Medium" as Task["priority"], category: "Compliance", notes: "" });
+  const [f, setF] = useState({ task: "", due: "2026-09-15", assigned: "Jeckonia Kwasa", priority: "Medium" as Task["priority"], category: "Compliance", notes: "" });
   return (
     <Modal open={open} onClose={onClose} tone="green" icon="bi-plus-square" size="md"
       title="Create task" subtitle="Appears in the deadline board and the owner's queue.">
@@ -334,7 +334,7 @@ export function NewTaskModal({ open, onClose, onCreate }: { open: boolean; onClo
           <div className="col-6"><label className="form-label">Due date</label><input type="date" className="form-control" value={f.due} onChange={(e) => setF({ ...f, due: e.target.value })} /></div>
           <div className="col-6"><label className="form-label">Owner</label>
             <select className="form-select" value={f.assigned} onChange={(e) => setF({ ...f, assigned: e.target.value })}>
-              {["Joseph Mwangi", "Sarah Kamau", "James Odhiambo", "Mary Wanjiku", "David Kiplagat", "Faith Chebet", "Platform Team", "Risk Team", "Legal"].map((a) => <option key={a}>{a}</option>)}
+              {["Jeckonia Kwasa", "Sarah Kamau", "James Odhiambo", "Mary Wanjiku", "David Kiplagat", "Faith Chebet", "Platform Team", "Risk Team", "Legal"].map((a) => <option key={a}>{a}</option>)}
             </select></div>
           <div className="col-6"><label className="form-label">Priority</label>
             <select className="form-select" value={f.priority} onChange={(e) => setF({ ...f, priority: e.target.value as Task["priority"] })}>
@@ -610,14 +610,14 @@ export function ExportReportModal({ open, onClose, datasets }: {
         <label className="pm-opt">
           <input type="checkbox" className="form-check-input mt-0" checked={watermark} onChange={(e) => setWatermark(e.target.checked)} />
           <span className="flex-grow-1"><span className="d-block" style={{ fontWeight: 700, fontSize: ".85rem" }}>Watermark with my identity</span>
-            <span className="d-block" style={{ fontSize: ".73rem", color: "var(--pm-muted)" }}>Embeds “Joseph Mwangi · {new Date().toLocaleDateString("en-GB")}” in every page/row</span></span>
+            <span className="d-block" style={{ fontSize: ".73rem", color: "var(--pm-muted)" }}>Embeds “Jeckonia Kwasa · {new Date().toLocaleDateString("en-GB")}” in every page/row</span></span>
         </label>
       </div>
       <div className="pm-modal-foot">
         <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
         <button className="btn btn-primary btn-sm" onClick={() => {
           if (!set) return;
-          const rows = watermark ? set.rows.map((r) => ({ ...r, exported_by: "Joseph Mwangi", exported_at: new Date().toISOString(), range })) : set.rows;
+          const rows = watermark ? set.rows.map((r) => ({ ...r, exported_by: "Jeckonia Kwasa", exported_at: new Date().toISOString(), range })) : set.rows;
           if (fmt === "json") jsonDownload(`paymo-${set.id}-${range}.json`, rows);
           else csvDownload(`paymo-${set.id}-${range}.${fmt === "csv" ? "csv" : "csv"}`, rows);
           push({ kind: "success", title: "Export ready", body: `${set.label} · ${rows.length} rows · ${fmt.toUpperCase()} downloaded.` });

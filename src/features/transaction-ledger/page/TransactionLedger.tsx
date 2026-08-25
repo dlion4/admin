@@ -625,7 +625,7 @@ export function TransactionLedger({
             userName: e.userName,
             amount: e.amount,
             reason,
-            heldBy: "Joseph Mwangi",
+            heldBy: "Jeckonia Kwasa",
             heldAt: "Just now",
             expiresAt: "In 4 hours",
             status: "Active",

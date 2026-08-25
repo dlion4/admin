@@ -234,7 +234,7 @@ Before any admin can access the dashboard, they must pass **four sequential auth
 | Element | Details |
 |---------|---------|
 | PayMo logo | Link to dashboard home, animated on hover |
-| Admin avatar + name | "Super Admin — Joseph Mwangi" with online indicator |
+| Admin avatar + name | "Super Admin — Jeckonia Kwasa" with online indicator |
 | Role badge | "Super Admin" (green), clickable for role details |
 | Session timer | "Session expires in 6:42:15" with visual countdown bar |
 | Notification bell | Red badge with unread count, dropdown preview |
@@ -2846,7 +2846,7 @@ INC-0047: M-Pesa Callback Delays
 ### Section 27.1: Investor Overview
 | Investor | Type | Shares | % Ownership | Invested | Current Valuation | MOIC | Status |
 |----------|------|--------|-------------|----------|-------------------|------|--------|
-| Joseph Mwangi (Founder) | Common | 5,000,000 | 50% | KES 50M | KES 2.47B | 49.4x | 🟢 Active |
+| Jeckonia Kwasa (Founder) | Common | 5,000,000 | 50% | KES 50M | KES 2.47B | 49.4x | 🟢 Active |
 | VC Fund A | Preferred Series A | 2,000,000 | 20% | KES 200M | KES 988M | 4.9x | 🟢 Active |
 | Angel Investor B | Common | 1,000,000 | 10% | KES 30M | KES 247M | 8.2x | 🟢 Active |
 | VC Fund C | Preferred Series B | 1,500,000 | 15% | KES 450M | KES 1.47B | 3.3x | 🟢 Active |
@@ -3014,7 +3014,7 @@ INC-0047: M-Pesa Callback Delays
 ### Section 29.1: Admin Directory
 | Admin | Role | Email | Status | Last Login | Active Sessions | 2FA | Passkey |
 |-------|------|-------|--------|------------|-----------------|-----|---------|
-| Joseph Mwangi | Super Admin | joseph@paymo.co.ke | 🟢 Active | 2 min ago | 1 | ✅ | ✅ |
+| Jeckonia Kwasa | Super Admin | joseph@paymo.co.ke | 🟢 Active | 2 min ago | 1 | ✅ | ✅ |
 | Sarah Kiptoo | Platform Admin | sarah@paymo.co.ke | 🟢 Active | 15 min ago | 1 | ✅ | ✅ |
 | James Ochieng | Operations Mgr | james@paymo.co.ke | 🟢 Active | 1h ago | 1 | ✅ | 🟡 |
 | Mary Wanjiku | Finance Mgr | mary@paymo.co.ke | 🟢 Active | 30 min ago | 1 | ✅ | ❌ |
@@ -3327,7 +3327,7 @@ REPORTING
 |-------|-------|
 | Log ID | AUD-8823456789 |
 | Timestamp | 2026-08-22 14:32:01.234 (UTC+3) |
-| Admin | Joseph Mwangi (joseph@paymo.co.ke) |
+| Admin | Jeckonia Kwasa (joseph@paymo.co.ke) |
 | Admin role | Super Admin |
 | Action | Freeze Account |
 | Target type | User |
@@ -4364,7 +4364,7 @@ REPORTING
 | `{{fee}}` | Financial | Financial templates | KES 225 |
 | `{{date}}` | System | All | August 22, 2026 |
 | `{{reference_number}}` | System | All | REF-2026-0822-001 |
-| `{{signatory_name}}` | System | All | Joseph Mwangi, CEO |
+| `{{signatory_name}}` | System | All | Jeckonia Kwasa, CEO |
 | `{{signatory_title}}` | System | All | Chief Executive Officer |
 
 ### Section 41.4: Template Usage Analytics
@@ -4653,9 +4653,9 @@ REPORTING
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| v1.0 | Jan 2024 | Joseph Mwangi | Initial 42-page layout |
-| v1.5 | Jun 2024 | Joseph Mwangi | Added fraud sections, expanded KYC |
-| v2.0 | Aug 2026 | Joseph Mwangi | Comprehensive expansion — all pages to 8+ sections, added appendices |
+| v1.0 | Jan 2024 | Jeckonia Kwasa | Initial 42-page layout |
+| v1.5 | Jun 2024 | Jeckonia Kwasa | Added fraud sections, expanded KYC |
+| v2.0 | Aug 2026 | Jeckonia Kwasa | Comprehensive expansion — all pages to 8+ sections, added appendices |
 
 
 

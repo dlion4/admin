@@ -452,7 +452,7 @@ export function SaveViewModal({ open, onClose, currentFilters, onSave }: {
       <div className="pm-modal-foot">
         <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
         <button className="btn btn-primary btn-sm" disabled={name.trim().length < 3} onClick={() => {
-          const v: SavedView = { id: `sv-${Date.now()}`, name, filters: currentFilters, count: Math.floor(Math.random() * 5000), owner: "Joseph Mwangi", shared };
+          const v: SavedView = { id: `sv-${Date.now()}`, name, filters: currentFilters, count: Math.floor(Math.random() * 5000), owner: "Jeckonia Kwasa", shared };
           onSave(v); push({ kind: "success", title: "View saved", body: `"${name}" is now available in saved views.` }); onClose();
         }}><i className="bi bi-bookmark-check me-1" />Save view</button>
       </div>
@@ -952,7 +952,7 @@ export function UserInsightsModal({ user, onClose }: { user: User | null; onClos
 export function UserAuditTrailModal({ user, onClose }: { user: User | null; onClose: () => void }) {
   if (!user) return null;
   const entries = [
-    { id: "AUD-88245", time: "24 Aug 14:32", who: "Joseph Mwangi", action: "Profile updated", detail: "Phone changed" },
+    { id: "AUD-88245", time: "24 Aug 14:32", who: "Jeckonia Kwasa", action: "Profile updated", detail: "Phone changed" },
     { id: "AUD-88201", time: "22 Aug 11:15", who: "Grace Wanjiru", action: "Limits adjusted", detail: "Daily withdraw → KES 200K" },
     { id: "AUD-88156", time: "20 Aug 09:30", who: "System", action: "KYC verified", detail: "Onfido ID passed" },
     { id: "AUD-88102", time: "18 Aug 16:20", who: "Peter Njoroge", action: "VIP granted", detail: "12 months" },

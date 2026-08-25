@@ -231,7 +231,7 @@ export function PartnerForecastModal({ open, onClose }: { open: boolean; onClose
 /* ============================ 13. Partner audit trail modal ============================ */
 export function PartnerAuditModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const entries = [
-    { id: "AUD-PTN-88102", time: "22 Aug 2026", who: "Joseph Mwangi", action: "Settlement reconciled", detail: "Safaricom KES 12.4M" },
+    { id: "AUD-PTN-88102", time: "22 Aug 2026", who: "Jeckonia Kwasa", action: "Settlement reconciled", detail: "Safaricom KES 12.4M" },
     { id: "AUD-PTN-88045", time: "20 Aug 2026", who: "Grace Wanjiru", action: "API keys rotated", detail: "Visa Kenya credentials" },
     { id: "AUD-PTN-87988", time: "18 Aug 2026", who: "System", action: "SLA breach logged", detail: "KCB Bank transfer time" },
     { id: "AUD-PTN-87901", time: "15 Aug 2026", who: "Peter Njoroge", action: "Risk review completed", detail: "QuickLend escalated" },

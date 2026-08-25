@@ -69,7 +69,7 @@ export function UserDetail({ signal, onNavigate }: { signal: { action: string; n
   const [txnFilter, setTxnFilter] = useState<"all" | "in" | "out">("all");
   const [notes, setNotes] = useState<{ id: string; text: string; by: string; time: string; visible: boolean }[]>([
     { id: "NT-114", text: "VIP merchant — pays supplier invoices every Friday. Prefers WhatsApp over phone.", by: "Grace Wanjiru", time: "2 weeks ago", visible: true },
-    { id: "NT-102", text: "Requested higher limits for Q3 event season — approved with Business preset.", by: "Joseph Mwangi", time: "1 month ago", visible: true },
+    { id: "NT-102", text: "Requested higher limits for Q3 event season — approved with Business preset.", by: "Jeckonia Kwasa", time: "1 month ago", visible: true },
   ]);
 
   const updateUser = (patch: Partial<FeaturedUser>) => {
@@ -586,7 +586,7 @@ export function UserDetail({ signal, onNavigate }: { signal: { action: string; n
       <AdminCreditModal user={creditOpen ? current : null} onClose={() => setCreditOpen(false)} onDone={(u, amt) => updateUser({ balance: u.balance + amt })} />
       <BlockUserModal user={blockOpen ? current : null} onClose={() => setBlockOpen(false)} onDone={() => { setBlockOpen(false); updateUser({ status: "Suspended" }); }} />
       <DataExportModal user={exportOpen ? current : null} onClose={() => setExportOpen(false)} />
-      <AddNoteModal user={noteOpen ? current : null} onClose={() => setNoteOpen(false)} onSaved={(_, text, visible) => setNotes((n) => [{ id: `NT-${Date.now() % 1000}`, text, by: "Joseph Mwangi", time: "Just now", visible }, ...n])} />
+      <AddNoteModal user={noteOpen ? current : null} onClose={() => setNoteOpen(false)} onSaved={(_, text, visible) => setNotes((n) => [{ id: `NT-${Date.now() % 1000}`, text, by: "Jeckonia Kwasa", time: "Just now", visible }, ...n])} />
       <KycReverifyWizard user={reverifyOpen ? current : null} onClose={() => setReverifyOpen(false)} />
       <KycDocModal doc={kycDoc} user={current} onClose={() => setKycDoc(null)}
         onDecision={(d, dec) => {

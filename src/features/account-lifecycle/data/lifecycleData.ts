@@ -71,7 +71,7 @@ export const CLOSURE_REQUESTS: ClosureRequest[] = first.slice(0, 14).map((f, i) 
     phone: `+2547${String(12 + (i % 77)).padStart(2, "0")} ${String(160 + i * 8).slice(0, 3)} ${String(350 + i * 13).slice(0, 3)}`,
     requested: `${3 + (i % 18)} Aug 2026`, reason: closureReasons[i % closureReasons.length],
     balance: 480 + ((i * 41_221) % 340_000), loans: i % 5 === 0 ? 1 : 0, standingOrders: i % 4 === 0 ? 2 : 0, cards: i % 3 === 0 ? 1 : 0, vip: i === 2,
-    status, reviewer: i % 3 === 0 ? "Unassigned" : ["David Kiplagat", "Mary Wanjiku", "Joseph Mwangi"][i % 3],
+    status, reviewer: i % 3 === 0 ? "Unassigned" : ["David Kiplagat", "Mary Wanjiku", "Jeckonia Kwasa"][i % 3],
     note: ["Requested twice via in-app form and WhatsApp.", "Dormant 412 days with residual balance.", "Confirmed fraud ring, funds retained 90 days.", "Sanctions match confirmed by compliance.", "Second profile sharing the same device cluster.", "CBK instruction reference CBN/2026/1142."][i % 6],
   };
 });

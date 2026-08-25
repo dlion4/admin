@@ -50,7 +50,7 @@ export function AccessPolicyDrawer({ open, onClose }: { open: boolean; onClose: 
         <div className="pm-table-wrap"><table className="pm-table"><thead><tr><th>Action</th><th>Approval</th><th>2FA</th><th>SLA</th></tr></thead><tbody>{[["Grant Tier 0–2", "Super Admin + 2FA", "Required", "24h"], ["Grant Tier 3–5", "Dual Super Admin", "Required", "24h"], ["Grant Tier 6–9", "Super Admin", "Required", "48h"], ["Revoke any", "Super Admin", "Required", "Immediate"], ["Custom role create", "Super Admin + 2FA", "Required", "48h"]].map(r => <tr key={r[0]}>{r.map((c, i) => <td key={i} className={i === 0 ? "pm-td-strong" : ""}>{c}</td>)}</tr>)}</tbody></table></div>
       </div>
       <div className="pm-card pm-card-pad"><h6>Policy version</h6>
-        {[["Version", "3.2"], ["Effective", "Aug 1, 2026"], ["Owner", "Joseph Mwangi"], ["Review cadence", "Quarterly"], ["Next review", "Nov 1, 2026"]].map(x => <div className="d-flex justify-content-between py-1 border-bottom small" key={x[0]}><span className="text-muted">{x[0]}</span><b>{x[1]}</b></div>)}
+        {[["Version", "3.2"], ["Effective", "Aug 1, 2026"], ["Owner", "Jeckonia Kwasa"], ["Review cadence", "Quarterly"], ["Next review", "Nov 1, 2026"]].map(x => <div className="d-flex justify-content-between py-1 border-bottom small" key={x[0]}><span className="text-muted">{x[0]}</span><b>{x[1]}</b></div>)}
       </div>
     </Drawer>
   );

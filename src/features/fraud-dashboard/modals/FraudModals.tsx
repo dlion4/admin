@@ -716,7 +716,7 @@ export function DraftSarModal({ alert, onClose, onSave }: {
               <div className="pm-kv"><span className="k">Subject</span><span className="v">{alert.user}</span></div>
               <div className="pm-kv"><span className="k">Activity</span><span className="v">{activity}</span></div>
               <div className="pm-kv"><span className="k">Evidence</span><span className="v">5 artifacts sealed</span></div>
-              <div className="pm-kv"><span className="k">Prepared by</span><span className="v">Joseph Mwangi · Super Admin</span></div>
+              <div className="pm-kv"><span className="k">Prepared by</span><span className="v">Jeckonia Kwasa · Super Admin</span></div>
             </div>
             <div className="pm-note" style={{ borderColor: "#f79009", background: "#fff5e6" }}>
               <i className="bi bi-exclamation-triangle me-1" style={{ color: "#f79009" }} />

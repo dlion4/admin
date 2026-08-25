@@ -38,7 +38,7 @@ export function AdminDetailDrawer({ admin, onClose }: { admin: U | null; onClose
 export function SessionDetailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { push } = useToast();
   if (!open) return null;
-  const session = { id: "S-8821", admin: "Joseph Mwangi", login: "08:00 EAT", ip: "192.168.1.42", device: "MacBook Pro 16″", os: "macOS 14.5", browser: "Chrome 128", location: "Nairobi, Kenya", mfa: "TOTP + Passkey", duration: "8h 0m", expires: "16:00 EAT", status: "Active" };
+  const session = { id: "S-8821", admin: "Jeckonia Kwasa", login: "08:00 EAT", ip: "192.168.1.42", device: "MacBook Pro 16″", os: "macOS 14.5", browser: "Chrome 128", location: "Nairobi, Kenya", mfa: "TOTP + Passkey", duration: "8h 0m", expires: "16:00 EAT", status: "Active" };
   return (
     <Modal open onClose={onClose} title="Session Detail" subtitle={`Session ${session.id} — live monitoring`} icon="bi-laptop" tone="blue" size="lg">
       <div className="pm-modal-body">
@@ -59,7 +59,7 @@ export function ActivityDetailModal({ open, onClose }: { open: boolean; onClose:
       <div className="pm-modal-body">
         <div className="row g-3">
           <div className="col-md-6"><label className="form-label">Timestamp</label><input className="form-control" value="Aug 24, 2026 14:32:01 EAT" readOnly /></div>
-          <div className="col-md-6"><label className="form-label">Admin</label><input className="form-control" value="Joseph Mwangi · Super Admin" readOnly /></div>
+          <div className="col-md-6"><label className="form-label">Admin</label><input className="form-control" value="Jeckonia Kwasa · Super Admin" readOnly /></div>
           <div className="col-md-6"><label className="form-label">Action</label><input className="form-control" value="Freeze account" readOnly /></div>
           <div className="col-md-6"><label className="form-label">Target</label><input className="form-control" value="User #89234 — Grace Muthoni" readOnly /></div>
           <div className="col-md-6"><label className="form-label">IP address</label><input className="form-control" value="192.168.1.42" readOnly /></div>

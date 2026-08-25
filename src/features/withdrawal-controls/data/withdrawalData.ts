@@ -147,21 +147,21 @@ export const FRAUD_CONTROLS: FraudControl[] = [
 
 /* ---------------- §13.4 User-specific limit overrides ---------------- */
 export const USER_OVERRIDES: UserOverride[] = [
-  { id: "OVR-001", userId: "PAY-VIP-001", name: "Wanjiru Kamau", tier: "VIP Platinum", standardDaily: 500_000, customDaily: "Unlimited", standardMonthly: 5_000_000, customMonthly: "Unlimited", reason: "VIP Platinum standing", setBy: "Joseph Mwangi", expires: "Never", status: "Active" },
-  { id: "OVR-002", userId: "PAY-VIP-004", name: "Delta Logistics Ltd", tier: "Business Premium", standardDaily: 500_000, customDaily: 10_000_000, standardMonthly: 5_000_000, customMonthly: 100_000_000, reason: "Business Premium payroll cycle", setBy: "Joseph Mwangi", expires: "Never", status: "Active" },
+  { id: "OVR-001", userId: "PAY-VIP-001", name: "Wanjiru Kamau", tier: "VIP Platinum", standardDaily: 500_000, customDaily: "Unlimited", standardMonthly: 5_000_000, customMonthly: "Unlimited", reason: "VIP Platinum standing", setBy: "Jeckonia Kwasa", expires: "Never", status: "Active" },
+  { id: "OVR-002", userId: "PAY-VIP-004", name: "Delta Logistics Ltd", tier: "Business Premium", standardDaily: 500_000, customDaily: 10_000_000, standardMonthly: 5_000_000, customMonthly: 100_000_000, reason: "Business Premium payroll cycle", setBy: "Jeckonia Kwasa", expires: "Never", status: "Active" },
   { id: "OVR-003", userId: "PAY-67890", name: "Brian Otieno", tier: "Standard", standardDaily: 500_000, customDaily: 250_000, standardMonthly: 5_000_000, customMonthly: 2_000_000, reason: "Previous fraud flag", setBy: "Sarah Kamau", expires: "Dec 2026", status: "Restricted" },
   { id: "OVR-004", userId: "PAY-89012", name: "Amina Hassan", tier: "Standard (new)", standardDaily: 500_000, customDaily: 100_000, standardMonthly: 5_000_000, customMonthly: 500_000, reason: "New account restriction", setBy: "System", expires: "Sep 2026", status: "Restricted" },
-  { id: "OVR-005", userId: "PAY-11223", name: "Victor Kiplagat", tier: "Standard", standardDaily: 500_000, customDaily: 0, standardMonthly: 5_000_000, customMonthly: 0, reason: "Fraud investigation FRD-2291", setBy: "Joseph Mwangi", expires: "Until cleared", status: "Blocked" },
+  { id: "OVR-005", userId: "PAY-11223", name: "Victor Kiplagat", tier: "Standard", standardDaily: 500_000, customDaily: 0, standardMonthly: 5_000_000, customMonthly: 0, reason: "Fraud investigation FRD-2291", setBy: "Jeckonia Kwasa", expires: "Until cleared", status: "Blocked" },
   { id: "OVR-006", userId: "PAY-VIP-002", name: "Halima Yusuf", tier: "VIP Platinum", standardDaily: 500_000, customDaily: 2_000_000, standardMonthly: 5_000_000, customMonthly: 20_000_000, reason: "VIP Platinum · property settlement", setBy: "Sarah Kamau", expires: "Nov 2026", status: "Active" },
-  { id: "OVR-007", userId: "PAY-VIP-007", name: "Nairobi Dental Group", tier: "Business Premium", standardDaily: 500_000, customDaily: 5_000_000, standardMonthly: 5_000_000, customMonthly: 45_000_000, reason: "Supplier payments cycle", setBy: "Joseph Mwangi", expires: "Never", status: "Active" },
+  { id: "OVR-007", userId: "PAY-VIP-007", name: "Nairobi Dental Group", tier: "Business Premium", standardDaily: 500_000, customDaily: 5_000_000, standardMonthly: 5_000_000, customMonthly: 45_000_000, reason: "Supplier payments cycle", setBy: "Jeckonia Kwasa", expires: "Never", status: "Active" },
   { id: "OVR-008", userId: "PAY-33445", name: "Peter Mbugua", tier: "Standard", standardDaily: 500_000, customDaily: 50_000, standardMonthly: 5_000_000, customMonthly: 300_000, reason: "Chargeback dispute CB-88 open", setBy: "Sarah Kamau", expires: "Oct 2026", status: "Restricted" },
-  { id: "OVR-009", userId: "PAY-44556", name: "Grace Wambui", tier: "Standard", standardDaily: 500_000, customDaily: 0, standardMonthly: 5_000_000, customMonthly: 0, reason: "Court order — estate freeze", setBy: "Joseph Mwangi", expires: "Until court lift", status: "Blocked" },
+  { id: "OVR-009", userId: "PAY-44556", name: "Grace Wambui", tier: "Standard", standardDaily: 500_000, customDaily: 0, standardMonthly: 5_000_000, customMonthly: 0, reason: "Court order — estate freeze", setBy: "Jeckonia Kwasa", expires: "Until court lift", status: "Blocked" },
   { id: "OVR-010", userId: "PAY-55667", name: "Dennis Mutua", tier: "Standard", standardDaily: 500_000, customDaily: 300_000, standardMonthly: 5_000_000, customMonthly: 2_500_000, reason: "VPN withdrawal attempt — under review", setBy: "System", expires: "Oct 2026", status: "Restricted" },
   { id: "OVR-011", userId: "PAY-66778", name: "Fatuma Ali", tier: "Standard (new)", standardDaily: 500_000, customDaily: 10_000, standardMonthly: 5_000_000, customMonthly: 80_000, reason: "New account restriction (< 7 days)", setBy: "System", expires: "Aug 30, 2026", status: "Restricted" },
   { id: "OVR-012", userId: "PAY-77889", name: "Samuel Njoroge", tier: "Agent", standardDaily: 500_000, customDaily: 800_000, standardMonthly: 5_000_000, customMonthly: 8_000_000, reason: "Agent float rebalancing profile", setBy: "Sarah Kamau", expires: "Jan 2027", status: "Active" },
-  { id: "OVR-013", userId: "PAY-88900", name: "Rift Valley Motors", tier: "Business", standardDaily: 500_000, customDaily: 3_000_000, standardMonthly: 5_000_000, customMonthly: 25_000_000, reason: "Fleet supplier payments", setBy: "Joseph Mwangi", expires: "Dec 2026", status: "Active" },
+  { id: "OVR-013", userId: "PAY-88900", name: "Rift Valley Motors", tier: "Business", standardDaily: 500_000, customDaily: 3_000_000, standardMonthly: 5_000_000, customMonthly: 25_000_000, reason: "Fleet supplier payments", setBy: "Jeckonia Kwasa", expires: "Dec 2026", status: "Active" },
   { id: "OVR-014", userId: "PAY-99011", name: "Lucy Njeri", tier: "Standard", standardDaily: 500_000, customDaily: 450_000, standardMonthly: 5_000_000, customMonthly: 4_500_000, reason: "Dormancy re-activation (verified)", setBy: "Sarah Kamau", expires: "Sep 2026", status: "Active" },
-  { id: "OVR-015", userId: "PAY-10123", name: "Kevin Ochieng", tier: "Standard", standardDaily: 500_000, customDaily: 0, standardMonthly: 5_000_000, customMonthly: 0, reason: "SIM-swap investigation FRD-2304", setBy: "Joseph Mwangi", expires: "Until cleared", status: "Blocked" },
+  { id: "OVR-015", userId: "PAY-10123", name: "Kevin Ochieng", tier: "Standard", standardDaily: 500_000, customDaily: 0, standardMonthly: 5_000_000, customMonthly: 0, reason: "SIM-swap investigation FRD-2304", setBy: "Jeckonia Kwasa", expires: "Until cleared", status: "Blocked" },
 ];
 
 /* ---------------- High-value withdrawal queue (> KES 100K) ---------------- */
@@ -213,18 +213,18 @@ export const ANALYTICS: AnalyticsRow[] = [
 
 /* ---------------- §13.7 Limit change audit ---------------- */
 export const AUDIT: AuditRow[] = [
-  { id: "AUD-0112", date: "Aug 22", admin: "Joseph Mwangi", change: "Global daily limit", from: "KES 500K", to: "KES 500K", reason: "No change (quarterly review)", approvedBy: "—" },
-  { id: "AUD-0111", date: "Aug 15", admin: "Joseph Mwangi", change: "User PAY-VIP-004 daily", from: "KES 500K", to: "KES 10M", reason: "Business growth", approvedBy: "—" },
-  { id: "AUD-0110", date: "Aug 10", admin: "Sarah Kamau", change: "User PAY-67890 daily", from: "KES 500K", to: "KES 250K", reason: "Fraud precaution", approvedBy: "Joseph Mwangi" },
-  { id: "AUD-0109", date: "Aug 1", admin: "Joseph Mwangi", change: "ATM per-transaction", from: "KES 35K", to: "KES 40K", reason: "Partner agreement update", approvedBy: "—" },
-  { id: "AUD-0108", date: "Jul 30", admin: "Sarah Kamau", change: "User PAY-33445 daily", from: "KES 500K", to: "KES 50K", reason: "Open chargeback CB-88", approvedBy: "Joseph Mwangi" },
-  { id: "AUD-0107", date: "Jul 28", admin: "Joseph Mwangi", change: "Geo-anomaly threshold", from: "300km", to: "500km", reason: "FP rate reduction pilot", approvedBy: "—" },
+  { id: "AUD-0112", date: "Aug 22", admin: "Jeckonia Kwasa", change: "Global daily limit", from: "KES 500K", to: "KES 500K", reason: "No change (quarterly review)", approvedBy: "—" },
+  { id: "AUD-0111", date: "Aug 15", admin: "Jeckonia Kwasa", change: "User PAY-VIP-004 daily", from: "KES 500K", to: "KES 10M", reason: "Business growth", approvedBy: "—" },
+  { id: "AUD-0110", date: "Aug 10", admin: "Sarah Kamau", change: "User PAY-67890 daily", from: "KES 500K", to: "KES 250K", reason: "Fraud precaution", approvedBy: "Jeckonia Kwasa" },
+  { id: "AUD-0109", date: "Aug 1", admin: "Jeckonia Kwasa", change: "ATM per-transaction", from: "KES 35K", to: "KES 40K", reason: "Partner agreement update", approvedBy: "—" },
+  { id: "AUD-0108", date: "Jul 30", admin: "Sarah Kamau", change: "User PAY-33445 daily", from: "KES 500K", to: "KES 50K", reason: "Open chargeback CB-88", approvedBy: "Jeckonia Kwasa" },
+  { id: "AUD-0107", date: "Jul 28", admin: "Jeckonia Kwasa", change: "Geo-anomaly threshold", from: "300km", to: "500km", reason: "FP rate reduction pilot", approvedBy: "—" },
   { id: "AUD-0106", date: "Jul 25", admin: "System", change: "User PAY-66778 daily", from: "KES 500K", to: "KES 10K", reason: "New account auto-restriction", approvedBy: "Auto (rule PR-04)" },
-  { id: "AUD-0105", date: "Jul 22", admin: "Joseph Mwangi", change: "User PAY-99011 monthly", from: "KES 5M", to: "KES 4.5M", reason: "Dormancy re-activation", approvedBy: "Sarah Kamau" },
-  { id: "AUD-0104", date: "Jul 19", admin: "Sarah Kamau", change: "User PAY-VIP-002 daily", from: "KES 500K", to: "KES 2M", reason: "VIP property settlement", approvedBy: "Joseph Mwangi" },
-  { id: "AUD-0103", date: "Jul 15", admin: "Joseph Mwangi", change: "Velocity spike threshold", from: "40%", to: "50%", reason: "Tune false positives", approvedBy: "—" },
-  { id: "AUD-0102", date: "Jul 12", admin: "Joseph Mwangi", change: "User PAY-11223 daily", from: "KES 500K", to: "KES 0", reason: "Fraud investigation FRD-2291", approvedBy: "Board notified" },
-  { id: "AUD-0101", date: "Jul 8", admin: "Sarah Kamau", change: "Time anomaly window", from: "Enabled 1AM–6AM", to: "Disabled", reason: "Over-blocking night traders", approvedBy: "Joseph Mwangi" },
+  { id: "AUD-0105", date: "Jul 22", admin: "Jeckonia Kwasa", change: "User PAY-99011 monthly", from: "KES 5M", to: "KES 4.5M", reason: "Dormancy re-activation", approvedBy: "Sarah Kamau" },
+  { id: "AUD-0104", date: "Jul 19", admin: "Sarah Kamau", change: "User PAY-VIP-002 daily", from: "KES 500K", to: "KES 2M", reason: "VIP property settlement", approvedBy: "Jeckonia Kwasa" },
+  { id: "AUD-0103", date: "Jul 15", admin: "Jeckonia Kwasa", change: "Velocity spike threshold", from: "40%", to: "50%", reason: "Tune false positives", approvedBy: "—" },
+  { id: "AUD-0102", date: "Jul 12", admin: "Jeckonia Kwasa", change: "User PAY-11223 daily", from: "KES 500K", to: "KES 0", reason: "Fraud investigation FRD-2291", approvedBy: "Board notified" },
+  { id: "AUD-0101", date: "Jul 8", admin: "Sarah Kamau", change: "Time anomaly window", from: "Enabled 1AM–6AM", to: "Disabled", reason: "Over-blocking night traders", approvedBy: "Jeckonia Kwasa" },
 ];
 
 /* ---------------- KPI ---------------- */

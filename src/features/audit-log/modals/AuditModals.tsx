@@ -7,7 +7,7 @@ export function AuditEntryDrawer({ open, onClose }: { open: boolean; onClose: ()
   return (
     <Drawer open onClose={onClose} title="Audit Entry Detail" subtitle="Immutable record with full context and integrity proof" icon="bi-list-check" wide>
       <div className="pm-card pm-card-pad mb-3"><Badge tone="green" dot>Integrity verified</Badge>
-        <div className="row g-3 mt-2">{[["Timestamp", "Aug 24, 2026 14:32:01 EAT"], ["Admin", "Joseph Mwangi"], ["Action", "Freeze account"], ["Target", "User #89234"], ["IP", "192.168.1.42"], ["Session", "S-8821"], ["Result", "Success"]].map(x => <div className="col-md-6" key={x[0]}><div className="pm-eyebrow">{x[0]}</div><b className="small">{x[1]}</b></div>)}</div>
+        <div className="row g-3 mt-2">{[["Timestamp", "Aug 24, 2026 14:32:01 EAT"], ["Admin", "Jeckonia Kwasa"], ["Action", "Freeze account"], ["Target", "User #89234"], ["IP", "192.168.1.42"], ["Session", "S-8821"], ["Result", "Success"]].map(x => <div className="col-md-6" key={x[0]}><div className="pm-eyebrow">{x[0]}</div><b className="small">{x[1]}</b></div>)}</div>
       </div>
       <div className="pm-card pm-card-pad mb-3"><h6>Integrity proof</h6>
         {[["Pre-image hash", "a3f8c2e1b..."], ["Chain position", "#1,842,341"], ["Replicated", "3 of 3 replicas"], ["Previous hash", "f7e9d1c2a..."], ["Merkle root", "b5c3a2f1e..."]].map(x => <div className="d-flex justify-content-between py-1 border-bottom small" key={x[0]}><span className="text-muted">{x[0]}</span><b className="mono">{x[1]}</b></div>)}

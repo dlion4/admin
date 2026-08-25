@@ -111,7 +111,7 @@ export const REVIEW_ACTIVITY: ReviewActivity[] = Array.from({ length: 22 }, (_, 
 export interface SavedKycView { id: string; name: string; query: string; count: number; owner: string; shared: boolean; }
 export const SAVED_KYC_VIEWS: SavedKycView[] = [
   { id: "KV-1", name: "Critical sanctions / PEP", query: "risk=Critical, sanctions!=Clear", count: 12, owner: "David Kiplagat", shared: true },
-  { id: "KV-2", name: "SLA breach - unassigned", query: "age>24h, reviewer=Unassigned", count: 9, owner: "Joseph Mwangi", shared: true },
+  { id: "KV-2", name: "SLA breach - unassigned", query: "age>24h, reviewer=Unassigned", count: 9, owner: "Jeckonia Kwasa", shared: true },
   { id: "KV-3", name: "Address review", query: "document=Address, state=Review", count: 51, owner: "Cynthia Awuor", shared: false },
   { id: "KV-4", name: "Business tier applications", query: "tier=Business", count: 84, owner: "Mary Wanjiku", shared: true },
   { id: "KV-5", name: "Possible duplicate identities", query: "duplicate>70", count: 44, owner: "James Odhiambo", shared: true },

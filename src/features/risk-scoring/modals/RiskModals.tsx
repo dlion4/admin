@@ -698,7 +698,7 @@ export function RiskAlertModal({ onClose }: { onClose: () => void }) {
 export function AccountActionHistoryModal({ user, onClose }: { user: RiskUser | null; onClose: () => void }) {
   if (!user) return null;
   const history = [
-    { date: "Aug 22", action: "Score override", by: "Joseph Mwangi", from: "72", to: "30", reason: "Investigation cleared" },
+    { date: "Aug 22", action: "Score override", by: "Jeckonia Kwasa", from: "72", to: "30", reason: "Investigation cleared" },
     { date: "Aug 18", action: "Enhanced monitoring", by: "System", from: "—", to: "—", reason: "Auto-triggered by score > 60" },
     { date: "Aug 15", action: "Score recalculation", by: "System", from: "45", to: "55", reason: "Transaction velocity increase" },
     { date: "Aug 10", action: "Account unfrozen", by: "Sarah Kamau", from: "Frozen", to: "Active", reason: "KYC verified" },

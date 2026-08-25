@@ -49,7 +49,7 @@ export function ServicePortfolio({
   const [audit, setAudit] = useState<PortfolioAudit[]>(PORTFOLIO_AUDIT);
 
   const logAudit = (area: string, change: string, from: string, to: string, reason: string) =>
-    setAudit((a) => [{ id: `PA-${1043 + a.length - PORTFOLIO_AUDIT.length}`, date: "Aug 23 · now", admin: "Joseph Mwangi", area, change, from, to, reason }, ...a]);
+    setAudit((a) => [{ id: `PA-${1043 + a.length - PORTFOLIO_AUDIT.length}`, date: "Aug 23 · now", admin: "Jeckonia Kwasa", area, change, from, to, reason }, ...a]);
 
   /* ---------------- catalog table state ---------------- */
   const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("catalog");
@@ -150,7 +150,7 @@ export function ServicePortfolio({
   };
   const doConfig = (cfgId: string, value: string, reason: string) => {
     const c = configs.find((x) => x.id === cfgId);
-    setConfigs((cs) => cs.map((x) => (x.id === cfgId ? { ...x, value, changed: "Aug 23", changedBy: "Joseph Mwangi" } : x)));
+    setConfigs((cs) => cs.map((x) => (x.id === cfgId ? { ...x, value, changed: "Aug 23", changedBy: "Jeckonia Kwasa" } : x)));
     logAudit(c?.service ?? "Config", c?.key ?? cfgId, c?.value ?? "—", value, reason);
   };
   const doRetire = (serviceId: string, reason: string, migration: string, deadline: string, banner: boolean) => {

@@ -38,7 +38,7 @@ export function LiquidityPools({
   const [sweeps, setSweeps] = useState<SweepRule[]>(SWEEPS);
   const [alerts, setAlerts] = useState<LiquidityAlert[]>([]);
   const [activity, setActivity] = useState<ActivityRow[]>(ACTIVITY);
-  const nextAct = (pool: string, action: string, amount: number, balanceAfter: number, by = "Joseph Mwangi") =>
+  const nextAct = (pool: string, action: string, amount: number, balanceAfter: number, by = "Jeckonia Kwasa") =>
     setActivity((a) => [{ id: `ACT-${4413 + a.length - ACTIVITY.length}`, time: nowTime(), pool, action, amount, balanceAfter, by }, ...a]);
 
   /* ---------------- derived alert state from pools ---------------- */
@@ -119,14 +119,14 @@ export function LiquidityPools({
       id: `TRF-${7742 + Math.floor(Math.random() * 50)}`,
       date: "2026-08-23", time: nowTime(),
       fromPool: from.name, toPool: to.name, amount, reason,
-      initiatedBy: "Joseph Mwangi", approvedBy: "Sarah Kamau", status: "Complete",
+      initiatedBy: "Jeckonia Kwasa", approvedBy: "Sarah Kamau", status: "Complete",
     });
     nextAct(from.name, `Transfer out to ${to.name}`, -amount, from.balance - amount);
     nextAct(to.name, `Transfer in from ${from.name}`, amount, to.balance + amount);
   };
 
   const doApprove = (t: PoolTransfer) => {
-    setTransfers((ts) => ts.map((x) => (x.id === t.id ? { ...x, status: "Complete", approvedBy: "Joseph Mwangi" } : x)));
+    setTransfers((ts) => ts.map((x) => (x.id === t.id ? { ...x, status: "Complete", approvedBy: "Jeckonia Kwasa" } : x)));
     applyBalances(t.fromPool, t.toPool, t.amount);
     nextAct(t.toPool, `${t.id} approved & executed`, t.amount, t.amount);
     setTransferDetail(null);
@@ -140,7 +140,7 @@ export function LiquidityPools({
       id: `TRF-${7742 + Math.floor(Math.random() * 50)}`,
       date: "2026-08-23", time: nowTime(),
       fromPool: bank, toPool: p.name, amount, reason: "External top-up (bank transfer in)",
-      initiatedBy: "Joseph Mwangi", approvedBy: "Sarah Kamau", status: "Complete",
+      initiatedBy: "Jeckonia Kwasa", approvedBy: "Sarah Kamau", status: "Complete",
     });
     nextAct(p.name, `Top-up from ${bank.split(" •")[0]}`, amount, p.balance + amount);
   };
@@ -151,7 +151,7 @@ export function LiquidityPools({
       id: `TRF-${7742 + Math.floor(Math.random() * 50)}`,
       date: "2026-08-23", time: nowTime(),
       fromPool: p.name, toPool: "External bank account", amount, reason: "External withdrawal — board resolution pending",
-      initiatedBy: "Joseph Mwangi", approvedBy: "Board co-sign pending", status: "Pending approval",
+      initiatedBy: "Jeckonia Kwasa", approvedBy: "Board co-sign pending", status: "Pending approval",
     });
     nextAct(p.name, "Withdrawal queued (board review)", -amount, p.balance - amount);
   };
@@ -164,7 +164,7 @@ export function LiquidityPools({
   const doFreeze = (p: LiquidityPool) => {
     const frozen = p.health === "Frozen";
     patchPool(p.id, { health: frozen ? "Healthy" : "Frozen" });
-    nextAct(p.name, frozen ? "Pool unfrozen — queues executing" : "Pool frozen — sweeps halted", 0, p.balance, frozen ? "Sarah Kamau" : "Joseph Mwangi");
+    nextAct(p.name, frozen ? "Pool unfrozen — queues executing" : "Pool frozen — sweeps halted", 0, p.balance, frozen ? "Sarah Kamau" : "Jeckonia Kwasa");
   };
 
   const doCreatePool = (name: string, funding: number, ratio: number, threshold: number) => {
@@ -205,7 +205,7 @@ export function LiquidityPools({
 
   const doAlertEdit = (a: LiquidityAlert, threshold: number, notify: string) => {
     setAlerts((as) => as.map((x) => (x.id === a.id ? { ...x, threshold, notify, ok: x.current >= threshold } : x)));
-    nextAct(a.pool, `Alert threshold → ${kes(threshold, { compact: true })}`, 0, 0, "Joseph Mwangi");
+    nextAct(a.pool, `Alert threshold → ${kes(threshold, { compact: true })}`, 0, 0, "Jeckonia Kwasa");
   };
 
   const openTransfer = (p: LiquidityPool | null) => { setTransferSource(p); setTransferWizard(true); };

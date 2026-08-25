@@ -288,7 +288,7 @@ export const REQUESTS: ChangeRequest[] = [
 
 /* ---------------- §21.8 audit seed ---------------- */
 export const PRODUCT_AUDIT: ProductAudit[] = [
-  { id: "PCA-2210", date: "Aug 23 · 09:12", admin: "Joseph Mwangi", area: "Overrides", change: "OVR-08 FX cap frozen", from: "Active", to: "Frozen", reason: "Treasury review of import documentation" },
+  { id: "PCA-2210", date: "Aug 23 · 09:12", admin: "Jeckonia Kwasa", area: "Overrides", change: "OVR-08 FX cap frozen", from: "Active", to: "Frozen", reason: "Treasury review of import documentation" },
   { id: "PCA-2209", date: "Aug 22 · 16:40", admin: "C. Muthoni", area: "Loans", change: "Rule RL-08 edited", from: "12h gap", to: "24h gap", reason: "Cool-off too short — repeat borrowing pattern" },
   { id: "PCA-2208", date: "Aug 22 · 09:00", admin: "J. Mwangi", area: "Publish", change: "v3.14.2 promoted to Production", from: "v3.14.1", to: "v3.14.2", reason: "4 approved changes released in Aug 22 window" },
   { id: "PCA-2207", date: "Aug 22 · 08:02", admin: "Finance Mgr", area: "Loans", change: "Max loan amount", from: "KES 300,000", to: "KES 500,000", reason: "Board approved expansion" },

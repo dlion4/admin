@@ -51,7 +51,7 @@ export function ProductConfig({
   const [audit, setAudit] = useState<ProductAudit[]>(PRODUCT_AUDIT);
 
   const logAudit = (area: string, change: string, from: string, to: string, reason: string) =>
-    setAudit((a) => [{ id: `PCA-${2211 + a.length - PRODUCT_AUDIT.length}`, date: "Aug 23 · now", admin: "Joseph Mwangi", area, change, from, to, reason }, ...a]);
+    setAudit((a) => [{ id: `PCA-${2211 + a.length - PRODUCT_AUDIT.length}`, date: "Aug 23 · now", admin: "Jeckonia Kwasa", area, change, from, to, reason }, ...a]);
 
   /* ---------------- tab + table state ---------------- */
   const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("products");
@@ -119,14 +119,14 @@ export function ProductConfig({
   /* ---------------- mutations (absolute admin powers) ---------------- */
   const doEditSetting = (id: string, value: string, reason: string) => {
     const s = settings.find((x) => x.id === id);
-    setSettings((ss) => ss.map((x) => (x.id === id ? { ...x, value, drift: value !== x.value ? value : x.drift, changed: "Aug 23", changedBy: "Joseph Mwangi" } : x)));
-    setRequests((rs) => [{ id: `CR-${2102 + rs.length - REQUESTS.length}`, productId: s!.productId, settingKey: s!.key, from: s!.value, to: value, requestedBy: "Joseph Mwangi", requestedAt: "Aug 23 · now", status: "Pending", risk: "Medium", reason, approvals: [{ role: "Risk", who: "V. Kiprop", state: "Pending" }, { role: "Product", who: "P. Wanjiru", state: "Pending" }, { role: "Super Admin", who: "J. Mwangi", state: "Pending" }] }, ...rs]);
+    setSettings((ss) => ss.map((x) => (x.id === id ? { ...x, value, drift: value !== x.value ? value : x.drift, changed: "Aug 23", changedBy: "Jeckonia Kwasa" } : x)));
+    setRequests((rs) => [{ id: `CR-${2102 + rs.length - REQUESTS.length}`, productId: s!.productId, settingKey: s!.key, from: s!.value, to: value, requestedBy: "Jeckonia Kwasa", requestedAt: "Aug 23 · now", status: "Pending", risk: "Medium", reason, approvals: [{ role: "Risk", who: "V. Kiprop", state: "Pending" }, { role: "Product", who: "P. Wanjiru", state: "Pending" }, { role: "Super Admin", who: "J. Mwangi", state: "Pending" }] }, ...rs]);
     logAudit(groupName(s!.productId), `${s!.key} edit staged`, s!.value, value, reason);
   };
   const doAddSetting = (productId: string, groupKey: string, key: string, value: string, kind: string, min: string, max: string, reason: string) => {
     const prefix = { "prod-mpesa": "MP", "prod-cards": "CD", "prod-loans": "LN", "prod-savings": "SV", "prod-bank": "BK", "prod-fx": "FX", "prod-bills": "BL", "prod-payroll": "PR" }[productId] ?? "NW";
     const id = `PCF-${prefix}-${String(settings.filter((s) => s.productId === productId).length + 1).padStart(2, "0")}`;
-    setSettings((ss) => [...ss, { id, productId, group: groupKey, key, value, valueKind: kind as Setting["valueKind"], min: min || undefined, max: max || undefined, editable: true, changed: "Aug 23", changedBy: "Joseph Mwangi", drift: value }]);
+    setSettings((ss) => [...ss, { id, productId, group: groupKey, key, value, valueKind: kind as Setting["valueKind"], min: min || undefined, max: max || undefined, editable: true, changed: "Aug 23", changedBy: "Jeckonia Kwasa", drift: value }]);
     logAudit(groupName(productId), `${key} created`, "—", value, reason);
   };
   const doDeleteSetting = (id: string) => {
@@ -176,7 +176,7 @@ export function ProductConfig({
     logAudit("Registry", `${products.find((x) => x.id === id)?.name ?? id} details`, "—", `${owner} · ${status}`, "Registry record updated");
   };
   const doAddOverride = (o: Omit<Override, "id" | "created" | "createdBy" | "status" | "affected">, status: Override["status"]) => {
-    setOverrides((os) => [{ ...o, id: `OVR-${String(os.length + 1).padStart(2, "0")}`, created: "Aug 23", createdBy: "Joseph Mwangi", status, affected: o.scope === "User" ? 1 : o.scope === "Merchant" ? 1 : o.scope === "Tier" ? 1240 : 5000 }, ...os]);
+    setOverrides((os) => [{ ...o, id: `OVR-${String(os.length + 1).padStart(2, "0")}`, created: "Aug 23", createdBy: "Jeckonia Kwasa", status, affected: o.scope === "User" ? 1 : o.scope === "Merchant" ? 1 : o.scope === "Tier" ? 1240 : 5000 }, ...os]);
     logAudit("Overrides", `override for ${o.target}`, o.baseline, o.value, o.note);
   };
   const doEditOverride = (id: string, value: string, expires: string, note: string) => {
@@ -187,7 +187,7 @@ export function ProductConfig({
   const doOverrideAction = (id: string, action: "expire" | "freeze" | "unfreeze" | "duplicate") => {
     const o = overrides.find((x) => x.id === id);
     if (action === "duplicate") {
-      setOverrides((os) => [{ ...(o as Override), id: `OVR-${String(os.length + 1).padStart(2, "0")}`, status: "Draft", created: "Aug 23", createdBy: "Joseph Mwangi" }, ...os]);
+      setOverrides((os) => [{ ...(o as Override), id: `OVR-${String(os.length + 1).padStart(2, "0")}`, status: "Draft", created: "Aug 23", createdBy: "Jeckonia Kwasa" }, ...os]);
       logAudit("Overrides", `duplicated ${id}`, o?.target ?? "", "new draft", "Duplicated for retargeting");
       return;
     }
@@ -224,7 +224,7 @@ export function ProductConfig({
     logAudit("Approvals", `${r?.settingKey ?? id} rejected`, r?.to ?? "", "rejected", reason);
   };
   const doNewRequest = (productId: string, settingKey: string, from: string, to: string, reason: string, risk: string) => {
-    setRequests((rs) => [{ id: `CR-${2102 + rs.length - REQUESTS.length}`, productId, settingKey, from, to, requestedBy: "Joseph Mwangi", requestedAt: "Aug 23 · now", status: "Pending", risk: risk as ChangeRequest["risk"], reason, approvals: [{ role: "Risk", who: "V. Kiprop", state: "Pending" }, { role: "Product", who: "P. Wanjiru", state: "Pending" }, { role: "Super Admin", who: "J. Mwangi", state: "Pending" }] }, ...rs]);
+    setRequests((rs) => [{ id: `CR-${2102 + rs.length - REQUESTS.length}`, productId, settingKey, from, to, requestedBy: "Jeckonia Kwasa", requestedAt: "Aug 23 · now", status: "Pending", risk: risk as ChangeRequest["risk"], reason, approvals: [{ role: "Risk", who: "V. Kiprop", state: "Pending" }, { role: "Product", who: "P. Wanjiru", state: "Pending" }, { role: "Super Admin", who: "J. Mwangi", state: "Pending" }] }, ...rs]);
     logAudit(groupName(productId), `change requested on ${settingKey}`, from, to, reason);
   };
   const doPromote = (window: string, notifyPartners: boolean) => {
@@ -240,7 +240,7 @@ export function ProductConfig({
   };
   const doSyncDrift = (id: string) => {
     const s = settings.find((x) => x.id === id);
-    setRequests((rs) => [{ id: `CR-${2102 + rs.length - REQUESTS.length}`, productId: s!.productId, settingKey: s!.key, from: s!.value, to: s!.drift!, requestedBy: "Joseph Mwangi", requestedAt: "Aug 23 · now", status: "Pending", risk: "Low", reason: "Environment sync — adopt staging value", approvals: [{ role: "Risk", who: "V. Kiprop", state: "Pending" }, { role: "Super Admin", who: "J. Mwangi", state: "Pending" }] }, ...rs]);
+    setRequests((rs) => [{ id: `CR-${2102 + rs.length - REQUESTS.length}`, productId: s!.productId, settingKey: s!.key, from: s!.value, to: s!.drift!, requestedBy: "Jeckonia Kwasa", requestedAt: "Aug 23 · now", status: "Pending", risk: "Low", reason: "Environment sync — adopt staging value", approvals: [{ role: "Risk", who: "V. Kiprop", state: "Pending" }, { role: "Super Admin", who: "J. Mwangi", state: "Pending" }] }, ...rs]);
     logAudit(groupName(s!.productId), `${s!.key} sync requested`, s!.value, s!.drift!, "Adopt staging value");
   };
 

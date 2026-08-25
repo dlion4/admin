@@ -45,7 +45,7 @@ const RAILS = ["M-Pesa", "Card (Visa)", "Card (Mastercard)", "PesaLink", "Intern
 const COUNTRIES = ["Nairobi", "Mombasa", "Kisumu", "Nakuru", "Uasin Gishu", "Machakos", "Nyeri", "Kakamega", "Kiambu", "Kilifi"];
 const METHODS = ["Passkey", "PIN", "Biometric", "OTP", "Fingerprint"];
 const DEVICE_MODELS = ["iPhone 15 Pro · iOS 18", "Samsung A54 · Android 14", "Tecno Spark 20 · Android 13", "Xiaomi Redmi Note 12 · Android 14", "iPhone 14 · iOS 17", "Infinix Note 40 · Android 14"];
-const ADMINS = ["Joseph Mwangi", "Sarah Kamau", "Mary Wanjiku", "David Kiplagat", "James Odhiambo"];
+const ADMINS = ["Jeckonia Kwasa", "Sarah Kamau", "Mary Wanjiku", "David Kiplagat", "James Odhiambo"];
 const AUDIT_ACTIONS = [
   ["Viewed profile", "Opened 360° profile from User Directory."],
   ["Viewed transactions", "Exported a 30-day transaction history."],

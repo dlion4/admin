@@ -442,7 +442,7 @@ export function AccountLifecycle({ signal, onNavigate }: { signal: { action: str
         setSel([]);
       }} />
       <ClosureWizard req={closureReq} onClose={() => setClosureReq(null)} onDone={(r, decision) => {
-        setClosures((list) => list.map((c) => c.id === r.id ? { ...c, status: decision, reviewer: "Joseph Mwangi" } : c));
+        setClosures((list) => list.map((c) => c.id === r.id ? { ...c, status: decision, reviewer: "Jeckonia Kwasa" } : c));
         setClosureReq(null);
       }} />
       <CampaignDrawer campaign={campaign} onClose={() => setCampaign(null)}

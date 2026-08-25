@@ -300,7 +300,7 @@ export function FeeChangeWizard({
         {step === 4 && (
           <>
             <div className="pm-card pm-card-pad mb-3">
-              <div className="pm-kv"><span className="k">Submitted by</span><span className="v">Joseph Mwangi · Tier 0</span></div>
+              <div className="pm-kv"><span className="k">Submitted by</span><span className="v">Jeckonia Kwasa · Tier 0</span></div>
               <div className="pm-kv"><span className="k">Approval required from</span><span className="v">Super Admin (Tier 0) · dual control</span></div>
               <div className="pm-kv"><span className="k">Audit reason</span><span className="v" style={{ maxWidth: 300 }}>{reason || "—"}</span></div>
             </div>
@@ -325,7 +325,7 @@ export function FeeChangeWizard({
               current: fee ? rateLabel(fee) : "—",
               proposed,
               effective: new Date(effective).toLocaleDateString("en-KE", { day: "2-digit", month: "short", year: "numeric" }),
-              submittedBy: "Joseph Mwangi",
+              submittedBy: "Jeckonia Kwasa",
               submittedAt: "Just now",
               status: "Pending approval",
               impact: `${delta >= 0 ? "+" : "−"}${kes(Math.abs(delta), { compact: true })}/mo · ${num(users)} txns affected`,
@@ -504,7 +504,7 @@ export function SimulatorWizard({
               current: rateLabel(target),
               proposed: `${newRate.toFixed(2)}%${newMin ? ` (min ${num(newMin)})` : ""}`,
               effective: "01 Oct 2026",
-              submittedBy: "Joseph Mwangi",
+              submittedBy: "Jeckonia Kwasa",
               submittedAt: "Just now",
               status: "Pending approval",
               impact: `${delta >= 0 ? "+" : "−"}${kes(Math.abs(delta), { compact: true })}/mo · ${num(newTxns)} txns`,
@@ -870,7 +870,7 @@ export function OverrideWizard({ open, onClose, onGrant }: { open: boolean; onCl
               <div className="pm-kv"><span className="k">Discount</span><span className="v">{discount}%</span></div>
               <div className="pm-kv"><span className="k">Segment / expiry</span><span className="v">{segment} · {expires}</span></div>
               <div className="pm-kv"><span className="k">Reason</span><span className="v" style={{ maxWidth: 280 }}>{reason || "—"}</span></div>
-              <div className="pm-kv"><span className="k">Approver</span><span className="v">Joseph Mwangi · Tier 0</span></div>
+              <div className="pm-kv"><span className="k">Approver</span><span className="v">Jeckonia Kwasa · Tier 0</span></div>
             </div>
             <TwoFactorField value={code} onChange={setCode} />
           </>
@@ -889,7 +889,7 @@ export function OverrideWizard({ open, onClose, onGrant }: { open: boolean; onCl
               feeId, feeName: feeId === "ALL" ? "All fees" : fee.name,
               standard: feeId === "ALL" ? "Standard rates" : rateLabel(fee),
               override: customRate, discountPct: discount, reason,
-              grantedBy: "Joseph Mwangi", approvedBy: "Joseph Mwangi (self, Tier 0)",
+              grantedBy: "Jeckonia Kwasa", approvedBy: "Jeckonia Kwasa (self, Tier 0)",
               grantedAt: "Just now",
               expires: expires === "Never (Tier 0 only)" ? "Never" : expires === "One-off" ? "One-off" : `+${expires}`,
               status: "Active", monthlyValue: Math.round((fee.revenue30d / Math.max(1, fee.txns30d)) * 40),
@@ -1451,7 +1451,7 @@ export function FeeHistoryModal({ fee, onClose }: { fee: FeeSchedule | null; onC
     { t: fee.lastChanged, who: fee.changedBy, what: fee.lastChanged === "—" ? "Live since launch — no changes" : `Set to ${rateLabel(fee)}`, tone: "done" },
     { t: "12 Jun 2026", who: "Sarah Kamau", what: "Reviewed — no change (competitor benchmark attached)", tone: "done" },
     { t: "28 Feb 2026", who: "David Kiplagat", what: `Competitor scan: PayMo ${fee.rate || fee.fixed}% vs market ${fee.competitor || "n/a"}%`, tone: "done" },
-    { t: "15 Nov 2025", who: "Joseph Mwangi", what: "Excise duty pass-through modelled into tax treatment", tone: "done" },
+    { t: "15 Nov 2025", who: "Jeckonia Kwasa", what: "Excise duty pass-through modelled into tax treatment", tone: "done" },
     { t: "01 Sep 2025", who: "System", what: "Fee line migrated to pricing-engine v3 (effective-dated)", tone: "done" },
     ...FEE_AUDIT.filter((a) => a.target.includes(fee.id) || a.target.includes(fee.name.split(" ")[0])).map((a) => ({
       t: a.time, who: a.admin, what: `${a.action} — ${a.detail}`, tone: "warn",

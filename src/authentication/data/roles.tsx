@@ -287,7 +287,7 @@ export const ROLES: Role[] = [
     dualControl: true,
     seats: { active: 1, total: 2 },
     gates: ["PIN", "Hardware Passkey", "TOTP", "Self-issued PIN"],
-    holders: [{ name: "Joseph Mwangi", status: "online" }],
+    holders: [{ name: "Jeckonia Kwasa", status: "online" }],
   },
   {
     id: "platform",
@@ -322,7 +322,7 @@ export const ROLES: Role[] = [
     seats: { active: 2, total: 3 },
     gates: ["PIN", "Passkey", "TOTP", "Session PIN"],
     holders: [
-      { name: "Sarah Kimani", status: "online" },
+      { name: "Dan Delion", status: "online" },
       { name: "James Otieno", status: "idle" },
     ],
   },
@@ -828,8 +828,8 @@ export const THREAT_SIGNALS = [
 ];
 
 export const ACTIVE_SESSIONS = [
-  { admin: "Joseph Mwangi", role: "Super Admin", ip: "197.232.61.14", device: "MacBook Pro 16", started: "08:14", state: "Active" },
-  { admin: "Sarah Kimani", role: "Platform Admin", ip: "197.232.61.22", device: "Dell XPS 15", started: "09:02", state: "Active" },
+  { admin: "Jeckonia Kwasa", role: "Super Admin", ip: "197.232.61.14", device: "MacBook Pro 16", started: "08:14", state: "Active" },
+  { admin: "Dan Delion", role: "Platform Admin", ip: "197.232.61.22", device: "Dell XPS 15", started: "09:02", state: "Active" },
   { admin: "David Kariuki", role: "Compliance Officer", ip: "41.90.64.7", device: "iPad Pro", started: "11:35", state: "Idle 12m" },
   { admin: "Grace Achieng", role: "Finance Manager", ip: "197.232.61.31", device: "ThinkPad T14", started: "07:58", state: "Active" },
 ];

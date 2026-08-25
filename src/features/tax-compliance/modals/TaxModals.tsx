@@ -286,7 +286,7 @@ export function RemitWizard({
             <div className="pm-kv"><span className="k">Amount</span><span className="v mono">{kes(amount)}</span></div>
             <div className="pm-kv"><span className="k">Held after</span><span className="v mono">{kes(pool.held - amount, { compact: true })}</span></div>
             <div className="pm-kv"><span className="k">Rail</span><span className="v">iTAX EFT · Tax Withholding Pool</span></div>
-            <div className="pm-kv"><span className="k">Approvers</span><span className="v">Joseph Mwangi (Super Admin) + Sarah Kamau (Finance)</span></div>
+            <div className="pm-kv"><span className="k">Approvers</span><span className="v">Jeckonia Kwasa (Super Admin) + Sarah Kamau (Finance)</span></div>
           </div>
         )}
         {step === 2 && <TwoFactorField value={code} onChange={setCode} />}
@@ -536,7 +536,7 @@ export function FileReportWizard({
               <div className="pm-kv"><span className="k">Return</span><span className="v">{report?.report ?? "—"}</span></div>
               <div className="pm-kv"><span className="k">Period</span><span className="v mono">{periodFrom} → {periodTo}</span></div>
               <div className="pm-kv"><span className="k">Remit with filing</span><span className="v">{remit ? "Yes · held pool balance" : "No · filing only"}</span></div>
-              <div className="pm-kv"><span className="k">Filed by</span><span className="v">Joseph Mwangi · Super Admin</span></div>
+              <div className="pm-kv"><span className="k">Filed by</span><span className="v">Jeckonia Kwasa · Super Admin</span></div>
             </div>
             <TwoFactorField value={code} onChange={setCode} />
           </>

@@ -37,7 +37,7 @@ export function WithdrawalControls({
     return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
   };
   const logAudit = (change: string, from: string, to: string, reason: string, approvedBy = "—") =>
-    setAudit((a) => [{ id: `AUD-${113 + a.length - AUDIT.length}`, date: "Aug 23", admin: "Joseph Mwangi", change, from, to, reason, approvedBy }, ...a]);
+    setAudit((a) => [{ id: `AUD-${113 + a.length - AUDIT.length}`, date: "Aug 23", admin: "Jeckonia Kwasa", change, from, to, reason, approvedBy }, ...a]);
 
   /* ---------------- overrides table state ---------------- */
   const [page, setPage] = useState(1);

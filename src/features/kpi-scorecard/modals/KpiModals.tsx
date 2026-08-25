@@ -75,7 +75,7 @@ export function KpiDrawer({ kpi, onClose, onEditTarget }: {
         <div className="pm-card-head"><h6 className="pm-card-title">Target governance</h6></div>
         <div className="p-3">
           <div className="pm-kv"><span className="k">Edit tier</span><span className="v"><Badge tone={kpi.tier === 0 ? "red" : "amber"}>{kpi.tier === 0 ? "Super Admin" : "Board approval"}</Badge></span></div>
-          <div className="pm-kv"><span className="k">Last changed</span><span className="v">03 Aug 2026 · Joseph Mwangi</span></div>
+          <div className="pm-kv"><span className="k">Last changed</span><span className="v">03 Aug 2026 · Jeckonia Kwasa</span></div>
           <div className="pm-kv"><span className="k">Data source</span><span className="v mono">warehouse.rt_kpi_{kpi.id}</span></div>
           <div className="pm-kv"><span className="k">Refresh</span><span className="v">{kpi.frequency} at 06:00 EAT</span></div>
         </div>
@@ -633,7 +633,7 @@ export function CommentaryDrawer({ open, onClose }: { open: boolean; onClose: ()
           <div className="pm-timeline">
             <div className="pm-tl-item done"><div style={{ fontWeight: 700, fontSize: ".82rem" }}>Q2-2026 — Sarah Kamau</div>
               <div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>Closed Q2 at 76% scorecard. Net revenue 108% of target. Main miss was card activation.</div></div>
-            <div className="pm-tl-item done"><div style={{ fontWeight: 700, fontSize: ".82rem" }}>Q1-2026 — Joseph Mwangi</div>
+            <div className="pm-tl-item done"><div style={{ fontWeight: 700, fontSize: ".82rem" }}>Q1-2026 — Jeckonia Kwasa</div>
               <div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>Fraud loss rate stepped down to 5.1 bps after v4.2.1 model rollout.</div></div>
           </div>
         </div>
@@ -830,7 +830,7 @@ export function SignOffWizard({ open, onClose }: { open: boolean; onClose: () =>
         <button className="btn btn-outline-secondary btn-sm me-auto" onClick={close}>Cancel</button>
         {step > 0 && <button className="btn btn-outline-secondary btn-sm" onClick={() => setStep(step - 1)}><i className="bi bi-arrow-left me-1" />Back</button>}
         {step < 2 && <button className="btn btn-primary btn-sm" disabled={step === 1 && !Object.values(ack).every(Boolean)} onClick={() => setStep(step + 1)}>Next<i className="bi bi-arrow-right ms-1" /></button>}
-        {step === 2 && <button className="btn btn-primary btn-sm" disabled={code !== "482913"} onClick={() => { push({ kind: "success", title: "Board pack signed", body: "Joseph Mwangi · 24 Aug 2026 · signature recorded in AUD-88240." }); close(); }}>
+        {step === 2 && <button className="btn btn-primary btn-sm" disabled={code !== "482913"} onClick={() => { push({ kind: "success", title: "Board pack signed", body: "Jeckonia Kwasa · 24 Aug 2026 · signature recorded in AUD-88240." }); close(); }}>
           <i className="bi bi-pen-fill me-1" />Sign & publish
         </button>}
       </div>
@@ -1230,7 +1230,7 @@ export function QuarterReviewModal({ open, period, onClose }: { open: boolean; p
 /* ============================ 25. Audit trail modal ============================ */
 export function AuditTrailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const entries = [
-    { id: "AUD-88240", time: "24 Aug 2026 14:32", user: "Joseph Mwangi", action: "Board pack signed", detail: "Q3-2026 forecast · 2FA verified", tone: "green" as const },
+    { id: "AUD-88240", time: "24 Aug 2026 14:32", user: "Jeckonia Kwasa", action: "Board pack signed", detail: "Q3-2026 forecast · 2FA verified", tone: "green" as const },
     { id: "AUD-88199", time: "22 Aug 2026 09:15", user: "Sarah Kamau", action: "Target changed", detail: "Platform uptime 99.9% → 99.95% · Board approval", tone: "blue" as const },
     { id: "AUD-88156", time: "18 Aug 2026 11:44", user: "CFO", action: "Revenue target revised", detail: "Q3 net revenue KES 112M → KES 118M", tone: "blue" as const },
     { id: "AUD-88102", time: "14 Aug 2026 16:20", user: "CRO", action: "Fraud ceiling tightened", detail: "6 bps → 5 bps after model v4.2.1 shadow run", tone: "amber" as const },

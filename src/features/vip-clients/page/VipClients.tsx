@@ -87,7 +87,7 @@ export function VipClients({ signal, onNavigate }: { signal: { action: string; n
     setAuditTrail((prev) => [{
       id: `VPA-${Math.floor(810 + Math.random() * 50)}`,
       time: "Just now",
-      admin: "Joseph Mwangi",
+      admin: "Jeckonia Kwasa",
       action: "Updated VIP Governance",
       vipName: grantWizard.name,
       details: `Tier set to ${tier}, assigned RM ${rmName}.`,

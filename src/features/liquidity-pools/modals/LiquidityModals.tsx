@@ -222,7 +222,7 @@ export function TransferWizard({
             <div className="pm-card pm-card-pad mb-3">
               <div className="pm-kv"><span className="k">Transfer</span><span className="v mono">{kes(amount)}</span></div>
               <div className="pm-kv"><span className="k">Route</span><span className="v">{from.name} → {to.name}</span></div>
-              <div className="pm-kv"><span className="k">Initiated by</span><span className="v">Joseph Mwangi · Tier 0</span></div>
+              <div className="pm-kv"><span className="k">Initiated by</span><span className="v">Jeckonia Kwasa · Tier 0</span></div>
               <div className="pm-kv"><span className="k">Approver</span><span className="v">Sarah Kamau · Finance Manager</span></div>
             </div>
             <TwoFactorField value={code} onChange={setCode} />

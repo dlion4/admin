@@ -299,7 +299,7 @@ export function ClosureWizard({ req, onClose, onDone }: { req: ClosureRequest | 
         {step === 2 && (
           <div className="d-flex flex-column gap-2">
             <div className="pm-opt active"><i className="bi bi-shield-check" style={{ color: "#12b76a" }} />
-              <span className="flex-grow-1"><b style={{ fontSize: ".85rem" }}>You — Joseph Mwangi (Tier 0)</b><span className="d-block" style={{ fontSize: ".73rem", color: "var(--pm-muted)" }}>Decision maker · always required</span></span><Badge tone="green">You</Badge></div>
+              <span className="flex-grow-1"><b style={{ fontSize: ".85rem" }}>You — Jeckonia Kwasa (Tier 0)</b><span className="d-block" style={{ fontSize: ".73rem", color: "var(--pm-muted)" }}>Decision maker · always required</span></span><Badge tone="green">You</Badge></div>
             {needsCo && <div className="pm-opt active"><i className="bi bi-send" style={{ color: "#7a5af8" }} />
               <span className="flex-grow-1"><b style={{ fontSize: ".85rem" }}>{req.vip ? "Grace Wanjiru — Relationship Manager" : req.balance > 100_000 ? "Sarah Kamau — Finance Manager" : "David Kiplagat — Compliance Officer"}</b>
               <span className="d-block" style={{ fontSize: ".73rem", color: "var(--pm-muted)" }}>{req.vip ? "VIP closures need RM sign-off" : req.balance > 100_000 ? "Balances over KES 100K need Finance co-approval" : "Fraud / AML / duplicate closures need Compliance"}</span></span><Badge tone="blue">Notification queued</Badge></div>}
@@ -458,7 +458,7 @@ export function NewCampaignWizard({ open, onClose, onCreate }: { open: boolean; 
         {step > 0 && <button className="btn btn-outline-secondary btn-sm" onClick={() => setStep(step - 1)}><i className="bi bi-arrow-left me-1" />Back</button>}
         {step < 3 && <button className="btn btn-primary btn-sm" disabled={(step === 0 && name.trim().length < 5) || (step === 1 && Object.values(channels).every((v) => !v))} onClick={() => setStep(step + 1)}>Next<i className="bi bi-arrow-right ms-1" /></button>}
         {step === 3 && <button className="btn btn-primary btn-sm" disabled={code !== "482913"} onClick={() => {
-          const c: Campaign = { id: `CMP-${2211 + Math.floor(Math.random() * 50)}`, name: name || "Untitled campaign", audience: `${bucket} dormant · ${tier}`, recipients: finalAudience, status: start > "2026-08-24" ? "Scheduled" : "Live", sent: 0, delivered: 0, opened: 0, converted: 0, spend: 0, offer, channels: Object.entries(channels).filter(([, v]) => v).map(([k]) => k), started: new Date(start).toLocaleDateString("en-GB", { day: "2-digit", month: "short" }), ends: new Date(end).toLocaleDateString("en-GB", { day: "2-digit", month: "short" }), owner: "Joseph Mwangi" };
+          const c: Campaign = { id: `CMP-${2211 + Math.floor(Math.random() * 50)}`, name: name || "Untitled campaign", audience: `${bucket} dormant · ${tier}`, recipients: finalAudience, status: start > "2026-08-24" ? "Scheduled" : "Live", sent: 0, delivered: 0, opened: 0, converted: 0, spend: 0, offer, channels: Object.entries(channels).filter(([, v]) => v).map(([k]) => k), started: new Date(start).toLocaleDateString("en-GB", { day: "2-digit", month: "short" }), ends: new Date(end).toLocaleDateString("en-GB", { day: "2-digit", month: "short" }), owner: "Jeckonia Kwasa" };
           onCreate(c); push({ kind: "success", title: "Campaign created", body: `${c.id} · ${num(c.recipients)} recipients · starts ${c.started}.` }); close();
         }}><i className="bi bi-rocket-takeoff me-1" />Launch campaign</button>}
       </div>

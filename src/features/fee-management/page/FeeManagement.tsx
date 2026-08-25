@@ -139,11 +139,11 @@ export function FeeManagement({
   };
   const approveChange = (c: ScheduledChange) => {
     setChanges((list) => list.map((x) => x.id === c.id
-      ? { ...x, status: "Scheduled", approvals: { role: x.approvals.role, by: "Joseph Mwangi", at: "Just now" } } : x));
+      ? { ...x, status: "Scheduled", approvals: { role: x.approvals.role, by: "Jeckonia Kwasa", at: "Just now" } } : x));
   };
   const rejectChange = (c: ScheduledChange, reason: string) => {
     setChanges((list) => list.map((x) => x.id === c.id
-      ? { ...x, status: "Rejected", impact: `Rejected (${reason}) · ${x.impact}`, approvals: { role: x.approvals.role, by: "Joseph Mwangi", at: "Just now" } } : x));
+      ? { ...x, status: "Rejected", impact: `Rejected (${reason}) · ${x.impact}`, approvals: { role: x.approvals.role, by: "Jeckonia Kwasa", at: "Just now" } } : x));
     updateFee(c.feeId, { nextChange: undefined });
   };
   const withdrawChange = (c: ScheduledChange) => {
@@ -159,14 +159,14 @@ export function FeeManagement({
         userId: r.userId, userName: r.userName, segment: r.segment,
         feeId: "FEE-001", feeName: r.feeName, standard: "Standard rate", override: r.ask,
         discountPct: 50, reason: `${r.justification} — ${note || "approved via queue"}`,
-        grantedBy: "Joseph Mwangi", approvedBy: "Joseph Mwangi (self, Tier 0)",
+        grantedBy: "Jeckonia Kwasa", approvedBy: "Jeckonia Kwasa (self, Tier 0)",
         grantedAt: "Just now", expires: "+6 months", status: "Active", monthlyValue: r.monthlyValue,
       }, ...list]);
     }
   };
   const cloneAsDraft = (f: FeeSchedule) => {
     const id = `FEE-${String(100 + schedules.length + 1).padStart(3, "0")}`;
-    setSchedules((list) => [{ ...f, id, name: `${f.name} (draft copy)`, status: "Draft", revenue30d: 0, txns30d: 0, lastChanged: "Draft · just now", changedBy: "Joseph Mwangi", nextChange: undefined }, ...list]);
+    setSchedules((list) => [{ ...f, id, name: `${f.name} (draft copy)`, status: "Draft", revenue30d: 0, txns30d: 0, lastChanged: "Draft · just now", changedBy: "Jeckonia Kwasa", nextChange: undefined }, ...list]);
     push({ kind: "info", title: `${id} drafted`, body: `Clone of ${f.id} — edit and submit when ready.` });
     setTab("Draft");
   };
@@ -178,7 +178,7 @@ export function FeeManagement({
       const drafts = schedules.filter((f) => selected.includes(f.id)).map((f, i) => ({
         ...f, id: `FEE-${String(100 + schedules.length + i + 1).padStart(3, "0")}`,
         name: `${f.name} (draft copy)`, status: "Draft" as const, revenue30d: 0, txns30d: 0,
-        lastChanged: "Draft · just now", changedBy: "Joseph Mwangi", nextChange: undefined,
+        lastChanged: "Draft · just now", changedBy: "Jeckonia Kwasa", nextChange: undefined,
       }));
       setSchedules((list) => [...drafts, ...list]);
       push({ kind: "info", title: `${drafts.length} drafts created`, body: "Cloned into the registry with zeroed revenue." });

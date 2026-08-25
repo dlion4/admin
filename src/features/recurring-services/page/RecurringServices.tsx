@@ -48,10 +48,10 @@ export function RecurringServices({
   const [audit, setAudit] = useState<RecurringAudit[]>(RECUR_AUDIT);
 
   const logAudit = (area: string, change: string, from: string, to: string, reason: string) =>
-    setAudit((a) => [{ id: `REA-${2188 + a.length - RECUR_AUDIT.length}`, date: "Aug 23 · now", admin: "Joseph Mwangi", area, change, from, to, reason }, ...a]);
+    setAudit((a) => [{ id: `REA-${2188 + a.length - RECUR_AUDIT.length}`, date: "Aug 23 · now", admin: "Jeckonia Kwasa", area, change, from, to, reason }, ...a]);
 
   const fileCR = (subject: string, from: string, to: string, reason: string, risk: "Low" | "Medium" | "High") => {
-    setRequests((rs) => [{ id: `RRC-${3304 + rs.length - REQUESTS.length}`, subject, from, to, requestedBy: "Joseph Mwangi", requestedAt: "Aug 23 · now", status: "Pending", risk, reason, approvals: [{ role: "Risk", who: "V. Kiprop", state: "Pending" }, { role: "Product", who: "P. Wanjiru", state: "Pending" }, { role: "Super Admin", who: "J. Mwangi", state: "Pending" }] }, ...rs]);
+    setRequests((rs) => [{ id: `RRC-${3304 + rs.length - REQUESTS.length}`, subject, from, to, requestedBy: "Jeckonia Kwasa", requestedAt: "Aug 23 · now", status: "Pending", risk, reason, approvals: [{ role: "Risk", who: "V. Kiprop", state: "Pending" }, { role: "Product", who: "P. Wanjiru", state: "Pending" }, { role: "Super Admin", who: "J. Mwangi", state: "Pending" }] }, ...rs]);
   };
 
   /* ---------------- tab + table state ---------------- */

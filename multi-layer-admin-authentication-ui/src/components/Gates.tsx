@@ -427,7 +427,7 @@ export function PinGate({ role, onDone, log }: GateProps) {
       >
         <div className="grid gap-3 sm:grid-cols-2">
           {[
-            { t: "Super admin reset", d: "Joseph Mwangi issues a new PIN over the secure channel. Fastest path — usually under 5 minutes.", b: "Page super admin", tone: "var(--bs-primary)" },
+            { t: "Super admin reset", d: "Jeckonia Kwasa issues a new PIN over the secure channel. Fastest path — usually under 5 minutes.", b: "Page super admin", tone: "var(--bs-primary)" },
             { t: "Email recovery", d: `A signed reset link is sent to ${DEMO.email}, valid for 10 minutes, single use, IP-bound.`, b: "Send reset link", tone: "var(--bs-info)" },
           ].map((o) => (
             <div key={o.t} className="pm-panel p-3">
@@ -811,7 +811,7 @@ export function SessionPinGate({ role, onDone, log }: GateProps) {
 
   const request = () => {
     setRequesting(true);
-    log("Session PIN requested from super admin", spec.tone, "Out-of-band channel: Signal · Joseph Mwangi");
+    log("Session PIN requested from super admin", spec.tone, "Out-of-band channel: Signal · Jeckonia Kwasa");
     setTimeout(() => {
       const code = String(Math.floor(1000 + Math.random() * 9000));
       setIssued(code);
@@ -829,7 +829,7 @@ export function SessionPinGate({ role, onDone, log }: GateProps) {
       return;
     }
     if (v === issued) {
-      log("Gate 4 passed — session PIN accepted", "var(--bs-success)", `Issued by Joseph Mwangi · single session`);
+      log("Gate 4 passed — session PIN accepted", "var(--bs-success)", `Issued by Jeckonia Kwasa · single session`);
       toast({ tone: "success", icon: "🛡️", title: "Gate 4 cleared", body: "All four gates passed. Minting session token…" });
       onDone();
     } else {
@@ -862,7 +862,7 @@ export function SessionPinGate({ role, onDone, log }: GateProps) {
                 👑
               </span>
               <div>
-                <p className="text-[0.8rem] font-bold">Joseph Mwangi</p>
+                <p className="text-[0.8rem] font-bold">Jeckonia Kwasa</p>
                 <p className="pm-faint text-[0.68rem]">Super Admin · Tier 0 · online</p>
               </div>
             </div>
@@ -947,7 +947,7 @@ export function SessionPinGate({ role, onDone, log }: GateProps) {
       >
         <div className="space-y-2">
           <div className="pm-panel max-w-[85%] rounded-2xl rounded-tl-sm p-3">
-            <p className="pm-faint text-[0.65rem]">Joseph Mwangi · Super Admin · now</p>
+            <p className="pm-faint text-[0.65rem]">Jeckonia Kwasa · Super Admin · now</p>
             <p className="mt-1 text-[0.82rem]">
               Verified it's you on {DEMO.device}. Here is your session PIN for the next {role.sessionTimeout} —
             </p>

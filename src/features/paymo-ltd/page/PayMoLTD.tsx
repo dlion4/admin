@@ -57,8 +57,8 @@ const TABS = [
 ];
 
 const initialFounders = [
-  { id: "f1", name: "Joseph Mwangi", role: "Founder & CEO", icon: "👨‍💼", color: "var(--bs-primary)", shares: 5000000, ownership: 50, invested: 50000000, currentValue: 1235000000, moic: 24.7, vestingStatus: "50% Vested", locked: false, vestingSchedule: [{ period: "Year 1 (Jan 2024 – Jan 2025)", shares: "1,250,000", status: "Vested" }, { period: "Year 2 (Jan 2025 – Jan 2026)", shares: "1,250,000", status: "Vested" }, { period: "Year 3 (Jan 2026 – Jan 2027)", shares: "1,250,000", status: "Cliff" }, { period: "Year 4 (Jan 2027 – Jan 2028)", shares: "1,250,000", status: "Unvested" }], permissions: ["Full system access", "Board chairperson", "Veto rights", "Emergency fund access", "CBK liaison", "Cap table management"] },
-  { id: "f2", name: "Sarah Kimani", role: "Co-Founder & CTO", icon: "👩‍💻", color: "var(--bs-purple)", shares: 1500000, ownership: 15, invested: 15000000, currentValue: 370500000, moic: 24.7, vestingStatus: "50% Vested", locked: false, vestingSchedule: [], permissions: ["Engineering access", "Infrastructure", "Security", "API control"] },
+  { id: "f1", name: "Jeckonia Kwasa", role: "Founder & CEO", icon: "👨‍💼", color: "var(--bs-primary)", shares: 5000000, ownership: 50, invested: 50000000, currentValue: 1235000000, moic: 24.7, vestingStatus: "50% Vested", locked: false, vestingSchedule: [{ period: "Year 1 (Jan 2024 – Jan 2025)", shares: "1,250,000", status: "Vested" }, { period: "Year 2 (Jan 2025 – Jan 2026)", shares: "1,250,000", status: "Vested" }, { period: "Year 3 (Jan 2026 – Jan 2027)", shares: "1,250,000", status: "Cliff" }, { period: "Year 4 (Jan 2027 – Jan 2028)", shares: "1,250,000", status: "Unvested" }], permissions: ["Full system access", "Board chairperson", "Veto rights", "Emergency fund access", "CBK liaison", "Cap table management"] },
+  { id: "f2", name: "Dan Delion", role: "Co-Founder & CTO", icon: "👩‍💻", color: "var(--bs-purple)", shares: 1500000, ownership: 15, invested: 15000000, currentValue: 370500000, moic: 24.7, vestingStatus: "50% Vested", locked: false, vestingSchedule: [], permissions: ["Engineering access", "Infrastructure", "Security", "API control"] },
   { id: "f3", name: "VC Fund A", role: "Series A Investor", icon: "🏛️", color: "var(--bs-success)", shares: 2000000, ownership: 20, invested: 200000000, currentValue: 494000000, moic: 2.5, vestingStatus: "Fully Vested", locked: false, vestingSchedule: [], permissions: ["Board seat", "Financial access", "Veto on dilution", "Tag-along rights"] },
   { id: "f4", name: "Angel Investor B", role: "Angel Investor", icon: "👼", color: "var(--bs-info)", shares: 1000000, ownership: 10, invested: 30000000, currentValue: 247000000, moic: 8.2, vestingStatus: "Fully Vested", locked: false, vestingSchedule: [], permissions: ["Financial access", "Tag-along rights", "ROFR"] },
   { id: "f5", name: "VC Fund C", role: "Series B Investor", icon: "🏦", color: "var(--bs-warning)", shares: 1500000, ownership: 15, invested: 450000000, currentValue: 370500000, moic: 0.82, vestingStatus: "N/A (Preferred)", locked: false, vestingSchedule: [], permissions: ["Board seat", "Full financial access", "Liquidation preference", "Anti-dilution"] },
@@ -100,7 +100,7 @@ const initialBoardResolutions = [
 ];
 
 const initialBudgets = [
-  { id: "bu1", dept: "Engineering", budget: 180000000, spent: 105000000, owner: "Sarah Kimani", locked: false },
+  { id: "bu1", dept: "Engineering", budget: 180000000, spent: 105000000, owner: "Dan Delion", locked: false },
   { id: "bu2", dept: "Operations", budget: 72000000, spent: 48000000, owner: "James Ochieng", locked: false },
   { id: "bu3", dept: "Marketing", budget: 48000000, spent: 32000000, owner: "Marketing Lead", locked: false },
   { id: "bu4", dept: "Compliance", budget: 36000000, spent: 18000000, owner: "Compliance Officer", locked: false },

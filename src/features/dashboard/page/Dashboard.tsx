@@ -370,7 +370,7 @@ export function Dashboard({ signal, onNavigate }: { signal: { action: string; n:
                     <DDItem icon="bi-eye" label="Open detail drawer" onClick={() => { close(); setAlert(a); }} />
                     <DDItem icon="bi-check2" label="Acknowledge" onClick={() => { close(); setAckd((p) => [...p, a.id]); push({ kind: "success", title: `${a.id} acknowledged` }); }} />
                     <DDItem icon="bi-alarm" label="Snooze 30 minutes" onClick={() => { close(); push({ kind: "info", title: `${a.id} snoozed`, body: "It will resurface at 15:05 EAT." }); }} />
-                    <DDItem icon="bi-person-check" label="Assign to me" onClick={() => { close(); push({ kind: "success", title: `${a.id} assigned to Joseph Mwangi` }); }} />
+                    <DDItem icon="bi-person-check" label="Assign to me" onClick={() => { close(); push({ kind: "success", title: `${a.id} assigned to Jeckonia Kwasa` }); }} />
                     <div className="pm-dd-sep" />
                     <DDItem icon="bi-fire" label="Escalate to incident" danger onClick={() => { close(); push({ kind: "warn", title: "Incident created", body: `INC-2026-0092 opened from ${a.id} · on-call paged.` }); }} />
                   </>)}

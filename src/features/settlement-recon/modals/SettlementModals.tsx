@@ -1103,7 +1103,7 @@ export function ReconConfigDrawer({
   return (
     <Drawer open={open} onClose={onClose} icon="bi-gear-wide-connected" tone="violet" title="Auto-reconciliation engine"
       subtitle="Thresholds, retries and escalation policy"
-      footer={<div className="pm-note w-100 mb-0"><i className="bi bi-info-circle me-1" />Engine v3.2 · last policy change 12 Aug by Joseph Mwangi · every change is audited.</div>}>
+      footer={<div className="pm-note w-100 mb-0"><i className="bi bi-info-circle me-1" />Engine v3.2 · last policy change 12 Aug by Jeckonia Kwasa · every change is audited.</div>}>
       {config.map((c) => (
         <div key={c.key} className="pm-alert-row mb-2" style={{ borderLeftColor: "#7a5af8", border: "1px solid var(--pm-border)" }}>
           <div className="flex-grow-1" style={{ minWidth: 0 }}>

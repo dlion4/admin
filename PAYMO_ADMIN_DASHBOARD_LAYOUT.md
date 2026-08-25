@@ -206,7 +206,7 @@ Before any admin can access the dashboard, they must pass **four sequential auth
 | Element | Details |
 |---------|---------|
 | PayMo logo | Link to dashboard home |
-| Admin avatar + name | "Super Admin — Joseph Mwangi" |
+| Admin avatar + name | "Super Admin — Jeckonia Kwasa" |
 | Role badge | "Super Admin" (green) |
 | Session timer | "Session expires in 6:42:15" |
 | Notification bell | Red badge with unread count |
@@ -1308,8 +1308,8 @@ Before applying fee changes, simulate impact:
 ### Section 29.1: Admin Directory
 | Admin | Email | Role | Last Active | Status | Sessions (30d) | Actions |
 |-------|-------|------|------------|--------|----------------|---------|
-| Joseph Mwangi | joseph@paymo.co.ke | Super Admin | 2 min ago | 🟢 Online | 28 | ⋮ |
-| Sarah Kimani | sarah@paymo.co.ke | Platform Admin | 15 min ago | 🟢 Online | 25 | ⋮ |
+| Jeckonia Kwasa | joseph@paymo.co.ke | Super Admin | 2 min ago | 🟢 Online | 28 | ⋮ |
+| Dan Delion | sarah@paymo.co.ke | Platform Admin | 15 min ago | 🟢 Online | 25 | ⋮ |
 | James Ochieng | james@paymo.co.ke | Ops Manager | 1 hour ago | 🟢 Online | 22 | ⋮ |
 | Mary Wanjiku | mary@paymo.co.ke | Compliance Officer | 3 hours ago | 🟡 Away | 20 | ⋮ |
 | Peter Kamau | peter@paymo.co.ke | Finance Manager | Yesterday | 🟢 Active | 18 | ⋮ |

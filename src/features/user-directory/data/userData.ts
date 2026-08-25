@@ -76,12 +76,12 @@ export const USERS: User[] = Array.from({ length: 50 }, (_, i) => {
 
 export type SavedView = { id: string; name: string; filters: string; count: number; owner: string; shared: boolean };
 export const SAVED_VIEWS: SavedView[] = [
-  { id: "sv-1", name: "VIP clients — Nairobi", filters: "tier=VIP, county=Nairobi", count: 412, owner: "Joseph Mwangi", shared: true },
+  { id: "sv-1", name: "VIP clients — Nairobi", filters: "tier=VIP, county=Nairobi", count: 412, owner: "Jeckonia Kwasa", shared: true },
   { id: "sv-2", name: "Frozen accounts", filters: "status=Frozen", count: 1_847, owner: "Mary Wanjiku", shared: true },
   { id: "sv-3", name: "KYC pending > 48h", filters: "kyc=Pending, joined<48h", count: 89, owner: "David Kiplagat", shared: false },
   { id: "sv-4", name: "High risk (score > 70)", filters: "riskScore>70", count: 2_412, owner: "Sarah Kamau", shared: true },
   { id: "sv-5", name: "Dormant 90+ days", filters: "status=Dormant", count: 21_430, owner: "James Odhiambo", shared: true },
-  { id: "sv-6", name: "Business accounts — all", filters: "tier=Business", count: 9_640, owner: "Joseph Mwangi", shared: true },
+  { id: "sv-6", name: "Business accounts — all", filters: "tier=Business", count: 9_640, owner: "Jeckonia Kwasa", shared: true },
   { id: "sv-7", name: "New signups this week", filters: "joined<7d", count: 2_104, owner: "Head of Growth", shared: false },
   { id: "sv-8", name: "Card holders — active", filters: "cards>0, status=Active", count: 34_210, owner: "VP Cards", shared: true },
 ];

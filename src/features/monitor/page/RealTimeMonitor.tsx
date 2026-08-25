@@ -564,7 +564,7 @@ export function RealTimeMonitor({ signal, onNavigate }: { signal: { action: stri
             <div className="pm-card-pad pt-0">
               <div className="pm-card pm-card-pad" style={{ background: "#f7f9fc" }}>
                 <div className="pm-eyebrow mb-2">On-call right now</div>
-                {[["Primary", "Mary Wanjiku", "Operations Manager"], ["Secondary", "James Odhiambo", "Platform Admin"], ["Escalation", "Joseph Mwangi", "Super Admin"]].map(([r, n, t]) => (
+                {[["Primary", "Mary Wanjiku", "Operations Manager"], ["Secondary", "James Odhiambo", "Platform Admin"], ["Escalation", "Jeckonia Kwasa", "Super Admin"]].map(([r, n, t]) => (
                   <div key={r} className="d-flex align-items-center gap-2 py-1">
                     <Avatar name={n} size="sm" />
                     <div className="flex-grow-1"><div style={{ fontSize: ".8rem", fontWeight: 700 }}>{n}</div>

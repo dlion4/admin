@@ -194,16 +194,16 @@ export const CALENDAR: CalEvent[] = [
 
 /* ---------------- §14.8 Tax configuration audit trail (expanded to 10) ---------------- */
 export const TAX_AUDIT: TaxAudit[] = [
-  { id: "TAXAUD-0112", date: "Aug 1", admin: "Joseph Mwangi", change: "VAT rate", from: "16%", to: "16%", reason: "No change (annual review)" },
+  { id: "TAXAUD-0112", date: "Aug 1", admin: "Jeckonia Kwasa", change: "VAT rate", from: "16%", to: "16%", reason: "No change (annual review)" },
   { id: "TAXAUD-0111", date: "Jul 1", admin: "Sarah Kamau (Finance Mgr)", change: "Excise duty base", from: "Transfer fees only", to: "Transfer + cashout fees", reason: "Finance Act 2023 amendment" },
-  { id: "TAXAUD-0110", date: "Jun 20", admin: "Joseph Mwangi", change: "WHT non-resident rate", from: "15%", to: "15%", reason: "No change (treaty review)" },
+  { id: "TAXAUD-0110", date: "Jun 20", admin: "Jeckonia Kwasa", change: "WHT non-resident rate", from: "15%", to: "15%", reason: "No change (treaty review)" },
   { id: "TAXAUD-0109", date: "Jun 14", admin: "Sarah Kamau (Finance Mgr)", change: "PAYE pool remittance day", from: "Day 9", to: "Day 9", reason: "Confirmed with payroll vendor" },
-  { id: "TAXAUD-0108", date: "May 30", admin: "Joseph Mwangi", change: "DST rate", from: "1.5%", to: "1.5%", reason: "No change (annual review)" },
+  { id: "TAXAUD-0108", date: "May 30", admin: "Jeckonia Kwasa", change: "DST rate", from: "1.5%", to: "1.5%", reason: "No change (annual review)" },
   { id: "TAXAUD-0107", date: "May 12", admin: "Sarah Kamau (Finance Mgr)", change: "Stamp duty base", from: "All card txns", to: "Domestic card txns", reason: "Cross-border exemption ruling" },
-  { id: "TAXAUD-0106", date: "Apr 28", admin: "Joseph Mwangi", change: "VAT threshold review", from: "—", to: "Turnover above KES 5M", reason: "Registration threshold check" },
+  { id: "TAXAUD-0106", date: "Apr 28", admin: "Jeckonia Kwasa", change: "VAT threshold review", from: "—", to: "Turnover above KES 5M", reason: "Registration threshold check" },
   { id: "TAXAUD-0105", date: "Apr 10", admin: "Sarah Kamau (Finance Mgr)", change: "WHT resident trigger", from: "KES 10K/mo", to: "KES 15K/mo", reason: "Finance Act 2024 alignment" },
-  { id: "TAXAUD-0104", date: "Mar 22", admin: "Joseph Mwangi", change: "Corporate tax provision", from: "30%", to: "30%", reason: "Quarterly provision confirmed" },
-  { id: "TAXAUD-0103", date: "Jan 1", admin: "Joseph Mwangi", change: "DST rate", from: "1.5%", to: "1.5%", reason: "No change (annual review)" },
+  { id: "TAXAUD-0104", date: "Mar 22", admin: "Jeckonia Kwasa", change: "Corporate tax provision", from: "30%", to: "30%", reason: "Quarterly provision confirmed" },
+  { id: "TAXAUD-0103", date: "Jan 1", admin: "Jeckonia Kwasa", change: "DST rate", from: "1.5%", to: "1.5%", reason: "No change (annual review)" },
 ];
 
 /* ---------------- KPI ---------------- */

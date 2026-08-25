@@ -200,10 +200,10 @@ export const TARGET_HISTORY: TargetChange[] = [
 
 export type BoardPack = { period: string; status: "Draft" | "In review" | "Published" | "Presented"; due: string; pages: number; owner: string };
 export const BOARD_PACKS: BoardPack[] = [
-  { period: "August 2026 monthly", status: "Draft", due: "31 Aug 2026", pages: 48, owner: "Joseph Mwangi" },
+  { period: "August 2026 monthly", status: "Draft", due: "31 Aug 2026", pages: 48, owner: "Jeckonia Kwasa" },
   { period: "Q2-2026 results", status: "Presented", due: "12 Aug 2026", pages: 86, owner: "Sarah Kamau" },
   { period: "Q3-2026 forecast", status: "In review", due: "05 Sep 2026", pages: 54, owner: "Sarah Kamau" },
-  { period: "FY2026 planning", status: "Published", due: "15 Jul 2026", pages: 112, owner: "Joseph Mwangi" },
+  { period: "FY2026 planning", status: "Published", due: "15 Jul 2026", pages: 112, owner: "Jeckonia Kwasa" },
   { period: "Risk committee — July", status: "Presented", due: "28 Jul 2026", pages: 38, owner: "David Kiplagat" },
 ];
 

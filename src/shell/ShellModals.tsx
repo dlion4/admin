@@ -414,7 +414,7 @@ export function EmergencyLockdownWizard({ open, onClose }: { open: boolean; onCl
               <div className="pm-kv"><span className="k">Impact</span><span className="v">{chosen.impact}</span></div>
               <div className="pm-kv"><span className="k">Auto-lift</span><span className="v">{duration === "0" ? "Manual only" : `${duration} minutes`}</span></div>
               <div className="pm-kv"><span className="k">Notifications</span><span className="v">{Object.entries(notify).filter(([, v]) => v).length} channels</span></div>
-              <div className="pm-kv"><span className="k">Authorised by</span><span className="v">Joseph Mwangi · Tier 0</span></div>
+              <div className="pm-kv"><span className="k">Authorised by</span><span className="v">Jeckonia Kwasa · Tier 0</span></div>
               <div className="pm-kv"><span className="k">Reason</span><span className="v" style={{ maxWidth: 320 }}>{reason || "—"}</span></div>
             </div>
             <div className="pm-code">POST /admin/v1/platform/lockdown{"\n"}{`{ "scope": "${scope}", "autoLiftMinutes": ${duration}, "actor": "adm_joseph_mwangi" }`}</div>
@@ -684,11 +684,11 @@ export function ShortcutsModal({ open, onClose }: { open: boolean; onClose: () =
 /* ---------------------------------------------------------------- 11. Admin profile drawer */
 export function ProfileDrawer({ open, onClose, onOpen }: { open: boolean; onClose: () => void; onOpen: (id: string) => void }) {
   return (
-    <Drawer open={open} onClose={onClose} title="Joseph Mwangi" subtitle="Tier 0 — Super Admin · joseph.mwangi@paymo.co.ke" icon="bi-person-badge" tone="green">
+    <Drawer open={open} onClose={onClose} title="Jeckonia Kwasa" subtitle="Tier 0 — Super Admin · joseph.mwangi@paymo.co.ke" icon="bi-person-badge" tone="green">
       <div className="pm-card pm-card-pad mb-3 d-flex align-items-center gap-3">
-        <Avatar name="Joseph Mwangi" size="lg" />
+        <Avatar name="Jeckonia Kwasa" size="lg" />
         <div className="flex-grow-1">
-          <div style={{ fontWeight: 700 }}>Joseph Mwangi</div>
+          <div style={{ fontWeight: 700 }}>Jeckonia Kwasa</div>
           <div style={{ fontSize: ".76rem", color: "var(--pm-muted)" }}>Founder & Chief Executive · Nairobi HQ</div>
           <div className="d-flex gap-1 mt-1"><Badge tone="green" dot>Online</Badge><Badge tone="violet">Tier 0</Badge><Badge tone="blue">Passkey bound</Badge></div>
         </div>

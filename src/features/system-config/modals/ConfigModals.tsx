@@ -8,7 +8,7 @@ export function ConfigChangeDetailModal({ open, onClose }: { open: boolean; onCl
     <Modal open onClose={onClose} title="Configuration Change Detail" subtitle="Versioned change with before/after values" icon="bi-sliders" tone="blue" size="lg">
       <div className="pm-modal-body">
         <div className="row g-3">
-          { [["Setting", "Primary color"], ["Admin", "Joseph Mwangi"], ["Date", "Aug 15, 2026"], ["Status", "Deployed"]].map(x => <div className="col-md-6" key={x[0]}><label className="form-label">{x[0]}</label><input className="form-control" value={x[1]} readOnly /></div>)}
+          { [["Setting", "Primary color"], ["Admin", "Jeckonia Kwasa"], ["Date", "Aug 15, 2026"], ["Status", "Deployed"]].map(x => <div className="col-md-6" key={x[0]}><label className="form-label">{x[0]}</label><input className="form-control" value={x[1]} readOnly /></div>)}
           <div className="col-md-6"><label className="form-label">Old value</label><input className="form-control" value="#2E7D32" readOnly /></div>
           <div className="col-md-6"><label className="form-label">New value</label><input className="form-control" value="#1B5E20" readOnly /></div>
           <div className="col-12"><label className="form-label">Reason</label><textarea className="form-control" rows={2} value="Brand refresh — updated primary green to darker shade for better accessibility." readOnly /></div>

@@ -50,7 +50,7 @@ export function TemplatePreviewModal({ open, template, onClose }: { open: boolea
           <p className="small"><b>Dear Joseph Kamau Mwangi,</b></p>
           <p className="small">This letter is to inform you that your account (PAY-12345-6789) has been flagged for review due to unusual transaction patterns.</p>
           <p className="small">Please contact our support team within 7 days to resolve this matter.</p>
-          <p className="small mt-3">Kind regards,<br /><b>Joseph Mwangi</b><br />Compliance Officer<br />PayMo Digital Bank Ltd</p>
+          <p className="small mt-3">Kind regards,<br /><b>Jeckonia Kwasa</b><br />Compliance Officer<br />PayMo Digital Bank Ltd</p>
         </div>
       </div>
       <div className="pm-modal-foot"><button className="btn btn-outline-secondary" onClick={onClose}>Close</button><button className="btn btn-primary" onClick={onClose}>Download PDF</button></div>

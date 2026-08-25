@@ -128,7 +128,7 @@ export function SettlementRecon({
     setSuspense((list) => [{
       id: `SUS-${1013 + Math.floor(Math.random() * 60)}`, date: "23 Aug", amount: b.amount,
       reason: `${b.type} — ${b.id}`, status: "Pending", ageDays: 0,
-      resolution: "Awaiting partner callback", createdBy: "Joseph Mwangi",
+      resolution: "Awaiting partner callback", createdBy: "Jeckonia Kwasa",
     }, ...list]);
   };
   const doAdjust = (b: ReconBreak) => resolveBreak(b.id, { status: "Resolved", assignedTo: "Sarah Kamau", suggestion: `Adjustment ADJ posted · ${kes(b.amount)}` });
@@ -611,7 +611,7 @@ export function SettlementRecon({
       <ExceptionsModal open={exceptionsOpen} onClose={() => setExceptionsOpen(false)} onBreaks={() => { setExceptionsOpen(false); setBreaksOpen(true); }} />
       <RunReconWizard open={reconWizard} onClose={() => setReconWizard(false)}
         onDone={(r) => {
-          setReconDays((list) => list.map((d, i) => i === 0 ? { ...d, actual: d.expected, variance: 0, status: "Matched", breaks: r.breaks, operator: "Joseph Mwangi" } : d));
+          setReconDays((list) => list.map((d, i) => i === 0 ? { ...d, actual: d.expected, variance: 0, status: "Matched", breaks: r.breaks, operator: "Jeckonia Kwasa" } : d));
         }} />
       <SettlementExportModal open={exportOpen} onClose={() => setExportOpen(false)} runs={runs} days={reconDays} breaks={breaks} />
       <RunFilterDrawer open={filterOpen} filters={filters} onClose={() => setFilterOpen(false)}

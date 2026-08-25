@@ -192,7 +192,7 @@ export function OnboardingForecastModal({ open, onClose }: { open: boolean; onCl
 /* ============================ 11. Onboarding audit trail modal ============================ */
 export function OnboardingAuditModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const entries = [
-    { id: "AUD-ONB-88102", time: "22 Aug 2026", who: "Joseph Mwangi", action: "UAT approved", detail: "Kenya Airways passed all test cases" },
+    { id: "AUD-ONB-88102", time: "22 Aug 2026", who: "Jeckonia Kwasa", action: "UAT approved", detail: "Kenya Airways passed all test cases" },
     { id: "AUD-ONB-88045", time: "20 Aug 2026", who: "Grace Wanjiru", action: "Due diligence completed", detail: "LipaLater document review finished" },
     { id: "AUD-ONB-87988", time: "18 Aug 2026", who: "System", action: "Sandbox keys issued", detail: "PesaLink sandbox credentials generated" },
     { id: "AUD-ONB-87901", time: "15 Aug 2026", who: "Peter Njoroge", action: "Application received", detail: "HELB application added to queue" },

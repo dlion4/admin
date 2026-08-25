@@ -42,7 +42,7 @@ export function AddRecordModal({ type, open, onClose, onAdd }: { type: string; o
     budget: [
       { label: "Department", placeholder: "e.g. Engineering" },
       { label: "Annual Budget (KES)", placeholder: "e.g. 180000000", type: "number" },
-      { label: "Budget Owner", placeholder: "e.g. Sarah Kimani" },
+      { label: "Budget Owner", placeholder: "e.g. Dan Delion" },
     ],
   };
 
@@ -394,7 +394,7 @@ export function ESigWorkflowModal({ open, onClose }: { open: boolean; onClose: (
         </div>}
         {step === 1 && <div className="d-flex flex-column gap-2">
           <div className="pm-eyebrow mb-1">Add signers</div>
-          {["Joseph Mwangi (CEO)", "Sarah Kimani (CTO)", "Mary Wanjiku (CFO)", "Dr. Amina Osman (Board Chair)"].map(s => (
+          {["Jeckonia Kwasa (CEO)", "Dan Delion (CTO)", "Mary Wanjiku (CFO)", "Dr. Amina Osman (Board Chair)"].map(s => (
             <label key={s} className="d-flex align-items-center gap-2 mb-2" style={{ fontSize: ".82rem" }}><input type="checkbox" className="form-check-input" />{s}</label>
           ))}
         </div>}
@@ -484,8 +484,8 @@ export function AdminActivityLogModal({ open, onClose }: { open: boolean; onClos
     <Modal open={open} onClose={onClose} title="Admin Activity Log" subtitle="Who did what and when" icon="bi-person-video3" tone="blue" size="lg">
       <div className="pm-modal-body">
         {[
-          { name: "Joseph Mwangi", role: "Super Admin", actions: 47, last: "2 min ago" },
-          { name: "Sarah Kimani", role: "Super Admin", actions: 23, last: "1 hour ago" },
+          { name: "Jeckonia Kwasa", role: "Super Admin", actions: 47, last: "2 min ago" },
+          { name: "Dan Delion", role: "Super Admin", actions: 23, last: "1 hour ago" },
           { name: "James Ochieng", role: "Platform Admin", actions: 12, last: "3 hours ago" },
           { name: "Mary Wanjiku", role: "Finance Admin", actions: 8, last: "Yesterday" },
         ].map((a, i) => (
@@ -579,7 +579,7 @@ export function ShareholderInviteModal({ open, onClose }: { open: boolean; onClo
           </div>
           <div className="pm-card pm-card-pad">
             <div className="pm-eyebrow mb-2">Post-Invitation Cap Table</div>
-            {(["Joseph Mwangi 50%", "VC Fund A 20%", "Angel B 10%", "VC Fund C 15%", "ESOP 5%", "NEW INVESTOR"] as const).map(n => (
+            {(["Jeckonia Kwasa 50%", "VC Fund A 20%", "Angel B 10%", "VC Fund C 15%", "ESOP 5%", "NEW INVESTOR"] as const).map(n => (
               <div key={n} className="pm-kv" style={n === "NEW INVESTOR" ? { fontWeight: 700, color: "var(--pm-green)" } : undefined}><span className="k">{n}</span></div>
             ))}
           </div>
@@ -654,7 +654,7 @@ export function PowerOfAttorneyModal({ open, onClose }: { open: boolean; onClose
       <div className="pm-modal-body">
         {step === 0 && <div className="d-flex flex-column gap-2">
           <div className="pm-eyebrow mb-1">Select agent (attorney-in-fact)</div>
-          {["Sarah Kimani (CTO)", "Mary Wanjiku (CFO)", "James Ochieng (VP Eng)", "External Counsel"].map(n => (
+          {["Dan Delion (CTO)", "Mary Wanjiku (CFO)", "James Ochieng (VP Eng)", "External Counsel"].map(n => (
             <button key={n} className="pm-opt"><div className="r" /><span className="pm-td-strong">{n}</span></button>
           ))}
         </div>}
@@ -673,7 +673,7 @@ export function PowerOfAttorneyModal({ open, onClose }: { open: boolean; onClose
         </div>}
         {step === 3 && <div className="pm-card pm-card-pad">
           <div className="pm-eyebrow mb-2">PoA Summary</div>
-          <div className="pm-kv"><span className="k">Agent</span><span className="v">Sarah Kimani (CTO)</span></div>
+          <div className="pm-kv"><span className="k">Agent</span><span className="v">Dan Delion (CTO)</span></div>
           <div className="pm-kv"><span className="k">Powers</span><span className="v">Financial + Regulatory</span></div>
           <div className="pm-kv"><span className="k">Duration</span><span className="v">12 months</span></div>
           <div className="pm-kv"><span className="k">Revocable</span><span className="v">Yes — by Board resolution</span></div>
@@ -729,8 +729,8 @@ export function EmergencyActionsModal({ open, onClose }: { open: boolean; onClos
    ================================================================ */
 export function AdminPermissionsDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const admins = [
-    { name: "Joseph Mwangi", role: "Super Admin", perms: ["All Operations", "Lock/Unlock", "Delete", "Emergency", "PoA"] },
-    { name: "Sarah Kimani", role: "Super Admin", perms: ["All Operations", "Lock/Unlock", "Delete", "Emergency"] },
+    { name: "Jeckonia Kwasa", role: "Super Admin", perms: ["All Operations", "Lock/Unlock", "Delete", "Emergency", "PoA"] },
+    { name: "Dan Delion", role: "Super Admin", perms: ["All Operations", "Lock/Unlock", "Delete", "Emergency"] },
     { name: "James Ochieng", role: "Platform Admin", perms: ["View All", "Edit (non-locked)", "Create"] },
     { name: "Mary Wanjiku", role: "Finance Admin", perms: ["View Financial", "Edit Treasury", "Process Payments"] },
   ];

@@ -201,7 +201,7 @@ export function CloseAccountWizard({ user, onClose, onDone }: { user: FeaturedUs
             <div className="pm-kv"><span className="k">Reason</span><span className="v">{reason}</span></div>
             <div className="pm-kv"><span className="k">Sweep</span><span className="v">{sweep ? `KES ${num(user.balance)} to ${user.phone}` : "None — balance forfeited"}</span></div>
             <div className="pm-kv"><span className="k">Cooling-off</span><span className="v">{cooling === "0" ? "None" : `${cooling} days`}</span></div>
-            <div className="pm-kv"><span className="k">Closed by</span><span className="v">Joseph Mwangi (Tier 0) + co-approval</span></div>
+            <div className="pm-kv"><span className="k">Closed by</span><span className="v">Jeckonia Kwasa (Tier 0) + co-approval</span></div>
           </div>
         )}
       </div>

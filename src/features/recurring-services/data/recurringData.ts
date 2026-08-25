@@ -309,14 +309,14 @@ export const REQUESTS: ChangeRequest[] = [
 
 /* ================================================================ Audit trail */
 export const RECUR_AUDIT: RecurringAudit[] = [
-  { id: "REA-2187", date: "Aug 23 · 09:12", admin: "Joseph Mwangi", area: "Failed queue", change: "FPD-2211 marked recovered (manual)", from: "Retry pending", to: "Recovered", reason: "User paid via agent after reminder 2" },
+  { id: "REA-2187", date: "Aug 23 · 09:12", admin: "Jeckonia Kwasa", area: "Failed queue", change: "FPD-2211 marked recovered (manual)", from: "Retry pending", to: "Recovered", reason: "User paid via agent after reminder 2" },
   { id: "REA-2186", date: "Aug 23 · 06:40", admin: "System", area: "Retries", change: "Nightly retry batch", from: "—", to: "1,240 attempted · 558 recovered", reason: "Scheduled run 06:00 window" },
   { id: "REA-2185", date: "Aug 22 · 17:02", admin: "Pauline Wanjiru", area: "Plans", change: "plan-insurance-plus paused", from: "Active", to: "Paused", reason: "Underwriter rate review — no new signups" },
   { id: "REA-2184", date: "Aug 22 · 10:00", admin: "Risk (auto)", area: "Mandates", change: "PAY-89012 paused", from: "Active", to: "Paused", reason: "Account frozen — KYC re-verification" },
   { id: "REA-2183", date: "Aug 21 · 15:31", admin: "Alex Njoroge", area: "Dunning", change: "DUN-06 card-expiring campaign paused", from: "Active", to: "Paused", reason: "Card list freshness issue — data engineering fix" },
   { id: "REA-2182", date: "Aug 20 · 16:44", admin: "Daniel Kimani", area: "Guardrails", change: "RRC-3303 filed (max mandate amount)", from: "KES 500,000", to: "KES 750,000", reason: "Enterprise payroll sweeps ceiling" },
   { id: "REA-2181", date: "Aug 20 · 08:00", admin: "System", area: "Lifecycle", change: "Auto-cancel batch (14 mandates)", from: "Grace", to: "Cancelled", reason: "Grace period elapsed — win-back pool" },
-  { id: "REA-2180", date: "Aug 19 · 14:26", admin: "Joseph Mwangi", area: "Config", change: "Smart retry timing set to pilot", from: "off", to: "Pilot — off", reason: "5% cohort for 2 weeks, then review" },
+  { id: "REA-2180", date: "Aug 19 · 14:26", admin: "Jeckonia Kwasa", area: "Config", change: "Smart retry timing set to pilot", from: "off", to: "Pilot — off", reason: "5% cohort for 2 weeks, then review" },
   { id: "REA-2179", date: "Aug 18 · 09:03", admin: "System", area: "Retries", change: "PAY-67890 cancelled after max retries", from: "Retry 3", to: "Cancelled", reason: "Card expired — no update after final notice" },
   { id: "REA-2178", date: "Aug 16 · 12:00", admin: "Product (auto)", area: "Lifecycle", change: "PAY-15005 trial started", from: "—", to: "Trial", reason: "Signup flow — 7-day free trial" },
 ];

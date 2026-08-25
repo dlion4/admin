@@ -114,8 +114,8 @@ export function LimitHistoryModal({ limit, onClose }: { limit: GlobalLimit | nul
   if (!limit) return null;
   const related = AUDIT.filter((a) => a.change.toLowerCase().includes(limit.label.split(" (")[0].split(" per")[0].toLowerCase().slice(0, 8)));
   const history = [
-    { d: limit.lastChanged, from: kes(limit.current), to: kes(limit.current), by: "Joseph Mwangi", why: "No change (quarterly review)" },
-    { d: "Mar 2025", from: kes(Math.round(limit.current * 0.8)), to: kes(limit.current), by: "Joseph Mwangi", why: "Annual limits review" },
+    { d: limit.lastChanged, from: kes(limit.current), to: kes(limit.current), by: "Jeckonia Kwasa", why: "No change (quarterly review)" },
+    { d: "Mar 2025", from: kes(Math.round(limit.current * 0.8)), to: kes(limit.current), by: "Jeckonia Kwasa", why: "Annual limits review" },
     { d: "Jan 2025", from: "—", to: kes(Math.round(limit.current * 0.8)), by: "Platform launch", why: "Initial calibration" },
     ...related.map((r) => ({ d: r.date, from: r.from, to: r.to, by: r.admin, why: r.reason })),
   ];
@@ -463,7 +463,7 @@ export function ReviewWizard({
             <div className="pm-card pm-card-pad mb-3">
               <div className="pm-kv"><span className="k">Decision</span><span className="v"><Badge tone={decision === "Approve" ? "green" : "red"} dot>{decision}</Badge></span></div>
               <div className="pm-kv"><span className="k">Note</span><span className="v">{note || "—"}</span></div>
-              <div className="pm-kv"><span className="k">Reviewer</span><span className="v">Joseph Mwangi · Tier 0 Super Admin</span></div>
+              <div className="pm-kv"><span className="k">Reviewer</span><span className="v">Jeckonia Kwasa · Tier 0 Super Admin</span></div>
               <div className="pm-kv"><span className="k">Co-signer</span><span className="v">{kes(item.amount) === kes(2_400_000) ? "Board chair (pending)" : "Auto-logged to audit"}</span></div>
             </div>
             <TwoFactorField value={code} onChange={setCode} />
@@ -698,7 +698,7 @@ export function OverrideWizard({
               id: target?.id ?? `OVR-${16 + Math.floor(Math.random() * 80)}`,
               userId: userId || "PAY-00000", name: name || "Unnamed", tier,
               standardDaily: 500_000, customDaily: daily, standardMonthly: 5_000_000, customMonthly: monthly,
-              reason: reason || "Manual override", setBy: "Joseph Mwangi", expires,
+              reason: reason || "Manual override", setBy: "Jeckonia Kwasa", expires,
               status: daily === 0 ? "Blocked" : (daily !== "Unlimited" && daily < 500_000) || (monthly !== "Unlimited" && monthly < 5_000_000) ? "Restricted" : "Active",
             });
             push({ kind: "success", title: editing ? "Override updated" : "Override created", body: `${userId} · ${daily === "Unlimited" ? "unlimited" : kes(daily, { compact: true })}/day · audit logged.` });

@@ -112,7 +112,7 @@ export function ShareTransferWizard({ open, onClose }: { open: boolean; onClose:
       <div className="pm-modal-body">
         {step === 0 && <div className="d-flex flex-column gap-2">
           <div className="pm-eyebrow mb-1">Select transferor (seller)</div>
-          {["Joseph Mwangi (50%)", "VC Fund A (20%)", "Angel B (10%)", "VC Fund C (15%)"].map(n => (
+          {["Jeckonia Kwasa (50%)", "VC Fund A (20%)", "Angel B (10%)", "VC Fund C (15%)"].map(n => (
             <button key={n} className={`pm-opt ${selected.from === n ? "active" : ""}`} onClick={() => setSelected(p => ({ ...p, from: n }))}>
               <div className="r" /><div className="pm-td-strong">{n}</div>
             </button>
@@ -460,7 +460,7 @@ export function CapTableModal({ open, onClose }: { open: boolean; onClose: () =>
             <thead><tr><th>Shareholder</th><th>Type</th><th className="text-end">Shares</th><th className="text-end">%</th><th className="text-end">Invested</th><th className="text-end">Value</th><th>MOIC</th></tr></thead>
             <tbody>
               {([
-                ["Joseph Mwangi", "Common", "5,000,000", "50.0%", 50000000, 1235000000, "24.7x"],
+                ["Jeckonia Kwasa", "Common", "5,000,000", "50.0%", 50000000, 1235000000, "24.7x"],
                 ["VC Fund A", "Preferred A", "2,000,000", "20.0%", 200000000, 494000000, "2.5x"],
                 ["Angel Investor B", "Common", "1,000,000", "10.0%", 30000000, 247000000, "8.2x"],
                 ["VC Fund C", "Preferred B", "1,500,000", "15.0%", 450000000, 370500000, "0.8x"],
@@ -530,7 +530,7 @@ export function DividendModal({ open, onClose }: { open: boolean; onClose: () =>
         <div className="pm-card pm-card-pad mb-3">
           <div className="pm-eyebrow mb-2">Projected Distribution</div>
           {([
-            ["Joseph Mwangi (50%)", kes(62500000)],
+            ["Jeckonia Kwasa (50%)", kes(62500000)],
             ["VC Fund A (20%)", kes(25000000)],
             ["Angel B (10%)", kes(12500000)],
             ["VC Fund C (15%)", kes(18750000)],
@@ -596,7 +596,7 @@ export function ESOPManagementModal({ open, onClose }: { open: boolean; onClose:
             <thead><tr><th>Employee</th><th className="text-end">Granted</th><th className="text-end">Vested</th><th>Strike Price</th><th>Status</th></tr></thead>
             <tbody>
               {([
-                ["Sarah Kimani (CTO)", "50,000", "15,000", "KES 50", "Active"],
+                ["Dan Delion (CTO)", "50,000", "15,000", "KES 50", "Active"],
                 ["James Ochieng (VP Eng)", "30,000", "9,000", "KES 75", "Active"],
                 ["Mary Wanjiku (CFO)", "25,000", "7,500", "KES 60", "Active"],
                 ["David Mwangi (Head Ops)", "10,000", "3,000", "KES 80", "Active"],
@@ -669,7 +669,7 @@ export function ShareValuationModal({ open, onClose }: { open: boolean; onClose:
         <div className="pm-card pm-card-pad">
           <div className="pm-eyebrow mb-2">Fair Market Value by Shareholder</div>
           {([
-            ["Joseph Mwangi", "5,000,000", "KES 1,235,000,000"],
+            ["Jeckonia Kwasa", "5,000,000", "KES 1,235,000,000"],
             ["VC Fund A", "2,000,000", "KES 494,000,000"],
             ["Angel B", "1,000,000", "KES 247,000,000"],
             ["VC Fund C", "1,500,000", "KES 370,500,000"],
@@ -752,7 +752,7 @@ export function ShareholderAgreementModal({ open, onClose }: { open: boolean; on
       </div>
       <div className="pm-card pm-card-pad">
         <div className="pm-eyebrow mb-2">Signed Parties</div>
-        {["Joseph Mwangi — Founder & CEO", "Sarah Kimani — Co-Founder & CTO", "VC Fund A — Series A Lead", "Angel Investor B", "VC Fund C — Series B Lead"].map(p => (
+        {["Jeckonia Kwasa — Founder & CEO", "Dan Delion — Co-Founder & CTO", "VC Fund A — Series A Lead", "Angel Investor B", "VC Fund C — Series B Lead"].map(p => (
           <div key={p} className="pm-kv"><span className="k">{p}</span><span className="v"><Badge tone="green" dot>Signed</Badge></span></div>
         ))}
       </div>
@@ -764,7 +764,7 @@ export function DepartmentBudgetModal({ open, onClose }: { open: boolean; onClos
   return (
     <SimpleModal open={open} onClose={onClose} title="Department Budgets" subtitle="FY 2026-2027 allocations" icon="bi-clipboard-data" tone="blue">
       {[
-        { dept: "Engineering", budget: 180000000, spent: 105000000, owner: "Sarah Kimani" },
+        { dept: "Engineering", budget: 180000000, spent: 105000000, owner: "Dan Delion" },
         { dept: "Operations", budget: 72000000, spent: 48000000, owner: "James Ochieng" },
         { dept: "Marketing", budget: 48000000, spent: 32000000, owner: "Marketing Lead" },
         { dept: "Compliance", budget: 36000000, spent: 18000000, owner: "Compliance Officer" },
@@ -876,8 +876,8 @@ export function GovernanceModal({ open, onClose }: { open: boolean; onClose: () 
       <div className="pm-card pm-card-pad mb-3">
         <div className="pm-eyebrow mb-2">Board of Directors</div>
         {[
-          { name: "Joseph Mwangi", role: "Chairman & CEO", since: "Jan 2024" },
-          { name: "Sarah Kimani", role: "Director & CTO", since: "Jan 2024" },
+          { name: "Jeckonia Kwasa", role: "Chairman & CEO", since: "Jan 2024" },
+          { name: "Dan Delion", role: "Director & CTO", since: "Jan 2024" },
           { name: "Dr. Amina Osman", role: "Independent Director", since: "Mar 2024" },
           { name: "VC Fund A Rep", role: "Non-Executive Director", since: "Jan 2024" },
           { name: "VC Fund C Rep", role: "Non-Executive Director", since: "Jun 2024" },
@@ -944,7 +944,7 @@ export function RelatedPartyModal({ open, onClose }: { open: boolean; onClose: (
     <SimpleDrawer open={open} onClose={onClose} title="Related Party Transactions" subtitle="Transactions with related parties per CBK requirements" icon="bi-link-45deg" tone="amber">
       {[
         { party: "Safaricom PLC", nature: "Service agreement", amount: "KES 124M/yr", approved: true },
-        { party: "Joseph Mwangi (personal)", nature: "Director loan — waived", amount: "KES 0", approved: true },
+        { party: "Jeckonia Kwasa (personal)", nature: "Director loan — waived", amount: "KES 0", approved: true },
         { party: "VC Fund A", nature: "Board observer fees", amount: "KES 1.2M/yr", approved: true },
       ].map(r => (
         <div key={r.party} className="pm-card pm-card-pad mb-2">
@@ -1116,7 +1116,7 @@ export function ShareholderCommModal({ open, onClose }: { open: boolean; onClose
       <input className="form-control mb-3" placeholder="e.g. Q2 2026 Financial Update" />
       <label className="form-label">Recipients</label>
       <div className="d-flex flex-column gap-2 mb-3">
-        {["Joseph Mwangi (CEO)", "Sarah Kimani (CTO)", "VC Fund A", "Angel Investor B", "VC Fund C"].map(r => (
+        {["Jeckonia Kwasa (CEO)", "Dan Delion (CTO)", "VC Fund A", "Angel Investor B", "VC Fund C"].map(r => (
           <label key={r} className="d-flex align-items-center gap-2" style={{ fontSize: ".82rem" }}><input type="checkbox" className="form-check-input" defaultChecked />{r}</label>
         ))}
       </div>

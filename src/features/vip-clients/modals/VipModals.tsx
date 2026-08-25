@@ -484,7 +484,7 @@ export function FeeExemptionWizard({ client, open, onClose, onDone }: {
               discountType: type,
               discountValue: type === "Full Waiver" ? 100 : value,
               expiresAt: "31 Dec 2026",
-              approvedBy: "Joseph Mwangi (Super Admin)",
+              approvedBy: "Jeckonia Kwasa (Super Admin)",
               status: "Active",
             });
             push({ kind: "success", title: "Fee Exemption Rule Activated", body: `${rail} discount for ${client.name}.` });
@@ -1109,7 +1109,7 @@ export function VipInsightsModal({ client, onClose }: { client: VipClient | null
 export function VipAuditDetailModal({ client, onClose }: { client: VipClient | null; onClose: () => void }) {
   if (!client) return null;
   const entries = [
-    { id: "AUD-VIP-88102", time: "22 Aug 2026", who: "Joseph Mwangi", action: "Limits adjusted", detail: `Daily limit → ${kes(client.dailyLimit)}` },
+    { id: "AUD-VIP-88102", time: "22 Aug 2026", who: "Jeckonia Kwasa", action: "Limits adjusted", detail: `Daily limit → ${kes(client.dailyLimit)}` },
     { id: "AUD-VIP-88045", time: "18 Aug 2026", who: "Grace Wanjiru", action: "Fee exemption granted", detail: "100% fee exempt" },
     { id: "AUD-VIP-87988", time: "15 Aug 2026", who: "System", action: "VIP tier upgraded", detail: `To ${client.tier}` },
     { id: "AUD-VIP-87901", time: "10 Aug 2026", who: "Peter Njoroge", action: "RM assigned", detail: client.rm },

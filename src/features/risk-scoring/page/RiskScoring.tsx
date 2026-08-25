@@ -56,7 +56,7 @@ export function RiskScoring({ signal, onNavigate }: { signal: { action: string; 
 
   // Override ledger data
   const overrideLedger = [
-    { date: "Aug 22", admin: "Joseph Mwangi", user: "PAY-67890", original: "72", override: "30", reason: "Investigation cleared — false positive", expires: "Never" },
+    { date: "Aug 22", admin: "Jeckonia Kwasa", user: "PAY-67890", original: "72", override: "30", reason: "Investigation cleared — false positive", expires: "Never" },
     { date: "Aug 20", admin: "Sarah Kamau", user: "PAY-11234", original: "55", override: "25", reason: "Verified legitimate business activity", expires: "Dec 2026" },
     { date: "Aug 18", admin: "James Otieno", user: "PAY-55678", original: "45", override: "20", reason: "VIP volume confirmed legitimate", expires: "Sep 2026" },
     { date: "Aug 15", admin: "David Kiprop", user: "PAY-44556", original: "68", override: "55", reason: "Network link under remediation", expires: "Oct 2026" },

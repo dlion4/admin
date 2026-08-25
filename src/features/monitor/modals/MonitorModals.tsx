@@ -566,7 +566,7 @@ export function FraudEscalationWizard({ alert, onClose }: { alert: FraudAlert | 
               <div className="pm-kv"><span className="k">Customer</span><span className="v">{alert.name} · {alert.user}</span></div>
               <div className="pm-kv"><span className="k">Decision</span><span className="v">{decision.toUpperCase()}</span></div>
               <div className="pm-kv"><span className="k">Actions</span><span className="v">{Object.entries(actions).filter(([, v]) => v).map(([k]) => k).join(", ") || "None"}</span></div>
-              <div className="pm-kv"><span className="k">Filed by</span><span className="v">Joseph Mwangi · Tier 0</span></div>
+              <div className="pm-kv"><span className="k">Filed by</span><span className="v">Jeckonia Kwasa · Tier 0</span></div>
               <div className="pm-kv"><span className="k">Deadline</span><span className="v">FRA submission within 7 days</span></div>
             </div>
             <TwoFactorField value={code} onChange={setCode} />
@@ -710,7 +710,7 @@ export function IncidentWizard({ open, onClose, prefill }: { open: boolean; onCl
             <div className="pm-kv"><span className="k">Service</span><span className="v mono">{service}</span></div>
             <div className="pm-kv"><span className="k">Impact</span><span className="v" style={{ maxWidth: 320 }}>{impact || "—"}</span></div>
             <div className="pm-kv"><span className="k">Comms</span><span className="v">{Object.entries(comms).filter(([, v]) => v).map(([k]) => k).join(", ")}</span></div>
-            <div className="pm-kv"><span className="k">Incident commander</span><span className="v">Joseph Mwangi</span></div>
+            <div className="pm-kv"><span className="k">Incident commander</span><span className="v">Jeckonia Kwasa</span></div>
           </div>
         )}
       </div>
@@ -921,7 +921,7 @@ export function SnapshotModal({ open, onClose, rows }: { open: boolean; onClose:
       <div className="pm-modal-foot">
         <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
         <button className="btn btn-primary btn-sm" onClick={() => {
-          const data = includeMeta ? rows.map((r) => ({ ...r, captured_by: "Joseph Mwangi", captured_at: new Date().toISOString() })) : rows;
+          const data = includeMeta ? rows.map((r) => ({ ...r, captured_by: "Jeckonia Kwasa", captured_at: new Date().toISOString() })) : rows;
           if (fmt === "json") jsonDownload("live-stream-snapshot.json", data);
           else csvDownload("live-stream-snapshot.csv", data);
           push({ kind: "success", title: "Snapshot exported", body: `${rows.length} rows written.` }); onClose();

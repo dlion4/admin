@@ -166,7 +166,7 @@ export function ReportAuditModal({ open, onClose }: { open: boolean; onClose: ()
   const entries = [
     { id: "AUD-RPT-88102", time: "22 Aug 2026", who: "CFO", action: "Board pack published", detail: "Q2-2026 results, 86 pages" },
     { id: "AUD-RPT-88045", time: "18 Aug 2026", who: "Sarah Kamau", action: "Investor report sent", detail: "Monthly update, 54 pages" },
-    { id: "AUD-RPT-87988", time: "15 Aug 2026", who: "Joseph Mwangi", action: "Regulatory filing", detail: "CBK quarterly, 38 pages" },
+    { id: "AUD-RPT-87988", time: "15 Aug 2026", who: "Jeckonia Kwasa", action: "Regulatory filing", detail: "CBK quarterly, 38 pages" },
     { id: "AUD-RPT-87901", time: "10 Aug 2026", who: "System", action: "Report generated", detail: "KPI scorecard, 54 pages" },
   ];
   return (

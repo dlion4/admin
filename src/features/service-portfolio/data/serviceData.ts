@@ -537,14 +537,14 @@ export type PortfolioAudit = {
 };
 
 export const PORTFOLIO_AUDIT: PortfolioAudit[] = [
-  { id: "PA-1042", date: "Aug 21 · 14:02", admin: "Joseph Mwangi", area: "Service status", change: "Crypto Off-ramp paused", from: "Active", to: "Paused", reason: "CMA/CA VASP licensing review — compliance instruction" },
+  { id: "PA-1042", date: "Aug 21 · 14:02", admin: "Jeckonia Kwasa", area: "Service status", change: "Crypto Off-ramp paused", from: "Active", to: "Paused", reason: "CMA/CA VASP licensing review — compliance instruction" },
   { id: "PA-1041", date: "Aug 18 · 09:41", admin: "Mercy Achieng", area: "Biller catalog", change: "Supported billers", from: "231", to: "234", reason: "Added 2 county governments + Zuku Fiber" },
   { id: "PA-1040", date: "Aug 10 · 16:25", admin: "Alex Otieno", area: "Limits", change: "Default transfer limit", from: "KES 700,000", to: "KES 1,000,000", reason: "Match updated PesaLink ceiling after CBK notice" },
   { id: "PA-1039", date: "Aug 06 · 11:12", admin: "Sarah Njoroge", area: "Corridors", change: "Supported corridors", from: "43", to: "45", reason: "Added Ghana & Vietnam via Thunes" },
   { id: "PA-1038", date: "Aug 01 · 10:05", admin: "Cynthia Muthoni", area: "Lending", change: "Max loan amount", from: "KES 300,000", to: "KES 500,000", reason: "Tier-3 scorecard release 4.2" },
   { id: "PA-1037", date: "Jul 20 · 13:58", admin: "David Kimani", area: "Cards", change: "Default monthly limit", from: "KES 350,000", to: "KES 500,000", reason: "VIP tier alignment with card program refresh" },
   { id: "PA-1036", date: "Jul 01 · 08:30", admin: "Faith Hassan", area: "Savings", change: "Flexible pocket APY", from: "9.0%", to: "8.5%", reason: "CBK rate corridor change; ALCO decision" },
-  { id: "PA-1035", date: "Jun 14 · 15:44", admin: "Joseph Mwangi", area: "Limits", change: "Daily wallet limit (KYC full)", from: "KES 300,000", to: "KES 500,000", reason: "Match revised AML threshold monitoring" },
+  { id: "PA-1035", date: "Jun 14 · 15:44", admin: "Jeckonia Kwasa", area: "Limits", change: "Daily wallet limit (KYC full)", from: "KES 300,000", to: "KES 500,000", reason: "Match revised AML threshold monitoring" },
 ];
 
 /* ---------------- KPI helper ---------------- */

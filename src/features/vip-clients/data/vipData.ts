@@ -454,18 +454,18 @@ export const CONCIERGE_REQUESTS: ConciergeRequest[] = [
 ];
 
 export const FEE_EXEMPTION_RULES: FeeExemptionRule[] = [
-  { id: "FER-401", vipId: "VIP-1001", vipName: "Amina Hassan", rail: "All Rails", discountType: "Full Waiver", discountValue: 100, expiresAt: "31 Dec 2026", approvedBy: "Joseph Mwangi (Super Admin)", status: "Active" },
-  { id: "FER-402", vipId: "VIP-1002", vipName: "James Mutua", rail: "All Rails", discountType: "Full Waiver", discountValue: 100, expiresAt: "31 Dec 2026", approvedBy: "Joseph Mwangi (Super Admin)", status: "Active" },
+  { id: "FER-401", vipId: "VIP-1001", vipName: "Amina Hassan", rail: "All Rails", discountType: "Full Waiver", discountValue: 100, expiresAt: "31 Dec 2026", approvedBy: "Jeckonia Kwasa (Super Admin)", status: "Active" },
+  { id: "FER-402", vipId: "VIP-1002", vipName: "James Mutua", rail: "All Rails", discountType: "Full Waiver", discountValue: 100, expiresAt: "31 Dec 2026", approvedBy: "Jeckonia Kwasa (Super Admin)", status: "Active" },
   { id: "FER-403", vipId: "VIP-1003", vipName: "Brian Otieno", rail: "M-Pesa", discountType: "Percentage Discount", discountValue: 60, expiresAt: "30 Nov 2026", approvedBy: "Sarah Kamau (Finance)", status: "Active" },
   { id: "FER-404", vipId: "VIP-1004", vipName: "Naomi Chemtai", rail: "FX Margin", discountType: "Percentage Discount", discountValue: 75, expiresAt: "31 Oct 2026", approvedBy: "Sarah Kamau (Finance)", status: "Active" },
-  { id: "FER-405", vipId: "VIP-1011", vipName: "Wanjiru Karanja", rail: "Card Acquiring", discountType: "Capped Rate", discountValue: 70, expiresAt: "15 Jan 2027", approvedBy: "Joseph Mwangi (Super Admin)", status: "Active" },
+  { id: "FER-405", vipId: "VIP-1011", vipName: "Wanjiru Karanja", rail: "Card Acquiring", discountType: "Capped Rate", discountValue: 70, expiresAt: "15 Jan 2027", approvedBy: "Jeckonia Kwasa (Super Admin)", status: "Active" },
 ];
 
 export const VIP_AUDIT_TRAIL: VipAuditEvent[] = [
-  { id: "VPA-801", time: "Today 10:45", admin: "Joseph Mwangi", action: "Granted Fee Waiver", vipName: "Amina Hassan", details: "Extended 100% fee waiver on all rails until Dec 2026." },
+  { id: "VPA-801", time: "Today 10:45", admin: "Jeckonia Kwasa", action: "Granted Fee Waiver", vipName: "Amina Hassan", details: "Extended 100% fee waiver on all rails until Dec 2026." },
   { id: "VPA-802", time: "Today 09:12", admin: "Sarah Kamau", action: "Approved Credit Line", vipName: "Wanjiru Karanja", details: "Raised float credit ceiling from KES 25M to KES 40M." },
   { id: "VPA-803", time: "Yesterday 15:30", admin: "Peter Njoroge", action: "Re-assigned RM", vipName: "David Kimani", details: "Moved from Unassigned to Dennis Otieno." },
-  { id: "VPA-804", time: "22 Aug 14:15", admin: "Joseph Mwangi", action: "Promoted Tier", vipName: "Naomi Chemtai", details: "Upgraded Platinum → Diamond after annual volume exceeded KES 1B." },
+  { id: "VPA-804", time: "22 Aug 14:15", admin: "Jeckonia Kwasa", action: "Promoted Tier", vipName: "Naomi Chemtai", details: "Upgraded Platinum → Diamond after annual volume exceeded KES 1B." },
   { id: "VPA-805", time: "20 Aug 11:20", admin: "David Kiplagat", action: "Risk Review Flag", vipName: "David Kimani", details: "Flagged account for high-value USD wire transfer investigation." },
 ];
 

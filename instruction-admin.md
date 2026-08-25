@@ -268,7 +268,7 @@ export const useCurrentAdmin = () => {
   // For now, return a mock that can be swapped
   return {
     id: 'admin-001',
-    name: 'Joseph Mwangi',
+    name: 'Jeckonia Kwasa',
     role: 0 as RoleTier,
     roleLabel: 'Super Admin',
     permissions: ROLE_PERMISSIONS[0],

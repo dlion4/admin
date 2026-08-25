@@ -240,7 +240,7 @@ export function ReverseWizard({
             <div className="pm-kv"><span className="k">Reason</span><span className="v">{reason}</span></div>
             <div className="pm-kv"><span className="k">Credit back</span><span className="v">{kes(creditBack)}</span></div>
             <div className="pm-kv"><span className="k">Notify</span><span className="v">{notify ? "Yes" : "No"}</span></div>
-            <div className="pm-kv"><span className="k">Authorised by</span><span className="v">Joseph Mwangi · Tier 0</span></div>
+            <div className="pm-kv"><span className="k">Authorised by</span><span className="v">Jeckonia Kwasa · Tier 0</span></div>
           </div>
         )}
       </div>
@@ -669,7 +669,7 @@ export function NewBatchWizard({
               failed: 0,
               amount,
               started: "—",
-              owner: "Joseph Mwangi",
+              owner: "Jeckonia Kwasa",
             };
             onCreate(b);
             push({ kind: "success", title: "Batch queued", body: `${b.id} · ${num(count)} items · ${kes(amount, { compact: true })}.` });

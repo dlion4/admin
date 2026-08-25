@@ -160,10 +160,10 @@ export function AdminShell({
             <button className="btn btn-sm w-100 mt-2" style={{ background: "#12b76a", color: "#fff", fontSize: ".75rem" }}
               onClick={() => setSessionOpen(true)}>Manage session</button>
           </div>
-          <button className="pm-user-row" onClick={() => setProfileOpen(true)} title="Joseph Mwangi — Super Admin">
-            <Avatar name="Joseph Mwangi" />
+          <button className="pm-user-row" onClick={() => setProfileOpen(true)} title="Jeckonia Kwasa — Super Admin">
+            <Avatar name="Jeckonia Kwasa" />
             <span className="pm-hide-collapsed text-start flex-grow-1" style={{ minWidth: 0 }}>
-              <span className="d-block" style={{ fontWeight: 700, fontSize: ".8rem", color: "#fff" }}>Joseph Mwangi</span>
+              <span className="d-block" style={{ fontWeight: 700, fontSize: ".8rem", color: "#fff" }}>Jeckonia Kwasa</span>
               <span className="d-block" style={{ fontSize: ".68rem", color: "#7b8aa3" }}>Super Admin · Tier 0</span>
             </span>
             <i className="bi bi-three-dots pm-hide-collapsed" style={{ color: "#7b8aa3" }} />
@@ -267,9 +267,9 @@ export function AdminShell({
             {/* Profile */}
             <Dropdown width={260} trigger={() => (
               <button className="d-flex align-items-center gap-2 px-1 py-1 border-0 bg-transparent">
-                <Avatar name="Joseph Mwangi" />
+                <Avatar name="Jeckonia Kwasa" />
                 <span className="d-none d-xl-block text-start">
-                  <span className="d-block" style={{ fontWeight: 700, fontSize: ".78rem", lineHeight: 1.1 }}>Joseph Mwangi</span>
+                  <span className="d-block" style={{ fontWeight: 700, fontSize: ".78rem", lineHeight: 1.1 }}>Jeckonia Kwasa</span>
                   <span className="d-block" style={{ fontSize: ".67rem", color: "var(--pm-muted)" }}>Super Admin</span>
                 </span>
                 <i className="bi bi-chevron-down d-none d-xl-block" style={{ fontSize: ".62rem", color: "var(--pm-muted)" }} />
@@ -278,9 +278,9 @@ export function AdminShell({
               {(close) => (
                 <>
                   <div className="px-2 py-2 d-flex align-items-center gap-2">
-                    <Avatar name="Joseph Mwangi" size="lg" />
+                    <Avatar name="Jeckonia Kwasa" size="lg" />
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontWeight: 700, fontSize: ".84rem" }}>Joseph Mwangi</div>
+                      <div style={{ fontWeight: 700, fontSize: ".84rem" }}>Jeckonia Kwasa</div>
                       <div style={{ fontSize: ".7rem", color: "var(--pm-muted)" }}>joseph.mwangi@paymo.co.ke</div>
                       <div className="mt-1 d-flex gap-1"><Badge tone="green" dot>Online</Badge><Badge tone="violet">Tier 0</Badge></div>
                     </div>

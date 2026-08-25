@@ -31,7 +31,7 @@ export function TaxCompliance({
   const [audit, setAudit] = useState<TaxAudit[]>(TAX_AUDIT);
 
   const logAudit = (change: string, from: string, to: string, reason: string) =>
-    setAudit((a) => [{ id: `TAXAUD-${113 + a.length - TAX_AUDIT.length}`, date: "Aug 23", admin: "Joseph Mwangi", change, from, to, reason }, ...a]);
+    setAudit((a) => [{ id: `TAXAUD-${113 + a.length - TAX_AUDIT.length}`, date: "Aug 23", admin: "Jeckonia Kwasa", change, from, to, reason }, ...a]);
 
   /* ---------------- user table state ---------------- */
   const [page, setPage] = useState(1);
