@@ -11,6 +11,13 @@ export type NavPage = {
 export type NavGroup = { id: string; label: string; icon: string; pages: NavPage[] };
 
 export const NAV: NavGroup[] = [
+  
+  {
+    id: "company", label: "COMPANY", icon: "bi-building",
+    pages: [
+      { id: "paymo-ltd", page: 44, label: "PayMo Digital Bank Ltd", icon: "bi-bank", ready: true, summary: "Company profile, treasury, P&L, cap table, budget, compliance and strategic governance.", sections: ["Company profile", "Treasury", "P&L statement", "Cap table & equity", "Budget & forecast", "Compliance", "Strategic governance", "Founders & stakeholders", "Board resolutions", "Dividends"] },
+    ],
+  },
   {
     id: "overview", label: "OVERVIEW", icon: "bi-speedometer2",
     pages: [
@@ -105,12 +112,7 @@ export const NAV: NavGroup[] = [
       { id: "analytics", page: 42, label: "Analytics Dashboard", icon: "bi-pie-chart", ready: true, summary: "Self-serve explorer, scheduled reports and warehouse sync.", sections: ["Explorer", "Saved reports", "Schedules", "Warehouse"] },
     ],
   },
-  {
-    id: "company", label: "COMPANY", icon: "bi-building",
-    pages: [
-      { id: "paymo-ltd", page: 44, label: "PayMo Digital Bank Ltd", icon: "bi-bank", ready: true, summary: "Company profile, treasury, P&L, cap table, budget, compliance and strategic governance.", sections: ["Company profile", "Treasury", "P&L statement", "Cap table & equity", "Budget & forecast", "Compliance", "Strategic governance", "Founders & stakeholders", "Board resolutions", "Dividends"] },
-    ],
-  },
+  
 ];
 
 export const ALL_PAGES: NavPage[] = NAV.flatMap((g) => g.pages);

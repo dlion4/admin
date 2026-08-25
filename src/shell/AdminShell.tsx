@@ -115,7 +115,7 @@ export function AdminShell({
           <div className="pm-brand-logo">P</div>
           <div className="pm-hide-collapsed">
             <div className="pm-brand-name">PayMo</div>
-            <div className="pm-brand-sub">SUPER ADMIN · BAAS</div>
+            <div className="pm-brand-sub">SUPER ADMIN </div>
           </div>
           <button className="pm-x ms-auto d-lg-none pm-hide-collapsed" style={{ color: "#7b8aa3" }} onClick={() => setMobileOpen(false)} aria-label="Close menu">
             <i className="bi bi-x-lg" />
