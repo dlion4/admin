@@ -990,6 +990,156 @@ export function LiabilityModal({
   );
 }
 
+/* ============================ 23. Tax analytics modal ============================ */
+export function TaxAnalyticsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const stats = [
+    { label: "Total tax collected (MTD)", value: "KES 42.8M", color: "#b42318" },
+    { label: "Pending remittances", value: "3", color: "#f79009" },
+    { label: "Filed returns (YTD)", value: "24", color: "#12b76a" },
+    { label: "Open correspondence", value: "2", color: "#2e90fa" },
+    { label: "Upcoming deadlines", value: "5", color: "#f79009" },
+    { label: "Compliance score", value: "98%", color: "#12b76a" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-graph-up" tone="blue" title="Tax analytics" subtitle="Compliance performance metrics">
+      <div className="row g-2 mb-3">
+        {stats.map((s) => (
+          <div className="col-6" key={s.label}><div className="pm-stat" style={{ borderLeft: `3px solid ${s.color}` }}>
+            <div className="pm-stat-label">{s.label}</div>
+            <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem", color: s.color }}>{s.value}</div></div></div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 24. Tax comparison modal ============================ */
+export function TaxCompareModal({ taxes, onClose }: { taxes: { type: string; rate: string; appliesTo: string }[]; onClose: () => void }) {
+  if (taxes.length < 2) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-arrow-left-right" tone="blue" title="Compare taxes" subtitle="Side-by-side comparison">
+      <div className="pm-card pm-table-wrap">
+        <table className="pm-table">
+          <thead><tr><th>Field</th><th>{taxes[0].type}</th><th>{taxes[1].type}</th></tr></thead>
+          <tbody>
+            {["rate", "appliesTo"].map((k) => (
+              <tr key={k}><td className="pm-td-strong">{k}</td><td>{taxes[0][k as keyof typeof taxes[0]]}</td><td>{taxes[1][k as keyof typeof taxes[0]]}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 25. Tax insights modal ============================ */
+export function TaxInsightsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const insights = [
+    { icon: "bi-graph-up", title: "Tax revenue trending up", detail: "8% increase in tax collected vs last month", tone: "green" },
+    { icon: "bi-exclamation-triangle", title: "Remittance due soon", detail: "KES 12.4M due by 31 Aug 2026", tone: "amber" },
+    { icon: "bi-check-circle", title: "Compliance score strong", detail: "98% compliance rate, above target", tone: "green" },
+    { icon: "bi-clock-history", title: "Filing deadline approaching", detail: "VAT return due in 7 days", tone: "amber" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-lightbulb" tone="blue" title="Tax insights" subtitle="AI-powered analysis">
+      <div className="d-flex flex-column gap-2">
+        {insights.map((ins) => (
+          <div key={ins.title} className="pm-alert-row" style={{ borderLeftColor: ins.tone === "green" ? "#12b76a" : "#f79009" }}>
+            <i className={`bi ${ins.icon}`} style={{ color: ins.tone === "green" ? "#12b76a" : "#f79009" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{ins.title}</div><div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{ins.detail}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 26. Tax pool detail modal ============================ */
+export function TaxPoolDetailInfoModal({ pool, onClose }: { pool: { id: string; type: string; balance: number; rate: string } | null; onClose: () => void }) {
+  if (!pool) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-piggybank" tone="blue" title="Tax pool detail" subtitle={pool.type}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Pool ID</span><span className="v mono">{pool.id}</span></div>
+        <div className="pm-kv"><span className="k">Type</span><span className="v"><Badge tone="blue">{pool.type}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Balance</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(pool.balance)}</span></div>
+        <div className="pm-kv"><span className="k">Rate</span><span className="v">{pool.rate}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 27. Remittance detail modal ============================ */
+export function RemittanceDetailInfoModal({ rem, onClose }: { rem: { id: string; amount: number; authority: string; filed: string; status: string } | null; onClose: () => void }) {
+  if (!rem) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-send" tone="blue" title="Remittance detail" subtitle={rem.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(rem.amount, { compact: true })}</span></div>
+        <div className="pm-kv"><span className="k">Authority</span><span className="v">{rem.authority}</span></div>
+        <div className="pm-kv"><span className="k">Filed</span><span className="v">{rem.filed}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={rem.status === "Completed" ? "green" : rem.status === "Pending" ? "amber" : "red"}>{rem.status}</Badge></span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 28. User tax detail modal ============================ */
+export function UserTaxDetailInfoModal({ user, onClose }: { user: { userId: string; name: string; taxId: string; ytdTax: number; status: string } | null; onClose: () => void }) {
+  if (!user) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-person-badge" tone="blue" title="User tax detail" subtitle={user.name}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">User ID</span><span className="v mono">{user.userId}</span></div>
+        <div className="pm-kv"><span className="k">Tax ID</span><span className="v mono">{user.taxId}</span></div>
+        <div className="pm-kv"><span className="k">YTD tax</span><span className="v pm-num" style={{ fontWeight: 700, color: "#b42318" }}>{kes(user.ytdTax)}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={user.status === "Compliant" ? "green" : "red"}>{user.status}</Badge></span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 29. Correspondence detail modal ============================ */
+export function CorrespondenceDetailInfoModal({ row, onClose }: { row: { id: string; from: string; subject: string; date: string; status: string } | null; onClose: () => void }) {
+  if (!row) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-envelope" tone="blue" title="Correspondence" subtitle={row.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">From</span><span className="v">{row.from}</span></div>
+        <div className="pm-kv"><span className="k">Subject</span><span className="v">{row.subject}</span></div>
+        <div className="pm-kv"><span className="k">Date</span><span className="v">{row.date}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={row.status === "Resolved" ? "green" : "amber"}>{row.status}</Badge></span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 30. Tax forecast modal ============================ */
+export function TaxForecastModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const forecast = [
+    { month: "Sep 2026", vat: 8200000, excise: 2100000, dst: 1800000 },
+    { month: "Oct 2026", vat: 8500000, excise: 2200000, dst: 1900000 },
+    { month: "Nov 2026", vat: 8800000, excise: 2300000, dst: 2000000 },
+    { month: "Dec 2026", vat: 9200000, excise: 2400000, dst: 2100000 },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-calendar-range" tone="blue" title="Tax forecast" subtitle="Next 4 months projection">
+      <div className="d-flex flex-column gap-2">
+        {forecast.map((f) => (
+          <div key={f.month} className="pm-card pm-card-pad">
+            <div style={{ fontWeight: 700, fontSize: ".88rem", marginBottom: 4 }}>{f.month}</div>
+            <div className="d-flex gap-2" style={{ fontSize: ".78rem" }}>
+              <span style={{ color: "#b42318" }}>VAT: {kes(f.vat, { compact: true })}</span>
+              <span style={{ color: "#f79009" }}>Excise: {kes(f.excise, { compact: true })}</span>
+              <span style={{ color: "#2e90fa" }}>DST: {kes(f.dst, { compact: true })}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
 void TAX_CONFIG;
 void TAX_POOLS;
 void USER_TAX;

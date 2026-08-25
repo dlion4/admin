@@ -65,4 +65,4 @@ All flows verified end-to-end. Final checks and commit:
 
 Also fixed a real logic bug found by the tests: mandates paused *by a service pause* now correctly resume when the service resumes.
 
-**Next: Page 23 — Card Programs** (V2.md line 2480). Say the word and I'll read the spec block and build it to this standard.
+**Next: Page 0 ** (V2.md line ). Say the word and I'll read the spec block and build it to this standard.

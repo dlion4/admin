@@ -5,6 +5,12 @@ import { COLUMNS, SAVED_VIEWS, SEGMENTS, SUMMARY_STATS, USERS, type SavedView, t
 import {
   AdvancedSearchDrawer, AdjustLimitsWizard, BulkActionsModal, ColumnConfigModal, EditUserModal,
   ExportUsersModal, FreezeWizard, ImpersonateModal, SaveViewModal, SavedViewsDrawer, UserDrawer, VipModal,
+  LoginHistoryModal, TransactionHistoryModal, CloseAccountModal, BroadcastModal, RenameViewModal,
+  UserActivityModal, RiskAssessmentModal, SendMessageModal, ComplianceModal, UserInsightsModal,
+  UserAuditTrailModal, NotificationConfigModal, SegmentAnalysisModal, UserHealthModal,
+  UserDevicesModal, UserDocumentsModal, UserPreferencesModal, UserTagsModal, CommunicationHistoryModal,
+  SessionManagementModal, AccountRecoveryModal, LoanDetailsModal, CardManagementModal,
+  GeoDistributionModal, ReferralNetworkModal, ActivityHeatmapModal,
   type SearchFilters, EMPTY_FILTERS,
 } from "../modals/UserModals";
 
@@ -39,6 +45,32 @@ export function UserDirectory({ signal, onNavigate }: { signal: { action: string
   const [viewsOpen, setViewsOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [loginHistUser, setLoginHistUser] = useState<User | null>(null);
+  const [txnHistUser, setTxnHistUser] = useState<User | null>(null);
+  const [closeUser, setCloseUser] = useState<User | null>(null);
+  const [broadcastOpen, setBroadcastOpen] = useState(false);
+  const [renameView, setRenameView] = useState<SavedView | null>(null);
+  const [activityUser, setActivityUser] = useState<User | null>(null);
+  const [riskUser, setRiskUser] = useState<User | null>(null);
+  const [msgUser, setMsgUser] = useState<User | null>(null);
+  const [complianceUser, setComplianceUser] = useState<User | null>(null);
+  const [insightsUser, setInsightsUser] = useState<User | null>(null);
+  const [auditUser, setAuditUser] = useState<User | null>(null);
+  const [notifUser, setNotifUser] = useState<User | null>(null);
+  const [segmentOpen, setSegmentOpen] = useState(false);
+  const [healthUser, setHealthUser] = useState<User | null>(null);
+  const [devicesUser, setDevicesUser] = useState<User | null>(null);
+  const [docsUser, setDocsUser] = useState<User | null>(null);
+  const [prefsUser, setPrefsUser] = useState<User | null>(null);
+  const [tagsUser, setTagsUser] = useState<User | null>(null);
+  const [commsUser, setCommsUser] = useState<User | null>(null);
+  const [sessionUser, setSessionUser] = useState<User | null>(null);
+  const [recoveryUser, setRecoveryUser] = useState<User | null>(null);
+  const [loanUser, setLoanUser] = useState<User | null>(null);
+  const [cardUser, setCardUser] = useState<User | null>(null);
+  const [geoOpen, setGeoOpen] = useState(false);
+  const [referralUser, setReferralUser] = useState<User | null>(null);
+  const [heatmapUser, setHeatmapUser] = useState<User | null>(null);
 
   const activeFilterCount = Object.entries(filters).filter(([k, v]) => {
     if (k === "q") return (v as string).length > 0;
@@ -114,7 +146,9 @@ export function UserDirectory({ signal, onNavigate }: { signal: { action: string
             {(close) => (<>
               <DDItem icon="bi-bookmark-plus" label="Save current view" onClick={() => { close(); setSaveViewOpen(true); }} />
               <DDItem icon="bi-file-earmark-spreadsheet" label="Export CSV" onClick={() => { close(); csvDownload("user-directory.csv", filtered as unknown as Record<string, unknown>[]); push({ kind: "success", title: "Exported" }); }} />
-              <DDItem icon="bi-broadcast" label="Broadcast to this segment" onClick={() => { close(); push({ kind: "info", title: "Broadcast", body: `${num(filtered.length)} recipients would receive the message.` }); }} />
+              <DDItem icon="bi-broadcast" label="Broadcast to segment" onClick={() => { close(); setBroadcastOpen(true); }} />
+              <DDItem icon="bi-bar-chart" label="Segment analysis" onClick={() => { close(); setSegmentOpen(true); }} />
+              <DDItem icon="bi-geo-alt" label="Geo distribution" onClick={() => { close(); setGeoOpen(true); }} />
             </>)}
           </Dropdown>
         </div>
@@ -228,7 +262,27 @@ export function UserDirectory({ signal, onNavigate }: { signal: { action: string
                             <DDItem icon="bi-gem" label={u.tier === "VIP" ? "Revoke VIP" : "Grant VIP"} onClick={() => { close(); setVipUser(u); }} />
                             <DDItem icon="bi-incognito" label="Impersonate" hint="Super admin only" onClick={() => { close(); setImpUser(u); }} />
                             <div style={{ height: 1, background: "var(--pm-border)", margin: ".2rem .3rem" }} />
-                            <DDItem icon="bi-x-octagon" label="Close account" danger onClick={() => { close(); push({ kind: "warn", title: "Close account", body: "Requires Compliance co-approval and 30-day cooling period." }); }} />
+                            <DDItem icon="bi-activity" label="Activity log" onClick={() => { close(); setActivityUser(u); }} />
+                            <DDItem icon="bi-shield-exclamation" label="Risk assessment" onClick={() => { close(); setRiskUser(u); }} />
+                            <DDItem icon="bi-envelope-paper" label="Send message" onClick={() => { close(); setMsgUser(u); }} />
+                            <DDItem icon="bi-shield-check" label="Compliance" onClick={() => { close(); setComplianceUser(u); }} />
+                            <DDItem icon="bi-lightbulb" label="Insights" onClick={() => { close(); setInsightsUser(u); }} />
+                            <DDItem icon="bi-clock-history" label="Audit trail" onClick={() => { close(); setAuditUser(u); }} />
+                            <DDItem icon="bi-bell" label="Notifications" onClick={() => { close(); setNotifUser(u); }} />
+                            <DDItem icon="bi-heart-pulse" label="Health score" onClick={() => { close(); setHealthUser(u); }} />
+                            <DDItem icon="bi-phone" label="Devices" onClick={() => { close(); setDevicesUser(u); }} />
+                            <DDItem icon="bi-file-earmark-text" label="Documents" onClick={() => { close(); setDocsUser(u); }} />
+                            <DDItem icon="bi-gear" label="Preferences" onClick={() => { close(); setPrefsUser(u); }} />
+                            <DDItem icon="bi-tags" label="Tags" onClick={() => { close(); setTagsUser(u); }} />
+                            <DDItem icon="bi-chat-square-text" label="Comms history" onClick={() => { close(); setCommsUser(u); }} />
+                            <DDItem icon="bi-box-arrow-right" label="Sessions" onClick={() => { close(); setSessionUser(u); }} />
+                            <DDItem icon="bi-key" label="Recovery" onClick={() => { close(); setRecoveryUser(u); }} />
+                            <DDItem icon="bi-cash-stack" label="Loans" onClick={() => { close(); setLoanUser(u); }} />
+                            <DDItem icon="bi-credit-card" label="Cards" onClick={() => { close(); setCardUser(u); }} />
+                            <DDItem icon="bi-diagram-3" label="Referrals" onClick={() => { close(); setReferralUser(u); }} />
+                            <DDItem icon="bi-grid-3x3" label="Activity heatmap" onClick={() => { close(); setHeatmapUser(u); }} />
+                            <div style={{ height: 1, background: "var(--pm-border)", margin: ".2rem .3rem" }} />
+                            <DDItem icon="bi-x-octagon" label="Close account" danger onClick={() => { close(); setCloseUser(u); }} />
                           </>)}
                         </Dropdown>
                       </td>
@@ -286,7 +340,7 @@ export function UserDirectory({ signal, onNavigate }: { signal: { action: string
             <thead><tr><th>View</th><th>Filters</th><th className="text-end">Matching users</th><th>Owner</th><th>Shared</th><th /></tr></thead>
             <tbody>
               {views.map((v) => (
-                <tr key={v.id} onClick={() => { push({ kind: "success", title: `View "${v.name}" applied` }); }}>
+                <tr key={v.id} onClick={() => { setViews((vw) => vw.map((x) => x.id === v.id ? x : x)); push({ kind: "success", title: `View "${v.name}" applied` }); }}>
                   <td className="pm-td-strong">{v.name}</td>
                   <td className="mono" style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{v.filters}</td>
                   <td className="text-end pm-num">{num(v.count)}</td>
@@ -296,7 +350,7 @@ export function UserDirectory({ signal, onNavigate }: { signal: { action: string
                     <Dropdown up width={200} trigger={() => <button className="pm-icon-btn" style={{ width: 28, height: 28 }}><i className="bi bi-three-dots-vertical" /></button>}>
                       {(close) => (<>
                         <DDItem icon="bi-play-fill" label="Apply this view" onClick={() => { close(); push({ kind: "success", title: `View "${v.name}" applied` }); }} />
-                        <DDItem icon="bi-pencil" label="Rename" onClick={() => { close(); push({ kind: "info", title: "Rename view", body: `View "${v.name}" can be renamed.` }); }} />
+                        <DDItem icon="bi-pencil" label="Rename" onClick={() => { close(); setRenameView(v); }} />
                         <DDItem icon="bi-trash" label="Delete" danger onClick={() => { close(); setViews((vw) => vw.filter((x) => x.id !== v.id)); push({ kind: "info", title: `"${v.name}" deleted` }); }} />
                       </>)}
                     </Dropdown>
@@ -311,7 +365,13 @@ export function UserDirectory({ signal, onNavigate }: { signal: { action: string
       {/* modals */}
       <UserDrawer user={user} onClose={() => setUser(null)} onFreeze={(u) => { setUser(null); setFreezeUser(u); }}
         onEdit={(u) => { setUser(null); setEditUser(u); }} onAdjustLimits={(u) => { setUser(null); setLimitsUser(u); }}
-        onGrantVip={(u) => { setUser(null); setVipUser(u); }} onImpersonate={(u) => { setUser(null); setImpUser(u); }} />
+        onGrantVip={(u) => { setUser(null); setVipUser(u); }} onImpersonate={(u) => { setUser(null); setImpUser(u); }}
+        onLoginHistory={(u) => { setUser(null); setLoginHistUser(u); }} onTransactionHistory={(u) => { setUser(null); setTxnHistUser(u); }}
+        onCloseAccount={(u) => { setUser(null); setCloseUser(u); }} onActivity={(u) => { setUser(null); setActivityUser(u); }}
+        onRisk={(u) => { setUser(null); setRiskUser(u); }} onMessage={(u) => { setUser(null); setMsgUser(u); }}
+        onCompliance={(u) => { setUser(null); setComplianceUser(u); }} onInsights={(u) => { setUser(null); setInsightsUser(u); }}
+        onAudit={(u) => { setUser(null); setAuditUser(u); }} onNotifications={(u) => { setUser(null); setNotifUser(u); }}
+        onHealth={(u) => { setUser(null); setHealthUser(u); }} />
       <EditUserModal user={editUser} onClose={() => setEditUser(null)}
         onSave={(u) => { setUsers((list) => list.map((x) => x.id === u.id ? u : x)); setEditUser(null); }} />
       <FreezeWizard user={freezeUser} onClose={() => setFreezeUser(null)} onDone={handleFreezeResult} />
@@ -328,6 +388,32 @@ export function UserDirectory({ signal, onNavigate }: { signal: { action: string
       <ExportUsersModal open={exportOpen} onClose={() => setExportOpen(false)} count={filtered.length} />
       <AdvancedSearchDrawer open={searchOpen} onClose={() => setSearchOpen(false)} filters={filters}
         onApply={(f) => { setFilters(f); setPage(1); }} />
+      {loginHistUser && <LoginHistoryModal user={loginHistUser} onClose={() => setLoginHistUser(null)} />}
+      {txnHistUser && <TransactionHistoryModal user={txnHistUser} onClose={() => setTxnHistUser(null)} />}
+      {closeUser && <CloseAccountModal user={closeUser} onClose={() => setCloseUser(null)} />}
+      <BroadcastModal open={broadcastOpen} onClose={() => setBroadcastOpen(false)} count={filtered.length} />
+      <RenameViewModal view={renameView} onClose={() => setRenameView(null)} onRename={(id, name) => setViews((vw) => vw.map((v) => v.id === id ? { ...v, name } : v))} />
+      {activityUser && <UserActivityModal user={activityUser} onClose={() => setActivityUser(null)} />}
+      {riskUser && <RiskAssessmentModal user={riskUser} onClose={() => setRiskUser(null)} />}
+      {msgUser && <SendMessageModal user={msgUser} onClose={() => setMsgUser(null)} />}
+      {complianceUser && <ComplianceModal user={complianceUser} onClose={() => setComplianceUser(null)} />}
+      {insightsUser && <UserInsightsModal user={insightsUser} onClose={() => setInsightsUser(null)} />}
+      {auditUser && <UserAuditTrailModal user={auditUser} onClose={() => setAuditUser(null)} />}
+      {notifUser && <NotificationConfigModal user={notifUser} onClose={() => setNotifUser(null)} />}
+      <SegmentAnalysisModal open={segmentOpen} onClose={() => setSegmentOpen(false)} />
+      {healthUser && <UserHealthModal user={healthUser} onClose={() => setHealthUser(null)} />}
+      {devicesUser && <UserDevicesModal user={devicesUser} onClose={() => setDevicesUser(null)} />}
+      {docsUser && <UserDocumentsModal user={docsUser} onClose={() => setDocsUser(null)} />}
+      {prefsUser && <UserPreferencesModal user={prefsUser} onClose={() => setPrefsUser(null)} />}
+      {tagsUser && <UserTagsModal user={tagsUser} onClose={() => setTagsUser(null)} />}
+      {commsUser && <CommunicationHistoryModal user={commsUser} onClose={() => setCommsUser(null)} />}
+      {sessionUser && <SessionManagementModal user={sessionUser} onClose={() => setSessionUser(null)} />}
+      {recoveryUser && <AccountRecoveryModal user={recoveryUser} onClose={() => setRecoveryUser(null)} />}
+      {loanUser && <LoanDetailsModal user={loanUser} onClose={() => setLoanUser(null)} />}
+      {cardUser && <CardManagementModal user={cardUser} onClose={() => setCardUser(null)} />}
+      <GeoDistributionModal open={geoOpen} onClose={() => setGeoOpen(false)} />
+      {referralUser && <ReferralNetworkModal user={referralUser} onClose={() => setReferralUser(null)} />}
+      {heatmapUser && <ActivityHeatmapModal user={heatmapUser} onClose={() => setHeatmapUser(null)} />}
     </>
   );
 }

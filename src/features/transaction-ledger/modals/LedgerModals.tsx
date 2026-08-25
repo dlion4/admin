@@ -1127,6 +1127,313 @@ export function ManualJournalWizard({
   );
 }
 
+/* ============================ 18. Transaction detail modal ============================ */
+export function TxnDetailModal({ entry, onClose }: { entry: LedgerEntry | null; onClose: () => void }) {
+  if (!entry) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-receipt" tone="blue" title="Transaction detail" subtitle={entry.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Type</span><span className="v"><Badge tone="blue">{entry.type}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700, color: entry.direction === "credit" ? "#12b76a" : "var(--pm-ink)" }}>{entry.direction === "credit" ? "+" : "-"}{kes(entry.amount)}</span></div>
+        <div className="pm-kv"><span className="k">Rail</span><span className="v">{entry.rail}</span></div>
+        <div className="pm-kv"><span className="k">Time</span><span className="v">{entry.time}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={entry.status === "Posted" ? "green" : entry.status === "Held" ? "amber" : "red"}>{entry.status}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Counterparty</span><span className="v">{entry.counterparty}</span></div>
+        <div className="pm-kv"><span className="k">Reference</span><span className="v mono">{entry.ref}</span></div>
+        <div className="pm-kv"><span className="k">Narrative</span><span className="v">{entry.narrative}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 19. Journal detail modal ============================ */
+export function JournalDetailModal({ entry, onClose }: { entry: LedgerEntry | null; onClose: () => void }) {
+  if (!entry) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-journal-text" tone="blue" title="Journal detail" subtitle={entry.journalId}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Journal ID</span><span className="v mono">{entry.journalId}</span></div>
+        <div className="pm-kv"><span className="k">Debit account</span><span className="v mono">{entry.debitAccount}</span></div>
+        <div className="pm-kv"><span className="k">Credit account</span><span className="v mono">{entry.creditAccount}</span></div>
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(entry.amount)}</span></div>
+        <div className="pm-kv"><span className="k">Fee</span><span className="v pm-num">{kes(entry.fee)}</span></div>
+        <div className="pm-kv"><span className="k">User</span><span className="v">{entry.userName} ({entry.userId})</span></div>
+        <div className="pm-kv"><span className="k">County</span><span className="v">{entry.county}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 20. Batch detail modal ============================ */
+export function BatchDetailModal({ batch, onClose }: { batch: BatchJob | null; onClose: () => void }) {
+  if (!batch) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-layers" tone="blue" title="Batch detail" subtitle={batch.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={batch.status === "Completed" ? "green" : batch.status === "Running" ? "blue" : batch.status === "Failed" ? "red" : "amber"}>{batch.status}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Items</span><span className="v pm-num">{batch.items}</span></div>
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(batch.amount, { compact: true })}</span></div>
+        <div className="pm-kv"><span className="k">Created</span><span className="v">{batch.created}</span></div>
+        <div className="pm-kv"><span className="k">Creator</span><span className="v">{batch.creator}</span></div>
+        <div className="pm-kv"><span className="k">Failed</span><span className="v pm-num" style={{ color: batch.failed > 0 ? "#f04438" : "#12b76a" }}>{batch.failed}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 21. Hold detail modal ============================ */
+export function HoldDetailModal({ hold, onClose }: { hold: Hold | null; onClose: () => void }) {
+  if (!hold) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-lock" tone="amber" title="Hold detail" subtitle={hold.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(hold.amount)}</span></div>
+        <div className="pm-kv"><span className="k">Reason</span><span className="v">{hold.reason}</span></div>
+        <div className="pm-kv"><span className="k">Placed</span><span className="v">{hold.placed}</span></div>
+        <div className="pm-kv"><span className="k">Auto-release</span><span className="v">{hold.autoRelease}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone="amber">{hold.status}</Badge></span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 22. Account detail modal ============================ */
+export function AccountDetailModal({ account, onClose }: { account: { id: string; name: string; type: string; balance: number } | null; onClose: () => void }) {
+  if (!account) return null;
+  const txns = [
+    { id: "TXN-001", time: "24 Aug 14:28", amount: 15000, desc: "Transfer in" },
+    { id: "TXN-002", time: "23 Aug 09:15", amount: -4200, desc: "Bill payment" },
+    { id: "TXN-003", time: "22 Aug 16:05", amount: 50000, desc: "Deposit" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-wallet2" tone="blue" title="Account detail" subtitle={account.name}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Account</span><span className="v mono">{account.id}</span></div>
+        <div className="pm-kv"><span className="k">Type</span><span className="v"><Badge tone="blue">{account.type}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Balance</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(account.balance)}</span></div>
+      </div>
+      <div className="pm-card"><div className="pm-card-head"><h6 className="pm-card-title">Recent activity</h6></div>
+        <div className="p-2 d-flex flex-column gap-1">
+          {txns.map((t) => (
+            <div key={t.id} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+              <i className={`bi ${t.amount > 0 ? "bi-arrow-down-left" : "bi-arrow-up-right"}`} style={{ color: t.amount > 0 ? "#12b76a" : "#f04438" }} />
+              <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".82rem" }}>{t.desc}</div><div style={{ fontSize: ".7rem", color: "var(--pm-muted)" }}>{t.id} · {t.time}</div></div>
+              <div style={{ fontWeight: 700, color: t.amount > 0 ? "#12b76a" : "var(--pm-ink)" }}>{t.amount > 0 ? "+" : ""}{kes(Math.abs(t.amount))}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 23. Fraud score detail modal ============================ */
+export function FraudScoreModal({ entry, onClose }: { entry: LedgerEntry | null; onClose: () => void }) {
+  if (!entry) return null;
+  const factors = [
+    { label: "Amount anomaly", score: entry.fraudScore > 50 ? 72 : 25, detail: "vs user average" },
+    { label: "Velocity check", score: entry.fraudScore > 50 ? 65 : 18, detail: "txns/hour" },
+    { label: "Geographic risk", score: 15, detail: entry.county },
+    { label: "Device trust", score: 22, detail: "Known device" },
+    { label: "Counterparty risk", score: entry.fraudScore > 50 ? 58 : 12, detail: entry.counterparty },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-shield-exclamation" tone={entry.fraudScore > 70 ? "red" : entry.fraudScore > 40 ? "amber" : "green"}
+      title="Fraud analysis" subtitle={`${entry.id} · score ${entry.fraudScore}/100`}>
+      <div className="pm-card pm-card-pad mb-3 text-center">
+        <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "2rem", color: entry.fraudScore > 70 ? "#f04438" : entry.fraudScore > 40 ? "#f79009" : "#12b76a" }}>{entry.fraudScore}</div>
+        <div style={{ fontSize: ".76rem", color: "var(--pm-muted)" }}>Fraud score</div>
+      </div>
+      <div className="d-flex flex-column gap-2">
+        {factors.map((f) => (
+          <div key={f.label} className="pm-card pm-card-pad">
+            <div className="d-flex justify-content-between align-items-center mb-1">
+              <span style={{ fontWeight: 700, fontSize: ".82rem" }}>{f.label}</span>
+              <span className="pm-num" style={{ fontWeight: 700, color: f.score > 50 ? "#f04438" : f.score > 30 ? "#f79009" : "#12b76a" }}>{f.score}</span>
+            </div>
+            <div style={{ height: 6, background: "#eaedf3", borderRadius: 3, overflow: "hidden" }}>
+              <div style={{ width: `${f.score}%`, height: "100%", background: f.score > 50 ? "#f04438" : f.score > 30 ? "#f79009" : "#12b76a", borderRadius: 3 }} />
+            </div>
+            <div style={{ fontSize: ".7rem", color: "var(--pm-muted)", marginTop: 4 }}>{f.detail}</div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 24. Ledger analytics modal ============================ */
+export function LedgerAnalyticsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const stats = [
+    { label: "Total entries today", value: "12,847", color: "#2e90fa" },
+    { label: "Volume today", value: "KES 2.4B", color: "#12b76a" },
+    { label: "Failed entries", value: "23", color: "#f04438" },
+    { label: "Avg processing time", value: "1.2s", color: "#7a5af8" },
+    { label: "Held amount", value: "KES 4.2M", color: "#f79009" },
+    { label: "Reconciliation rate", value: "99.8%", color: "#12b76a" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-graph-up" tone="blue" title="Ledger analytics" subtitle="Real-time performance metrics">
+      <div className="row g-2 mb-3">
+        {stats.map((s) => (
+          <div className="col-6" key={s.label}><div className="pm-stat" style={{ borderLeft: `3px solid ${s.color}` }}>
+            <div className="pm-stat-label">{s.label}</div>
+            <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem", color: s.color }}>{s.value}</div></div></div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 25. Transaction search modal ============================ */
+export function TxnSearchModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { push } = useToast();
+  const [query, setQuery] = useState("");
+  return (
+    <Modal open={open} onClose={onClose} tone="blue" icon="bi-search" size="md" title="Transaction search" subtitle="Search across all ledger entries">
+      <div className="pm-modal-body">
+        <label className="form-label">Search criteria</label>
+        <input className="form-control mb-3" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Transaction ID, user, counterparty, amount..." />
+        <label className="form-label">Filters</label>
+        <div className="row g-2 mb-3">
+          <div className="col-6"><label className="form-label">Type</label><select className="form-select"><option>All types</option>{["Transfer", "Payment", "Deposit", "Withdrawal", "Fee", "Refund"].map((t) => <option key={t}>{t}</option>)}</select></div>
+          <div className="col-6"><label className="form-label">Status</label><select className="form-select"><option>All statuses</option>{["Posted", "Held", "Failed", "Reversed"].map((s) => <option key={s}>{s}</option>)}</select></div>
+          <div className="col-6"><label className="form-label">Rail</label><select className="form-select"><option>All rails</option>{["M-Pesa", "Card", "Bank", "Internal"].map((r) => <option key={r}>{r}</option>)}</select></div>
+          <div className="col-6"><label className="form-label">Amount range</label><input type="number" className="form-control" placeholder="Min amount" /></div>
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { push({ kind: "success", title: "Search results ready" }); onClose(); }}>
+          <i className="bi bi-search me-1" />Search
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 26. Entry comparison modal ============================ */
+export function EntryCompareModal({ entries, onClose }: { entries: LedgerEntry[]; onClose: () => void }) {
+  if (entries.length < 2) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-arrow-left-right" tone="blue" title="Compare entries" subtitle="Side-by-side comparison">
+      <div className="pm-card pm-table-wrap">
+        <table className="pm-table">
+          <thead><tr><th>Field</th><th>{entries[0].id}</th><th>{entries[1].id}</th></tr></thead>
+          <tbody>
+            {["type", "amount", "rail", "status", "time", "counterparty", "county", "fraudScore"].map((k) => (
+              <tr key={k}><td className="pm-td-strong">{k}</td><td>{String(entries[0][k as keyof LedgerEntry])}</td><td>{String(entries[1][k as keyof LedgerEntry])}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 27. Reconciliation status modal ============================ */
+export function ReconStatusModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const channels = [
+    { name: "M-Pesa", matched: 8420, breaks: 12, rate: 99.9 },
+    { name: "Card", matched: 3240, breaks: 3, rate: 99.9 },
+    { name: "Bank", matched: 1180, breaks: 8, rate: 99.3 },
+    { name: "Internal", matched: 45, breaks: 1, rate: 97.8 },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-check-circle" tone="green" title="Reconciliation status" subtitle="Channel-level match rates">
+      <div className="d-flex flex-column gap-2">
+        {channels.map((c) => (
+          <div key={c.name} className="pm-card pm-card-pad">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span style={{ fontWeight: 700, fontSize: ".88rem" }}>{c.name}</span>
+              <Badge tone={c.rate > 99.5 ? "green" : c.rate > 99 ? "amber" : "red"}>{c.rate}%</Badge>
+            </div>
+            <div className="d-flex justify-content-between" style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>
+              <span>{c.matched.toLocaleString()} matched</span>
+              <span>{c.breaks} breaks</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 28. Flag detail modal ============================ */
+export function FlagDetailModal({ entry, onClose }: { entry: LedgerEntry | null; onClose: () => void }) {
+  const { push } = useToast();
+  if (!entry) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-flag" tone="red" title="Flagged transaction" subtitle={entry.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(entry.amount)}</span></div>
+        <div className="pm-kv"><span className="k">Fraud score</span><span className="v pm-num" style={{ color: entry.fraudScore > 70 ? "#f04438" : "#f79009" }}>{entry.fraudScore}/100</span></div>
+        <div className="pm-kv"><span className="k">Counterparty</span><span className="v">{entry.counterparty}</span></div>
+        <div className="pm-kv"><span className="k">SAR status</span><span className="v"><Badge tone="amber">Draft</Badge></span></div>
+      </div>
+      <div className="d-flex flex-column gap-2">
+        <button className="pm-dd-item"><i className="bi bi-file-earmark-text" style={{ color: "#2e90fa" }} /><span className="flex-grow-1">View SAR draft</span></button>
+        <button className="pm-dd-item"><i className="bi bi-person" style={{ color: "#667085" }} /><span className="flex-grow-1">Contact user</span></button>
+        <button className="pm-dd-item danger"><i className="bi bi-x-octagon" style={{ color: "#d92d20" }} /><span className="flex-grow-1">Block user</span></button>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 29. Export detail modal ============================ */
+export function ExportDetailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { push } = useToast();
+  const [format, setFormat] = useState("csv");
+  const [include, setInclude] = useState({ transactions: true, journal: true, batches: true, holds: true });
+  return (
+    <Modal open={open} onClose={onClose} tone="blue" icon="bi-download" size="md" title="Export data" subtitle="Choose format and content">
+      <div className="pm-modal-body">
+        <label className="form-label">Format</label>
+        <div className="d-flex gap-2 mb-3">
+          {["csv", "json", "xlsx"].map((f) => <button key={f} className={`pm-chip ${format === f ? "active" : ""}`} onClick={() => setFormat(f)}>{f.toUpperCase()}</button>)}
+        </div>
+        <label className="form-label">Include</label>
+        <div className="d-flex flex-column gap-2">
+          {Object.entries({ transactions: "Transactions", journal: "Journal entries", batches: "Batch jobs", holds: "Holds" }).map(([k, l]) => (
+            <label key={k} className={`pm-opt ${include[k as keyof typeof include] ? "active" : ""}`}>
+              <input type="checkbox" className="form-check-input mt-0" checked={include[k as keyof typeof include]} onChange={(e) => setInclude({ ...include, [k]: e.target.checked })} />
+              <span style={{ fontSize: ".84rem", fontWeight: 700 }}>{l}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { push({ kind: "success", title: "Export ready" }); onClose(); }}>
+          <i className="bi bi-download me-1" />Download
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 30. Ledger insights modal ============================ */
+export function LedgerInsightsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const insights = [
+    { icon: "bi-graph-up", title: "Volume trending up", detail: "12% increase in daily volume vs last week", tone: "green" },
+    { icon: "bi-exclamation-triangle", title: "Hold amount elevated", detail: "KES 4.2M held, 15% above normal", tone: "amber" },
+    { icon: "bi-shield-check", title: "Fraud rate stable", detail: "0.02% fraud rate, within target", tone: "green" },
+    { icon: "bi-clock-history", title: "Processing time improved", detail: "Avg 1.2s, down from 1.8s", tone: "green" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-lightbulb" tone="blue" title="Ledger insights" subtitle="AI-powered analysis">
+      <div className="d-flex flex-column gap-2">
+        {insights.map((ins) => (
+          <div key={ins.title} className="pm-alert-row" style={{ borderLeftColor: ins.tone === "green" ? "#12b76a" : "#f79009" }}>
+            <i className={`bi ${ins.icon}`} style={{ color: ins.tone === "green" ? "#12b76a" : "#f79009" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{ins.title}</div><div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{ins.detail}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
 void HOLDS;
 void BATCHES;
 void Avatar;

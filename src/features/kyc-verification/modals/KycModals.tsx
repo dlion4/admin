@@ -157,4 +157,396 @@ export function AuditDrawer({ item, open, onClose }: { item: KycCase | null; ope
   return <Drawer open={open} onClose={onClose} icon="bi-clock-history" tone="blue" title="Case audit trail" subtitle={`${item.id} · append-only evidence history`}><div className="pm-timeline">{["Case submitted", "Onfido checks completed", "Sanctions screening completed", "Risk score calculated", "Reviewer assigned", "Case opened by Joseph Mwangi"].map((x, i) => <div className={`pm-tl-item ${i < 4 ? "done" : i === 4 ? "warn" : ""}`} key={x}><div style={{ fontWeight: 700 }}>{x}</div><div className="pm-td-sub">{i * 7 + 2} minutes after submission · service/admin identity retained</div><div className="mono" style={{ fontSize: ".68rem", color: "#98a2b3" }}>AUD-KYC-{item.id.slice(-4)}-{i + 1}</div></div>)}</div></Drawer>;
 }
 
+/* ============================ 16. KYC case detail modal ============================ */
+export function CaseDetailModal({ item, onClose }: { item: KycCase | null; onClose: () => void }) {
+  if (!item) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-file-earmark-text" tone="blue" title="Case detail" subtitle={item.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Applicant</span><span className="v">{item.name}</span></div>
+        <div className="pm-kv"><span className="k">User ID</span><span className="v mono">{item.userId}</span></div>
+        <div className="pm-kv"><span className="k">Tier</span><span className="v"><Badge tone="blue">{item.tier}</Badge></span></div>
+        <div className="pm-kv"><span className="k">State</span><span className="v"><Badge tone={item.state === "Approved" ? "green" : item.state === "Rejected" ? "red" : "amber"}>{item.state}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Risk score</span><span className="v pm-num">{item.risk}/100</span></div>
+        <div className="pm-kv"><span className="k">Reviewer</span><span className="v">{item.reviewer}</span></div>
+        <div className="pm-kv"><span className="k">Age</span><span className="v">{item.ageHours}h</span></div>
+      </div>
+      {item.flags.length > 0 && <div className="pm-card pm-card-pad"><div className="pm-card-head"><h6 className="pm-card-title">Flags</h6></div><div className="p-2 d-flex flex-wrap gap-1">{item.flags.map((f) => <Badge key={f} tone="red">{f}</Badge>)}</div></div>}
+    </Drawer>
+  );
+}
+
+/* ============================ 17. Applicant profile modal ============================ */
+export function ApplicantProfileModal({ item, onClose }: { item: KycCase | null; onClose: () => void }) {
+  if (!item) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-person-badge" tone="blue" title="Applicant profile" subtitle={item.name}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Full name</span><span className="v">{item.name}</span></div>
+        <div className="pm-kv"><span className="k">Date of birth</span><span className="v">15 Mar 1990</span></div>
+        <div className="pm-kv"><span className="k">Nationality</span><span className="v">Kenyan</span></div>
+        <div className="pm-kv"><span className="k">ID number</span><span className="v mono">34567890</span></div>
+        <div className="pm-kv"><span className="k">Phone</span><span className="v mono">+254 712 345 678</span></div>
+        <div className="pm-kv"><span className="k">Email</span><span className="v">{item.name.toLowerCase().replace(/\s/g, ".")}@email.com</span></div>
+        <div className="pm-kv"><span className="k">Address</span><span className="v">Kilimani, Nairobi</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 18. Document viewer modal ============================ */
+export function DocumentViewerModal({ doc, onClose }: { doc: { name: string; type: string } | null; onClose: () => void }) {
+  if (!doc) return null;
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-file-earmark-image" size="lg"
+      title={doc.name} subtitle={doc.type}>
+      <div className="pm-modal-body">
+        <div className="pm-card pm-card-pad text-center" style={{ minHeight: 200, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div><i className="bi bi-file-earmark-image" style={{ fontSize: "3rem", color: "#c3cbd9" }} />
+            <div style={{ fontWeight: 700, marginTop: 8 }}>{doc.name}</div>
+            <div style={{ fontSize: ".76rem", color: "var(--pm-muted)" }}>{doc.type} · Document preview</div></div>
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm me-auto" onClick={onClose}>Close</button>
+        <button className="btn btn-outline-secondary btn-sm"><i className="bi bi-download me-1" />Download</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 19. KYC timeline modal ============================ */
+export function KycTimelineModal({ item, onClose }: { item: KycCase | null; onClose: () => void }) {
+  if (!item) return null;
+  const events = [
+    { time: "24 Aug 14:32", action: "Case opened", detail: "Auto-routed to Joseph Mwangi", icon: "bi-folder-plus", color: "#2e90fa" },
+    { time: "24 Aug 14:30", action: "Sanctions screening", detail: "Clear — no matches found", icon: "bi-globe-americas", color: "#12b76a" },
+    { time: "24 Aug 14:28", action: "Liveness check", detail: "Passed — 99.2% confidence", icon: "bi-camera", color: "#12b76a" },
+    { time: "24 Aug 14:25", action: "Document upload", detail: `${item.documents.length} document(s) uploaded`, icon: "bi-upload", color: "#2e90fa" },
+    { time: "24 Aug 14:20", action: "Application submitted", detail: "Tier 2 upgrade requested", icon: "bi-send", color: "#7a5af8" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-clock-history" tone="blue" title="KYC timeline" subtitle={item.id}>
+      <div className="d-flex flex-column gap-2">
+        {events.map((e, i) => (
+          <div key={i} className="d-flex align-items-start gap-3">
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: `${e.color}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <i className={`bi ${e.icon}`} style={{ color: e.color, fontSize: ".85rem" }} />
+            </div>
+            <div className="flex-grow-1">
+              <div style={{ fontWeight: 700, fontSize: ".82rem" }}>{e.action}</div>
+              <div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{e.detail}</div>
+              <div style={{ fontSize: ".68rem", color: "var(--pm-muted)", marginTop: 2 }}>{e.time}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 20. Risk factors modal ============================ */
+export function RiskFactorsModal({ item, onClose }: { item: KycCase | null; onClose: () => void }) {
+  if (!item) return null;
+  const factors = [
+    { label: "Document authenticity", score: 15, weight: 30, detail: "High confidence" },
+    { label: "Liveness check", score: 8, weight: 25, detail: "99.2% match" },
+    { label: "Sanctions screening", score: 0, weight: 20, detail: "Clear" },
+    { label: "PEP status", score: 0, weight: 15, detail: "Not a PEP" },
+    { label: "Adverse media", score: 12, weight: 10, detail: "Minor mention" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-shield-exclamation" tone="blue" title="Risk factors" subtitle={`${item.id} · score ${item.risk}/100`}>
+      <div className="pm-card pm-card-pad mb-3 text-center">
+        <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "2rem", color: item.risk > 70 ? "#f04438" : item.risk > 40 ? "#f79009" : "#12b76a" }}>{item.risk}</div>
+        <div style={{ fontSize: ".76rem", color: "var(--pm-muted)" }}>Overall risk score</div>
+      </div>
+      <div className="d-flex flex-column gap-2">
+        {factors.map((f) => (
+          <div key={f.label} className="pm-card pm-card-pad">
+            <div className="d-flex justify-content-between align-items-center mb-1">
+              <span style={{ fontWeight: 700, fontSize: ".82rem" }}>{f.label}</span>
+              <span className="pm-num" style={{ fontWeight: 700, color: f.score > 30 ? "#f04438" : f.score > 15 ? "#f79009" : "#12b76a" }}>{f.score}</span>
+            </div>
+            <div style={{ height: 6, background: "#eaedf3", borderRadius: 3, overflow: "hidden" }}>
+              <div style={{ width: `${f.score}%`, height: "100%", background: f.score > 30 ? "#f04438" : f.score > 15 ? "#f79009" : "#12b76a", borderRadius: 3 }} />
+            </div>
+            <div className="d-flex justify-content-between mt-1" style={{ fontSize: ".7rem", color: "var(--pm-muted)" }}>
+              <span>{f.detail}</span><span>Weight: {f.weight}%</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 21. Compliance checklist modal ============================ */
+export function ComplianceChecklistModal({ item, onClose }: { item: KycCase | null; onClose: () => void }) {
+  if (!item) return null;
+  const checks = [
+    { label: "ID verification", status: "Pass", date: "24 Aug 2026" },
+    { label: "Address verification", status: "Pass", date: "24 Aug 2026" },
+    { label: "Sanctions screening", status: "Clear", date: "24 Aug 2026" },
+    { label: "PEP check", status: "Clear", date: "24 Aug 2026" },
+    { label: "Adverse media", status: "Review", date: "24 Aug 2026" },
+    { label: "Source of funds", status: item.tier === "Business" ? "Pending" : "N/A", date: "—" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-list-check" tone="green" title="Compliance checklist" subtitle={item.id}>
+      <div className="d-flex flex-column gap-2">
+        {checks.map((c) => (
+          <div key={c.label} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className={`bi ${["Pass", "Clear"].includes(c.status) ? "bi-check-circle-fill" : c.status === "Review" ? "bi-hourglass-split" : c.status === "Pending" ? "bi-clock" : "bi-dash-circle"}`}
+              style={{ color: ["Pass", "Clear"].includes(c.status) ? "#12b76a" : c.status === "Review" ? "#f79009" : "#c3cbd9" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{c.label}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{c.date}</div></div>
+            <Badge tone={["Pass", "Clear"].includes(c.status) ? "green" : c.status === "Review" ? "amber" : "grey"}>{c.status}</Badge>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 22. KYC queue analytics modal ============================ */
+export function QueueAnalyticsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const stats = [
+    { label: "Pending review", value: 24, color: "#f79009" },
+    { label: "Approved today", value: 18, color: "#12b76a" },
+    { label: "Rejected today", value: 3, color: "#f04438" },
+    { label: "Avg wait time", value: "4.2h", color: "#2e90fa" },
+    { label: "Auto-cleared", value: 12, color: "#7a5af8" },
+    { label: "Escalated", value: 2, color: "#ee46bc" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-bar-chart" tone="blue" title="Queue analytics" subtitle="KYC review performance metrics">
+      <div className="row g-2 mb-3">
+        {stats.map((s) => (
+          <div className="col-6" key={s.label}><div className="pm-stat" style={{ borderLeft: `3px solid ${s.color}` }}>
+            <div className="pm-stat-label">{s.label}</div>
+            <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1.1rem", color: s.color }}>{s.value}</div></div></div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 23. Rejection reason modal ============================ */
+export function RejectionReasonModal({ item, onClose, onSubmit }: { item: KycCase | null; onClose: () => void; onSubmit: (reason: string) => void }) {
+  const { push } = useToast();
+  const [reason, setReason] = useState("");
+  if (!item) return null;
+  const reasons = [
+    "Document expired", "Blurry / unreadable image", "Name mismatch", "Document tampered",
+    "Liveness check failed", "Sanctions hit", "Incomplete application", "Other",
+  ];
+  return (
+    <Modal open onClose={onClose} tone="red" icon="bi-x-circle" size="md"
+      title="Rejection reason" subtitle={item.id}>
+      <div className="pm-modal-body">
+        <label className="form-label">Reason for rejection</label>
+        <textarea className="form-control mb-2" rows={3} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Provide a detailed reason for the applicant." />
+        <div className="d-flex gap-1 flex-wrap">
+          {reasons.map((r) => <button key={r} className="pm-chip" onClick={() => setReason(r)}>{r}</button>)}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-danger btn-sm" disabled={!reason.trim()} onClick={() => { onSubmit(reason); push({ kind: "success", title: "Rejection submitted" }); onClose(); }}>
+          <i className="bi bi-x-circle me-1" />Reject
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 24. Approval confirmation modal ============================ */
+export function ApprovalConfirmModal({ item, onClose, onApprove }: { item: KycCase | null; onClose: () => void; onApprove: () => void }) {
+  const { push } = useToast();
+  if (!item) return null;
+  return (
+    <Modal open onClose={onClose} tone="green" icon="bi-check-circle" size="md"
+      title="Approve KYC" subtitle={item.id}>
+      <div className="pm-modal-body">
+        <div className="pm-card pm-card-pad mb-3">
+          <div className="pm-kv"><span className="k">Applicant</span><span className="v">{item.name}</span></div>
+          <div className="pm-kv"><span className="k">Tier</span><span className="v"><Badge tone="blue">{item.tier}</Badge></span></div>
+          <div className="pm-kv"><span className="k">Risk score</span><span className="v pm-num">{item.risk}/100</span></div>
+        </div>
+        <div className="pm-note" style={{ borderColor: "#b7e6cf", background: "#e7f8ef", color: "#05603a" }}>
+          <i className="bi bi-shield-check me-1" />Approval will advance the applicant to the next KYC tier and log an audit event.
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { onApprove(); push({ kind: "success", title: "KYC approved" }); onClose(); }}>
+          <i className="bi bi-check-circle me-1" />Approve
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 25. Escalation modal ============================ */
+export function EscalationModal({ item, onClose }: { item: KycCase | null; onClose: () => void }) {
+  const { push } = useToast();
+  const [reason, setReason] = useState("");
+  if (!item) return null;
+  return (
+    <Modal open onClose={onClose} tone="amber" icon="bi-exclamation-triangle" size="md"
+      title="Escalate case" subtitle={item.id}>
+      <div className="pm-modal-body">
+        <label className="form-label">Escalation reason</label>
+        <textarea className="form-control mb-2" rows={3} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Why does this case need escalation?" />
+        <div className="d-flex gap-1 flex-wrap">
+          {["Sanctions match", "High risk score", "Document anomaly", "Suspected fraud", "Regulatory inquiry"].map((r) => (
+            <button key={r} className="pm-chip" onClick={() => setReason(r)}>{r}</button>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" disabled={!reason.trim()} onClick={() => { push({ kind: "success", title: "Case escalated" }); onClose(); }}>
+          <i className="bi bi-arrow-up-right me-1" />Escalate
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 26. Request more info modal ============================ */
+export function RequestInfoModal({ item, onClose }: { item: KycCase | null; onClose: () => void }) {
+  const { push } = useToast();
+  const [msg, setMsg] = useState("");
+  if (!item) return null;
+  const templates = [
+    "Please upload a clearer copy of your national ID.",
+    "We need proof of address (utility bill or bank statement).",
+    "Please complete the liveness check again.",
+    "Additional documentation required for source of funds.",
+  ];
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-envelope-paper" size="md"
+      title="Request more information" subtitle={item.id}>
+      <div className="pm-modal-body">
+        <label className="form-label">Message to applicant</label>
+        <textarea className="form-control mb-2" rows={4} value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="What additional information do you need?" />
+        <div className="d-flex gap-1 flex-wrap">
+          {templates.map((t, i) => <button key={i} className="pm-chip" onClick={() => setMsg(t)} style={{ fontSize: ".72rem" }}>Template {i + 1}</button>)}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" disabled={!msg.trim()} onClick={() => { push({ kind: "success", title: "Info request sent" }); onClose(); }}>
+          <i className="bi bi-send me-1" />Send request
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 27. KYC report modal ============================ */
+export function KycReportModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { push } = useToast();
+  const [period, setPeriod] = useState("This month");
+  return (
+    <Modal open={open} onClose={onClose} tone="blue" icon="bi-file-earmark-bar-graph" size="md"
+      title="KYC report" subtitle="Generate compliance report">
+      <div className="pm-modal-body">
+        <label className="form-label">Report period</label>
+        <select className="form-select mb-3" value={period} onChange={(e) => setPeriod(e.target.value)}>
+          {["Today", "This week", "This month", "Last quarter", "Custom"].map((p) => <option key={p}>{p}</option>)}
+        </select>
+        <label className="form-label">Include sections</label>
+        <div className="d-flex flex-column gap-2">
+          {["Approval rates", "Rejection reasons", "Avg processing time", "Risk distribution", "Agent performance"].map((s) => (
+            <label key={s} className="pm-opt active"><input type="checkbox" className="form-check-input mt-0" defaultChecked /><span style={{ fontSize: ".84rem", fontWeight: 700 }}>{s}</span></label>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { push({ kind: "success", title: "Report generated" }); onClose(); }}>
+          <i className="bi bi-download me-1" />Generate
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 28. Agent performance modal ============================ */
+export function AgentPerformanceModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const agents = [
+    { name: "Joseph Mwangi", reviewed: 45, approved: 38, rejected: 4, pending: 3, avgTime: "2.1h" },
+    { name: "Grace Wanjiru", reviewed: 38, approved: 32, rejected: 3, pending: 3, avgTime: "2.4h" },
+    { name: "Peter Njoroge", reviewed: 32, approved: 28, rejected: 2, pending: 2, avgTime: "1.8h" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-people" tone="blue" title="Agent performance" subtitle="KYC review team metrics">
+      <div className="d-flex flex-column gap-2">
+        {agents.map((a) => (
+          <div key={a.name} className="pm-card pm-card-pad">
+            <div className="d-flex align-items-center gap-3 mb-2">
+              <Avatar name={a.name} size="sm" />
+              <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".88rem" }}>{a.name}</div></div>
+              <Badge tone="green">{a.avgTime} avg</Badge>
+            </div>
+            <div className="row g-2">
+              {[{ l: "Reviewed", v: a.reviewed, c: "#2e90fa" }, { l: "Approved", v: a.approved, c: "#12b76a" }, { l: "Rejected", v: a.rejected, c: "#f04438" }, { l: "Pending", v: a.pending, c: "#f79009" }].map((x) => (
+                <div className="col-3" key={x.l}><div className="pm-stat" style={{ padding: ".4rem" }}>
+                  <div style={{ fontSize: ".6rem", color: "var(--pm-muted)" }}>{x.l}</div>
+                  <div style={{ fontWeight: 800, fontSize: ".88rem", color: x.c }}>{x.v}</div></div></div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 29. Screening detail modal ============================ */
+export function ScreeningDetailModal({ item, onClose }: { item: KycCase | null; onClose: () => void }) {
+  if (!item) return null;
+  const sources = [
+    { name: "OFAC SDN", status: "Clear", entries: 0 },
+    { name: "UN Sanctions", status: "Clear", entries: 0 },
+    { name: "EU Sanctions", status: "Clear", entries: 0 },
+    { name: "PEP Database", status: "Clear", entries: 0 },
+    { name: "Adverse Media", status: "Flagged", entries: 1 },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-globe-americas" tone="blue" title="Screening results" subtitle={item.id}>
+      <div className="d-flex flex-column gap-2">
+        {sources.map((s) => (
+          <div key={s.name} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className={`bi ${s.status === "Clear" ? "bi-check-circle-fill" : "bi-flag"}`} style={{ color: s.status === "Clear" ? "#12b76a" : "#f79009" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{s.name}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{s.entries} match(es)</div></div>
+            <Badge tone={s.status === "Clear" ? "green" : "amber"}>{s.status}</Badge>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 30. Liveness detail modal ============================ */
+export function LivenessDetailModal({ item, onClose }: { item: KycCase | null; onClose: () => void }) {
+  if (!item) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-camera" tone="green" title="Liveness check" subtitle={item.id}>
+      <div className="pm-card pm-card-pad mb-3 text-center" style={{ minHeight: 150, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div><i className="bi bi-camera-video" style={{ fontSize: "3rem", color: "#12b76a" }} />
+          <div style={{ fontWeight: 700, marginTop: 8 }}>Liveness check passed</div></div>
+      </div>
+      <div className="pm-card pm-card-pad">
+        <div className="pm-kv"><span className="k">Confidence</span><span className="v pm-num" style={{ color: "#12b76a", fontWeight: 700 }}>99.2%</span></div>
+        <div className="pm-kv"><span className="k">Timestamp</span><span className="v">24 Aug 2026 14:28</span></div>
+        <div className="pm-kv"><span className="k">Method</span><span className="v">Selfie + blink</span></div>
+        <div className="pm-kv"><span className="k">Device</span><span className="v">iPhone 15 Pro</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
 void SAVED_KYC_VIEWS;

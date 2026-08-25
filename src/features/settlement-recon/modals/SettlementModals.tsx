@@ -1394,6 +1394,149 @@ export function RunFilterDrawer({
   );
 }
 
+/* ============================ 24. Settlement analytics modal ============================ */
+export function SettlementAnalyticsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const stats = [
+    { label: "Total settled today", value: "KES 1.2B", color: "#12b76a" },
+    { label: "Pending settlements", value: "24", color: "#f79009" },
+    { label: "Breaks open", value: "14", color: "#f04438" },
+    { label: "Avg settlement time", value: "2.4h", color: "#2e90fa" },
+    { label: "Match rate", value: "99.7%", color: "#12b76a" },
+    { label: "Suspense balance", value: "KES 2.1M", color: "#7a5af8" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-graph-up" tone="blue" title="Settlement analytics" subtitle="Performance metrics">
+      <div className="row g-2 mb-3">
+        {stats.map((s) => (
+          <div className="col-6" key={s.label}><div className="pm-stat" style={{ borderLeft: `3px solid ${s.color}` }}>
+            <div className="pm-stat-label">{s.label}</div>
+            <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem", color: s.color }}>{s.value}</div></div></div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 25. Reconciliation status modal ============================ */
+export function ReconStatusDetailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const channels = [
+    { name: "M-Pesa", matched: 8420, breaks: 12, rate: 99.9 },
+    { name: "Card", matched: 3240, breaks: 3, rate: 99.9 },
+    { name: "Bank", matched: 1180, breaks: 8, rate: 99.3 },
+    { name: "Internal", matched: 45, breaks: 1, rate: 97.8 },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-check-circle" tone="green" title="Reconciliation status" subtitle="Channel-level match rates">
+      <div className="d-flex flex-column gap-2">
+        {channels.map((c) => (
+          <div key={c.name} className="pm-card pm-card-pad">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span style={{ fontWeight: 700, fontSize: ".88rem" }}>{c.name}</span>
+              <Badge tone={c.rate > 99.5 ? "green" : c.rate > 99 ? "amber" : "red"}>{c.rate}%</Badge>
+            </div>
+            <div className="d-flex justify-content-between" style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>
+              <span>{c.matched.toLocaleString()} matched</span>
+              <span>{c.breaks} breaks</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 26. Settlement insights modal ============================ */
+export function SettlementInsightsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const insights = [
+    { icon: "bi-graph-up", title: "Settlement volume up", detail: "15% increase in daily volume vs last week", tone: "green" },
+    { icon: "bi-exclamation-triangle", title: "Break rate elevated", detail: "14 breaks today, 3 above threshold", tone: "amber" },
+    { icon: "bi-check-circle", title: "Match rate stable", detail: "99.7% match rate, within target", tone: "green" },
+    { icon: "bi-clock-history", title: "Settlement time improved", detail: "Avg 2.4h, down from 3.1h", tone: "green" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-lightbulb" tone="blue" title="Settlement insights" subtitle="AI-powered analysis">
+      <div className="d-flex flex-column gap-2">
+        {insights.map((ins) => (
+          <div key={ins.title} className="pm-alert-row" style={{ borderLeftColor: ins.tone === "green" ? "#12b76a" : "#f79009" }}>
+            <i className={`bi ${ins.icon}`} style={{ color: ins.tone === "green" ? "#12b76a" : "#f79009" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{ins.title}</div><div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{ins.detail}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 27. Break detail modal ============================ */
+export function BreakDetailInfoModal({ brk, onClose }: { brk: ReconBreak | null; onClose: () => void }) {
+  if (!brk) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-exclamation-triangle" tone="red" title="Break detail" subtitle={brk.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(brk.amount)}</span></div>
+        <div className="pm-kv"><span className="k">Channel</span><span className="v">{brk.channel}</span></div>
+        <div className="pm-kv"><span className="k">Type</span><span className="v"><Badge tone="red">{brk.type}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Raised</span><span className="v">{brk.raised}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={brk.status === "Open" ? "red" : brk.status === "Escalated" ? "amber" : "green"}>{brk.status}</Badge></span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 28. Run detail modal ============================ */
+export function RunDetailInfoModal({ run, onClose }: { run: SettlementRun | null; onClose: () => void }) {
+  if (!run) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-play-circle" tone="blue" title="Run detail" subtitle={run.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Partner</span><span className="v">{run.partner}</span></div>
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(run.amount, { compact: true })}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={run.status === "Completed" ? "green" : run.status === "Processing" ? "blue" : run.status === "On hold" ? "amber" : "red"}>{run.status}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Date</span><span className="v">{run.date}</span></div>
+        <div className="pm-kv"><span className="k">Reference</span><span className="v mono">{run.reference}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 29. Suspense detail modal ============================ */
+export function SuspenseDetailInfoModal({ entry, onClose }: { entry: SuspenseEntry | null; onClose: () => void }) {
+  if (!entry) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-clock-history" tone="amber" title="Suspense entry" subtitle={entry.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(entry.amount)}</span></div>
+        <div className="pm-kv"><span className="k">Source</span><span className="v">{entry.source}</span></div>
+        <div className="pm-kv"><span className="k">Reason</span><span className="v">{entry.reason}</span></div>
+        <div className="pm-kv"><span className="k">Created</span><span className="v">{entry.created}</span></div>
+        <div className="pm-kv"><span className="k">Age</span><span className="v pm-num">{entry.ageDays} days</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 30. Settlement forecast modal ============================ */
+export function SettlementForecastModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const forecast = [
+    { partner: "Safaricom", volume: "KES 420M", settlement: "2h" },
+    { partner: "KCB Bank", volume: "KES 180M", settlement: "4h" },
+    { partner: "Equity Bank", volume: "KES 95M", settlement: "3h" },
+    { partner: "Co-op Bank", volume: "KES 62M", settlement: "5h" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-calendar-range" tone="blue" title="Settlement forecast" subtitle="Next settlement cycle">
+      <div className="d-flex flex-column gap-2">
+        {forecast.map((f) => (
+          <div key={f.partner} className="pm-card pm-card-pad d-flex align-items-center justify-content-between">
+            <div><div style={{ fontWeight: 700, fontSize: ".88rem" }}>{f.partner}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>Est. {f.settlement}</div></div>
+            <div style={{ fontWeight: 800, fontSize: ".95rem" }}>{f.volume}</div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
 void SUSPENSE;
 void STATEMENTS;
 void BANK_ACCOUNTS;

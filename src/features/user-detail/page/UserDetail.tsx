@@ -10,6 +10,10 @@ import {
   CloseAccountWizard, DataExportModal, EditProfileModal, FreezeWizard, ImpersonateModal,
   KillSessionsModal, KycDocModal, KycReverifyWizard, LoanRestructureWizard, LimitsWizard,
   RevokeTrustModal, TierChangeWizard, TxnActionModal, UserSwitcherDrawer, VipModal,
+  ProfileShareModal, WalletDetailModal, RiskRuleDetailModal, CardEligibilityModal,
+  LoginDetailModal, TxnDetailModal, LoanDetailModal, DeviceDetailModal,
+  AccountHealthModal, UserInsightModal, ComplianceCheckModal, SessionMgmtModal,
+  AccountRecoveryModal, ActivityHeatmapModal, ReferralNetworkModal,
 } from "../modals/UserDetailModals";
 
 const tierTone = (t: string) => t === "VIP" ? "violet" : t === "Business" ? "blue" : t === "Agent" ? "amber" : "grey";
@@ -46,6 +50,21 @@ export function UserDetail({ signal, onNavigate }: { signal: { action: string; n
   const [cardAct, setCardAct] = useState<typeof detail.cards[0] | null>(null);
   const [loanAct, setLoanAct] = useState<LoanRec | null>(null);
   const [txnAct, setTxnAct] = useState<{ txn: TxnRec; mode: "reverse" | "hold" | "release" } | null>(null);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [walletDetail, setWalletDetail] = useState<{ name: string; balance: number; desc: string } | null>(null);
+  const [riskRule, setRiskRule] = useState<{ id: string; rule: string; score: number; action: string; note: string } | null>(null);
+  const [cardEligOpen, setCardEligOpen] = useState(false);
+  const [loginDetail, setLoginDetail] = useState<typeof detail.logins[0] | null>(null);
+  const [txnDetail, setTxnDetail] = useState<TxnRec | null>(null);
+  const [loanDetail, setLoanDetail] = useState<LoanRec | null>(null);
+  const [deviceDetail, setDeviceDetail] = useState<typeof detail.devices[0] | null>(null);
+  const [healthOpen, setHealthOpen] = useState(false);
+  const [insightOpen, setInsightOpen] = useState(false);
+  const [complianceOpen, setComplianceOpen] = useState(false);
+  const [sessionMgmtOpen, setSessionMgmtOpen] = useState(false);
+  const [recoveryOpen, setRecoveryOpen] = useState(false);
+  const [heatmapOpen, setHeatmapOpen] = useState(false);
+  const [referralOpen, setReferralOpen] = useState(false);
 
   const [txnFilter, setTxnFilter] = useState<"all" | "in" | "out">("all");
   const [notes, setNotes] = useState<{ id: string; text: string; by: string; time: string; visible: boolean }[]>([
@@ -85,7 +104,7 @@ export function UserDetail({ signal, onNavigate }: { signal: { action: string; n
         </button>
         <div className="ms-auto">
           <div className="pm-seg d-none d-md-inline-flex">
-            <button onClick={() => push({ kind: "info", title: "Profile share link", body: "Read-only link valid 24h · watermarked." })}><i className="bi bi-link-45deg" /></button>
+            <button onClick={() => setShareOpen(true)}><i className="bi bi-link-45deg" /></button>
           </div>
         </div>
       </div>
@@ -189,7 +208,7 @@ export function UserDetail({ signal, onNavigate }: { signal: { action: string; n
                 <thead><tr><th>Wallet</th><th className="text-end">Balance</th><th className="text-end">Share</th><th>Progress</th></tr></thead>
                 <tbody>
                   {detail.wallets.map((w) => (
-                    <tr key={w.name} onClick={() => push({ kind: "info", title: w.name, body: `${kes(w.balance)} · ${w.desc}` })}>
+                    <tr key={w.name} onClick={() => setWalletDetail(w)}>
                       <td><i className={`bi ${w.icon} me-2`} style={{ color: "var(--pm-green)" }} /><span className="pm-td-strong">{w.name}</span>
                         <div className="pm-td-sub">{w.desc}</div></td>
                       <td className="text-end pm-num" style={{ fontWeight: 700 }}>{kes(w.balance)}</td>
@@ -227,7 +246,7 @@ export function UserDetail({ signal, onNavigate }: { signal: { action: string; n
               <div className="d-flex flex-column gap-2">
                 {detail.alerts.map((a) => (
                   <button key={a.id} className="pm-alert-row text-start" style={{ borderLeftColor: a.score > 75 ? "#f04438" : a.score > 50 ? "#f79009" : "#12b76a" }}
-                    onClick={() => push({ kind: "info", title: `${a.rule} · ${a.id}`, body: `${a.score}/100 · ${a.action} · ${a.note}` })}>
+                    onClick={() => setRiskRule(a)}>
                     <div className="flex-grow-1">
                       <div className="d-flex align-items-center gap-2 flex-wrap">
                         <span className="mono" style={{ fontSize: ".7rem", color: "var(--pm-muted)" }}>{a.id}</span>
@@ -452,7 +471,7 @@ export function UserDetail({ signal, onNavigate }: { signal: { action: string; n
             {detail.cards.length === 0 ? (
               <EmptyState icon="bi-credit-card" title="No cards on this account"
                 body="Issue a card from the Card Programs page (Page 23) or via the customer app."
-                action={<button className="btn btn-outline-secondary btn-sm" onClick={() => push({ kind: "info", title: "Card eligibility", body: `${current.name} is ${current.tier === "VIP" || current.tier === "Business" ? "eligible" : "not yet eligible"} — tier ${current.tier}, KYC ${current.kyc}, risk ${current.risk}.` })}>
+                action={<button className="btn btn-outline-secondary btn-sm" onClick={() => setCardEligOpen(true)}>
                   Check eligibility
                 </button>} />
             ) : (
@@ -579,6 +598,21 @@ export function UserDetail({ signal, onNavigate }: { signal: { action: string; n
       <CardActionModal card={cardAct} user={current} onClose={() => setCardAct(null)} onDone={(c, a) => setCardAct(a === "freeze" ? { ...c, status: "Frozen" } : { ...c, status: "Active" })} />
       <LoanRestructureWizard loan={loanAct} user={current} onClose={() => setLoanAct(null)} onDone={() => {}} />
       <TxnActionModal txn={txnAct?.txn ?? null} mode={txnAct?.mode ?? "reverse"} user={current} onClose={() => setTxnAct(null)} onDone={() => setTxnAct(null)} />
+      <ProfileShareModal user={shareOpen ? current : null} onClose={() => setShareOpen(false)} />
+      {walletDetail && <WalletDetailModal wallet={walletDetail} onClose={() => setWalletDetail(null)} />}
+      {riskRule && <RiskRuleDetailModal rule={riskRule} onClose={() => setRiskRule(null)} />}
+      <CardEligibilityModal user={cardEligOpen ? current : null} onClose={() => setCardEligOpen(false)} />
+      {loginDetail && <LoginDetailModal login={loginDetail} onClose={() => setLoginDetail(null)} />}
+      {txnDetail && <TxnDetailModal txn={txnDetail} onClose={() => setTxnDetail(null)} />}
+      {loanDetail && <LoanDetailModal loan={loanDetail} onClose={() => setLoanDetail(null)} />}
+      {deviceDetail && <DeviceDetailModal device={deviceDetail} onClose={() => setDeviceDetail(null)} />}
+      <AccountHealthModal user={healthOpen ? current : null} onClose={() => setHealthOpen(false)} />
+      <UserInsightModal user={insightOpen ? current : null} onClose={() => setInsightOpen(false)} />
+      <ComplianceCheckModal user={complianceOpen ? current : null} onClose={() => setComplianceOpen(false)} />
+      <SessionMgmtModal user={sessionMgmtOpen ? current : null} onClose={() => setSessionMgmtOpen(false)} />
+      <AccountRecoveryModal user={recoveryOpen ? current : null} onClose={() => setRecoveryOpen(false)} />
+      <ActivityHeatmapModal user={heatmapOpen ? current : null} onClose={() => setHeatmapOpen(false)} />
+      <ReferralNetworkModal user={referralOpen ? current : null} onClose={() => setReferralOpen(false)} />
     </>
   );
 }

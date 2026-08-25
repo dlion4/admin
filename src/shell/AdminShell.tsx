@@ -196,6 +196,10 @@ export function AdminShell({
           <div className="ms-auto d-flex align-items-center gap-2">
             <span className="pm-env d-none d-xl-inline">PRODUCTION</span>
 
+            <button className="btn btn-outline-primary btn-sm d-none d-md-inline-flex" onClick={() => onNavigate("auth")} title="Go to authentication">
+              <i className="bi bi-lock-fill me-1" /> Authentication
+            </button>
+
             <button className="pm-session d-none d-xxl-flex" onClick={() => setSessionOpen(true)} title="Session details">
               <i className="bi bi-hourglass-split" style={{ color: "var(--pm-green)" }} />
               <span className="mono">{hhmmss(secondsLeft)}</span>
@@ -318,7 +322,7 @@ export function AdminShell({
         onOpenItem={(n) => { setNotifications((p) => p.map((x) => x.id === n.id ? { ...x, unread: false } : x)); push({ kind: "info", title: n.title, body: `${n.id} acknowledged — routed to ${n.category} queue.` }); }} />
       <RolePermissionsModal open={rolesOpen} onClose={() => setRolesOpen(false)} />
       <SessionModal open={sessionOpen} onClose={() => setSessionOpen(false)} secondsLeft={secondsLeft} onExtend={() => setSecondsLeft(8 * 3600)} />
-      <SignOutModal open={signOutOpen} onClose={() => setSignOutOpen(false)} />
+      <SignOutModal open={signOutOpen} onClose={() => setSignOutOpen(false)} onNavigate={onNavigate} />
       <EmergencyLockdownWizard open={lockdownOpen} onClose={() => setLockdownOpen(false)} />
       <BroadcastWizard open={broadcastOpen} onClose={() => setBroadcastOpen(false)} />
       <HelpDrawer open={helpOpen} onClose={() => setHelpOpen(false)} onAction={(id) => { setHelpOpen(false); handleShellAction(id); }} />

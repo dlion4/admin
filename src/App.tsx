@@ -6,7 +6,7 @@ import { ROUTE_REGISTRY, ALL_PAGE_IDS, type PageSignal } from "./shell/routeRegi
 function AdminApp() {
   const getInitialPage = () => {
     const hashPage = window.location.hash.replace("#", "");
-    return ALL_PAGE_IDS.includes(hashPage) ? hashPage : "dashboard";
+    return ALL_PAGE_IDS.includes(hashPage) ? hashPage : "auth";
   };
   const [page, setPage] = useState(getInitialPage);
   const [signal, setSignal] = useState<PageSignal>({ action: "", n: 0 });
@@ -26,6 +26,11 @@ function AdminApp() {
   }, []);
 
   const ActivePage = ROUTE_REGISTRY[page];
+
+  // Authentication page is rendered without AdminShell for full-screen experience
+  if (page === "auth") {
+    return ActivePage ? <ActivePage signal={signal} onNavigate={navigate} /> : null;
+  }
 
   return (
     <AdminShell active={page} onNavigate={navigate} onPageAction={fire}>

@@ -1,0 +1,551 @@
+/* ============================================================
+   PayMo Admin — Authentication Theme
+   Bootstrap 5 + Tailwind CSS (scoped to [data-auth])
+   Inter + Sora + JetBrains Mono fonts
+   ============================================================ */
+
+/* ---- Fonts (same as index.css) ---- */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+/* ---- Tailwind CSS (scoped to [data-auth] on html) ---- */
+@import "tailwindcss";
+
+/* ============================================================
+   Scope Tailwind's base/preflight to auth page only
+   ============================================================ */
+html[data-auth] {
+  /* Override Bootstrap's resets for auth scope */
+  --tw-text-opacity: 1;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+}
+
+html[data-auth] body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
+  background: #060912 !important;
+  color: #e8eeff !important;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-bs-theme="light"] html[data-auth] body {
+  background: #eaeff8 !important;
+  color: #0d1a30 !important;
+}
+
+html[data-auth] ::selection {
+  background: color-mix(in srgb, #12b76a 45%, transparent);
+  color: #fff;
+}
+
+/* ============================================================
+   1. Theme Variables
+   ============================================================ */
+.auth-page {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Sora", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --pm-green: #12b76a;
+  --pm-green-dark: #0b8f52;
+  --pm-green-soft: #e7f8ef;
+  --pm-ink: #101828;
+  --pm-muted: #667085;
+  --pm-bg: #f2f4f8;
+  --pm-card: #ffffff;
+  --pm-border: #e6e9f0;
+  --pm-sidebar: #0b1322;
+  --pm-warn: #f79009;
+  --pm-warn-soft: #fff5e6;
+  --pm-danger: #f04438;
+  --pm-danger-soft: #fef2f2;
+  --pm-blue: #2e90fa;
+  --pm-blue-soft: #eff8ff;
+  --pm-violet: #7a5af8;
+  --pm-violet-soft: #f4f1ff;
+  --pm-radius: 16px;
+  --pm-shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 8px 24px -12px rgba(16, 24, 40, 0.12);
+  --pm-shadow-lg: 0 24px 60px -16px rgba(16, 24, 40, 0.28);
+  color-scheme: dark;
+  --auth-bg: #060912;
+  --auth-bg-2: #0a1020;
+  --auth-surface: rgba(17, 25, 43, 0.74);
+  --auth-surface-2: rgba(11, 18, 33, 0.9);
+  --auth-solid: #101a2e;
+  --auth-elevated: #13203a;
+  --auth-border: rgba(148, 173, 224, 0.16);
+  --auth-border-strong: rgba(148, 173, 224, 0.32);
+  --auth-text: #e8eeff;
+  --auth-muted: #8fa3c8;
+  --auth-faint: #64789c;
+  --auth-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.95);
+  --auth-grid: rgba(120, 160, 230, 0.05);
+  --auth-inset: rgba(255, 255, 255, 0.04);
+  --auth-primary: #12b76a;
+  --auth-secondary: #6c757d;
+  --auth-success: #12b76a;
+  --auth-danger: #f04438;
+  --auth-warning: #f79009;
+  --auth-info: #2e90fa;
+  --auth-purple: #7a5af8;
+  --auth-teal: #20c997;
+  --auth-orange: #fd7e14;
+  --bs-primary: #12b76a;
+  --bs-secondary: #6c757d;
+  --bs-success: #12b76a;
+  --bs-danger: #f04438;
+  --bs-warning: #f79009;
+  --bs-info: #2e90fa;
+}
+
+[data-bs-theme="light"] .auth-page {
+  color-scheme: light;
+  --auth-bg: #eaeff8;
+  --auth-bg-2: #f7f9fd;
+  --auth-surface: rgba(255, 255, 255, 0.88);
+  --auth-surface-2: rgba(248, 250, 253, 0.95);
+  --auth-solid: #ffffff;
+  --auth-elevated: #ffffff;
+  --auth-border: rgba(15, 30, 60, 0.12);
+  --auth-border-strong: rgba(15, 30, 60, 0.24);
+  --auth-text: #0d1a30;
+  --auth-muted: #566b8c;
+  --auth-faint: #7b8ca8;
+  --auth-shadow: 0 20px 45px -28px rgba(13, 26, 48, 0.45);
+  --auth-grid: rgba(13, 26, 48, 0.045);
+  --auth-inset: rgba(13, 26, 48, 0.03);
+}
+
+/* ============================================================
+   2. Scoped overrides — only inside .auth-page
+   ============================================================ */
+.auth-page,
+.auth-page *,
+.auth-page *::before,
+.auth-page *::after {
+  box-sizing: border-box;
+}
+
+.auth-page {
+  font-family: var(--font-sans) !important;
+  background: var(--auth-bg) !important;
+  color: var(--auth-text) !important;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-bs-theme="light"] .auth-page {
+  background: var(--auth-bg) !important;
+  color: var(--auth-text) !important;
+}
+
+/* ---- Headings ---- */
+.auth-page h1,
+.auth-page h2,
+.auth-page h3,
+.auth-page h4,
+.auth-page h5 {
+  font-family: var(--font-heading) !important;
+  letter-spacing: -0.02em !important;
+}
+
+.auth-page h1 {
+  font-size: 1.9rem !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+}
+
+@media (min-width: 640px) {
+  .auth-page h1 { font-size: 2.4rem !important; }
+}
+
+/* ---- Background effects ---- */
+.auth-page .pm-app-bg {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background:
+    radial-gradient(900px 520px at 12% -8%, color-mix(in srgb, var(--auth-primary) 24%, transparent), transparent 65%),
+    radial-gradient(760px 460px at 92% 4%, color-mix(in srgb, var(--auth-purple) 22%, transparent), transparent 62%),
+    radial-gradient(900px 620px at 60% 108%, color-mix(in srgb, var(--auth-teal) 16%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--auth-bg) 0%, var(--auth-bg-2) 100%) !important;
+}
+
+[data-bs-theme="light"] .auth-page .pm-app-bg { opacity: 0.62 !important; }
+
+.auth-page .pm-app-grid {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background-image:
+    linear-gradient(var(--auth-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--auth-grid) 1px, transparent 1px) !important;
+  background-size: 48px 48px !important;
+  mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 78%);
+}
+
+.auth-page .pm-scanline {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 140px !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--auth-info) 8%, transparent), transparent) !important;
+  animation: auth-scan 9s linear infinite;
+}
+
+/* ---- Cards ---- */
+.auth-page .pm-card,
+.auth-page header.pm-card,
+.auth-page aside.pm-card {
+  background: var(--auth-surface) !important;
+  border: 1px solid var(--auth-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--auth-shadow) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+/* ---- Panels ---- */
+.auth-page .pm-panel {
+  background: var(--auth-inset) !important;
+  border: 1px solid var(--auth-border) !important;
+  border-radius: 14px !important;
+}
+
+/* ---- Text ---- */
+.auth-page .pm-muted { color: var(--auth-muted) !important; }
+.auth-page .pm-faint { color: var(--auth-faint) !important; }
+.auth-page .pm-mono { font-family: var(--font-mono) !important; }
+
+/* ---- Buttons ---- */
+.auth-page .pm-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  border-radius: 10px !important;
+  border: 1px solid transparent !important;
+  padding: 0.58rem 1rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.01em !important;
+  cursor: pointer !important;
+  transition: transform 0.12s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, opacity 0.18s ease !important;
+  color: #fff !important;
+  background: var(--auth-secondary) !important;
+  white-space: nowrap !important;
+  font-family: var(--font-sans) !important;
+  text-decoration: none !important;
+}
+.auth-page .pm-btn:hover:not(:disabled) { transform: translateY(-1px) !important; }
+.auth-page .pm-btn:active:not(:disabled) { transform: translateY(0) scale(0.985) !important; }
+.auth-page .pm-btn:disabled { opacity: 0.5 !important; cursor: not-allowed !important; }
+.auth-page .pm-btn:focus-visible { outline: none !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--auth-primary) 45%, transparent) !important; }
+.auth-page .pm-btn-sm { padding: 0.4rem 0.7rem !important; font-size: 0.75rem !important; border-radius: 8px !important; }
+.auth-page .pm-btn-lg { padding: 0.85rem 1.5rem !important; font-size: 0.95rem !important; border-radius: 12px !important; }
+.auth-page .pm-btn-block { width: 100% !important; }
+.auth-page .pm-btn-primary { background: linear-gradient(180deg, #24a06a, var(--pm-green)) !important; border-color: var(--pm-green) !important; box-shadow: 0 10px 26px -12px color-mix(in srgb, var(--pm-green) 90%, transparent) !important; }
+.auth-page .pm-btn-success { background: linear-gradient(180deg, #24a06a, var(--pm-green)) !important; box-shadow: 0 10px 26px -12px color-mix(in srgb, var(--pm-green) 90%, transparent) !important; }
+.auth-page .pm-btn-danger { background: linear-gradient(180deg, #e4606d, var(--pm-danger)) !important; box-shadow: 0 10px 26px -12px color-mix(in srgb, var(--pm-danger) 90%, transparent) !important; }
+.auth-page .pm-btn-warning { background: linear-gradient(180deg, #ffcd39, var(--pm-warn)) !important; color: #3d2c00 !important; }
+.auth-page .pm-btn-info { background: linear-gradient(180deg, #3dd5f3, var(--pm-blue)) !important; color: #04323d !important; }
+.auth-page .pm-btn-dark { background: color-mix(in srgb, var(--auth-text) 10%, transparent) !important; border-color: var(--auth-border-strong) !important; color: var(--auth-text) !important; }
+.auth-page .pm-btn-ghost { background: transparent !important; border-color: var(--auth-border) !important; color: var(--auth-muted) !important; }
+.auth-page .pm-btn-ghost:hover:not(:disabled) { color: var(--auth-text) !important; border-color: var(--auth-border-strong) !important; background: var(--auth-inset) !important; }
+.auth-page .pm-btn-outline-primary { background: color-mix(in srgb, var(--pm-green) 12%, transparent) !important; border-color: color-mix(in srgb, var(--pm-green) 45%, transparent) !important; color: color-mix(in srgb, var(--pm-green) 82%, white 30%) !important; }
+.auth-page .pm-btn-outline-danger { background: color-mix(in srgb, var(--pm-danger) 12%, transparent) !important; border-color: color-mix(in srgb, var(--pm-danger) 45%, transparent) !important; color: color-mix(in srgb, var(--pm-danger) 78%, white 34%) !important; }
+
+/* ---- Badges ---- */
+.auth-page .pm-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  border-radius: 999px !important;
+  padding: 0.22rem 0.6rem !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  border: 1px solid transparent !important;
+  white-space: nowrap !important;
+}
+
+/* ---- Chips ---- */
+.auth-page .pm-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--auth-border) !important;
+  background: var(--auth-inset) !important;
+  padding: 0.28rem 0.7rem !important;
+  font-size: 0.72rem !important;
+  color: var(--auth-muted) !important;
+  font-family: var(--font-mono) !important;
+}
+
+/* ---- Inputs ---- */
+.auth-page .pm-input,
+.auth-page input.pm-input {
+  width: 100% !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--auth-border) !important;
+  background: var(--auth-surface-2) !important;
+  color: var(--auth-text) !important;
+  padding: 0.68rem 0.9rem !important;
+  font-size: 0.9rem !important;
+  font-family: var(--font-sans) !important;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease !important;
+  outline: none !important;
+}
+.auth-page .pm-input::placeholder { color: var(--auth-faint) !important; }
+.auth-page .pm-input:focus { border-color: color-mix(in srgb, var(--pm-green) 60%, transparent) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--pm-green) 22%, transparent) !important; }
+
+.auth-page .pm-label {
+  display: block !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.09em !important;
+  text-transform: uppercase !important;
+  color: var(--auth-faint) !important;
+  margin-bottom: 0.4rem !important;
+}
+
+/* ---- OTP ---- */
+.auth-page .pm-otp {
+  width: 3rem !important;
+  height: 3.6rem !important;
+  text-align: center !important;
+  font-family: var(--font-mono) !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: var(--auth-text) !important;
+  background: var(--auth-surface-2) !important;
+  border: 1.5px solid var(--auth-border) !important;
+  border-radius: 13px !important;
+  outline: none !important;
+  transition: all 0.15s ease !important;
+  caret-color: var(--pm-green) !important;
+}
+.auth-page .pm-otp:focus { border-color: var(--pm-green) !important; box-shadow: 0 0 0 4px color-mix(in srgb, var(--pm-green) 20%, transparent) !important; transform: translateY(-2px) !important; }
+.auth-page .pm-otp.filled { border-color: color-mix(in srgb, var(--pm-green) 55%, transparent) !important; background: color-mix(in srgb, var(--pm-green) 10%, var(--auth-surface-2)) !important; }
+.auth-page .pm-otp.error { border-color: var(--pm-danger) !important; background: color-mix(in srgb, var(--pm-danger) 12%, var(--auth-surface-2)) !important; }
+.auth-page .pm-shake { animation: auth-shake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+
+/* ---- Keypad ---- */
+.auth-page .pm-key {
+  height: 3.1rem !important;
+  border-radius: 13px !important;
+  border: 1px solid var(--auth-border) !important;
+  background: var(--auth-inset) !important;
+  color: var(--auth-text) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 1.15rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.12s ease !important;
+}
+.auth-page .pm-key:hover { background: color-mix(in srgb, var(--pm-green) 16%, transparent) !important; border-color: color-mix(in srgb, var(--pm-green) 45%, transparent) !important; transform: translateY(-1px) !important; }
+.auth-page .pm-key:active { transform: scale(0.95) !important; }
+
+/* ---- Tabs ---- */
+.auth-page .pm-tabs {
+  display: flex !important;
+  gap: 0.25rem !important;
+  border-bottom: 1px solid var(--auth-border) !important;
+  overflow-x: auto !important;
+  scrollbar-width: none;
+  flex-wrap: nowrap !important;
+}
+.auth-page .pm-tabs::-webkit-scrollbar { display: none; }
+.auth-page .pm-tab {
+  position: relative !important;
+  padding: 0.55rem 0.8rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  color: var(--auth-muted) !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: color 0.16s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+}
+.auth-page .pm-tab:hover { color: var(--auth-text) !important; }
+.auth-page .pm-tab.active { color: var(--pm-green) !important; }
+.auth-page .pm-tab.active::after { content: "" !important; position: absolute !important; left: 0.55rem !important; right: 0.55rem !important; bottom: -1px !important; height: 2px !important; border-radius: 2px !important; background: linear-gradient(90deg, var(--pm-green), var(--pm-blue)) !important; animation: auth-grow 0.25s ease; }
+.auth-page .pm-pill-tabs { display: inline-flex !important; gap: 0.2rem !important; padding: 0.25rem !important; border-radius: 12px !important; background: var(--auth-inset) !important; border: 1px solid var(--auth-border) !important; }
+.auth-page .pm-pill { padding: 0.35rem 0.75rem !important; font-size: 0.75rem !important; font-weight: 600 !important; border-radius: 9px !important; border: none !important; background: transparent !important; color: var(--auth-muted) !important; cursor: pointer !important; transition: all 0.15s ease !important; }
+.auth-page .pm-pill.active { background: var(--pm-green) !important; color: #fff !important; box-shadow: 0 6px 16px -8px var(--pm-green) !important; }
+
+/* ---- Tables ---- */
+.auth-page .pm-table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  font-size: 0.82rem !important;
+  --bs-table-bg: transparent !important;
+}
+.auth-page .pm-table th {
+  text-align: left !important;
+  font-size: 0.64rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--pm-muted) !important;
+  font-weight: 800 !important;
+  padding: 0.6rem 0.75rem !important;
+  background: #fafbfd !important;
+  position: sticky !important;
+  top: 0 !important;
+  backdrop-filter: blur(8px) !important;
+  z-index: 1 !important;
+  border-bottom: 1px solid var(--pm-border) !important;
+}
+.auth-page .pm-table td {
+  padding: 0.6rem 0.75rem !important;
+  border-bottom: 1px solid #f0f2f6 !important;
+  color: var(--auth-text) !important;
+  vertical-align: middle !important;
+}
+.auth-page .pm-table tbody tr:hover td { background: #fafbfd !important; }
+
+/* ---- Progress ---- */
+.auth-page .pm-progress { height: 6px !important; border-radius: 99px !important; background: #eef0f4 !important; overflow: hidden !important; border: none !important; }
+.auth-page .pm-progress-bar { height: 100% !important; border-radius: 99px !important; background: linear-gradient(90deg, var(--pm-green), #84e1b4) !important; transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important; }
+.auth-page .pm-progress-bar.danger { background: linear-gradient(90deg, var(--pm-danger), var(--auth-orange)) !important; }
+.auth-page .pm-progress-bar.success { background: linear-gradient(90deg, var(--pm-green), var(--auth-teal)) !important; }
+
+/* ---- Stepper ---- */
+.auth-page .pm-step { position: relative !important; display: flex !important; gap: 0.8rem !important; padding: 0.55rem 0.6rem !important; border-radius: 12px !important; transition: background 0.18s ease; flex-direction: row !important; }
+.auth-page .pm-step.current { background: color-mix(in srgb, var(--pm-green) 12%, transparent) !important; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pm-green) 30%, transparent) !important; }
+.auth-page .pm-step-dot { display: grid !important; place-items: center !important; width: 2rem !important; height: 2rem !important; border-radius: 999px !important; font-size: 0.72rem !important; font-weight: 700 !important; border: 1.5px solid var(--auth-border-strong) !important; color: var(--auth-faint) !important; background: var(--auth-surface-2) !important; flex: none !important; z-index: 1 !important; transition: all 0.22s ease; }
+.auth-page .pm-step.done .pm-step-dot { background: var(--pm-green) !important; border-color: var(--pm-green) !important; color: #fff !important; }
+.auth-page .pm-step.current .pm-step-dot { background: var(--pm-green) !important; border-color: var(--pm-green) !important; color: #fff !important; box-shadow: 0 0 0 5px color-mix(in srgb, var(--pm-green) 22%, transparent) !important; }
+.auth-page .pm-step-line { position: absolute !important; left: 1.6rem !important; top: 2.5rem !important; bottom: -0.6rem !important; width: 2px !important; background: var(--auth-border) !important; }
+.auth-page .pm-step.done .pm-step-line { background: color-mix(in srgb, var(--pm-green) 70%, transparent) !important; }
+
+/* ---- Role cards ---- */
+.auth-page .pm-role { position: relative !important; text-align: left !important; width: 100% !important; border-radius: 16px !important; border: 1px solid var(--auth-border) !important; background: var(--auth-surface-2) !important; padding: 0.95rem !important; cursor: pointer !important; overflow: hidden !important; transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease !important; }
+.auth-page .pm-role::before { content: "" !important; position: absolute !important; inset: 0 !important; background: radial-gradient(320px 120px at 12% 0%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%) !important; opacity: 0 !important; transition: opacity 0.22s ease; }
+.auth-page .pm-role:hover { transform: translateY(-3px) !important; border-color: color-mix(in srgb, var(--accent) 48%, transparent) !important; box-shadow: 0 20px 40px -26px color-mix(in srgb, var(--accent) 85%, transparent) !important; }
+.auth-page .pm-role:hover::before { opacity: 0.7 !important; }
+.auth-page .pm-role.selected { border-color: color-mix(in srgb, var(--accent) 78%, transparent) !important; background: color-mix(in srgb, var(--accent) 12%, var(--auth-surface-2)) !important; box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent), 0 22px 44px -24px color-mix(in srgb, var(--accent) 90%, transparent) !important; }
+.auth-page .pm-role.selected::before { opacity: 1 !important; }
+.auth-page .pm-role-check { display: grid !important; place-items: center !important; width: 1.35rem !important; height: 1.35rem !important; border-radius: 999px !important; border: 1.5px solid var(--auth-border-strong) !important; color: transparent !important; transition: all 0.18s ease; flex: none !important; }
+.auth-page .pm-role.selected .pm-role-check { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; animation: auth-pop 0.28s ease; }
+.auth-page .pm-role-icon { display: grid !important; place-items: center !important; width: 2.6rem !important; height: 2.6rem !important; border-radius: 13px !important; font-size: 1.2rem !important; background: color-mix(in srgb, var(--accent) 18%, transparent) !important; border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent) !important; flex: none !important; }
+
+/* ---- Overlays ---- */
+.auth-page .pm-backdrop { position: fixed !important; inset: 0 !important; z-index: 60 !important; background: rgba(3, 6, 15, 0.72) !important; backdrop-filter: blur(6px) !important; animation: auth-fade 0.2s ease; }
+.auth-page .pm-modal { background: var(--auth-solid) !important; border: 1px solid var(--auth-border-strong) !important; border-radius: 20px !important; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.85) !important; animation: auth-modal-in 0.28s cubic-bezier(0.22, 1, 0.36, 1); max-height: 88vh !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; }
+.auth-page .pm-offcanvas { background: var(--auth-solid) !important; border-left: 1px solid var(--auth-border-strong) !important; box-shadow: -30px 0 80px -30px rgba(0, 0, 0, 0.8) !important; animation: auth-slide-left 0.3s cubic-bezier(0.22, 1, 0.36, 1); display: flex !important; flex-direction: column !important; }
+.auth-page .pm-toast { border-radius: 13px !important; border: 1px solid var(--auth-border-strong) !important; border-left: 3px solid var(--pm-green) !important; background: var(--auth-elevated) !important; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7) !important; animation: auth-slide-up 0.25s cubic-bezier(0.22, 1, 0.36, 1); overflow: hidden !important; color: var(--auth-text) !important; padding: 0.65rem 0.8rem !important; display: flex !important; gap: 0.6rem !important; }
+.auth-page .pm-popover { position: absolute !important; z-index: 40 !important; background: var(--auth-elevated) !important; border: 1px solid var(--auth-border-strong) !important; border-radius: 14px !important; box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.7) !important; animation: auth-pop 0.18s ease; }
+
+/* ---- Effects ---- */
+.auth-page .pm-dot-live { width: 7px !important; height: 7px !important; border-radius: 999px !important; background: var(--pm-green) !important; box-shadow: 0 0 0 0 color-mix(in srgb, var(--pm-green) 70%, transparent) !important; animation: auth-blip 1.8s infinite; }
+.auth-page .pm-ring-pulse::after { content: "" !important; position: absolute !important; inset: -6px !important; border-radius: inherit !important; border: 2px solid color-mix(in srgb, var(--pm-green) 60%, transparent) !important; animation: auth-ring 1.8s ease-out infinite; }
+.auth-page .pm-shimmer { background: linear-gradient(100deg, transparent 20%, color-mix(in srgb, var(--auth-text) 12%, transparent) 45%, transparent 70%) !important; background-size: 220% 100% !important; animation: auth-shimmer 1.6s linear infinite; }
+.auth-page .pm-fade-up { animation: auth-slide-up 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ---- Scrollbar ---- */
+.auth-page .pm-scroll { scrollbar-width: thin !important; scrollbar-color: var(--auth-border-strong) transparent !important; }
+.auth-page .pm-scroll::-webkit-scrollbar { width: 8px !important; height: 8px !important; }
+.auth-page .pm-scroll::-webkit-scrollbar-thumb { background: var(--auth-border-strong) !important; border-radius: 99px !important; }
+.auth-page .pm-scroll::-webkit-scrollbar-track { background: transparent !important; }
+
+/* ---- Misc ---- */
+.auth-page .pm-spin { animation: auth-spin 1s linear infinite; }
+
+/* ============================================================
+   3. Layout — 3-column grid matching original design
+   ============================================================ */
+
+/* Auth body: sidebar + content grid */
+.auth-page .auth-body {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1280px) {
+  .auth-page .auth-body {
+    grid-template-columns: 260px 1fr;
+  }
+}
+
+/* Hero section: title + gate badges */
+.auth-page .auth-hero {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .auth-page .auth-hero {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+  }
+}
+
+
+
+/* Gate flow strip */
+.auth-page .auth-gates-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  overflow-x: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--auth-border);
+  margin-top: 0.75rem;
+}
+
+/* Gate badges in hero */
+.auth-page .auth-gate-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ============================================================
+   4. Keyframes
+   ============================================================ */
+@keyframes auth-fade { from { opacity: 0; } }
+@keyframes auth-modal-in { from { opacity: 0; transform: translateY(18px) scale(0.97); } }
+@keyframes auth-slide-up { from { opacity: 0; transform: translateY(14px); } }
+@keyframes auth-slide-left { from { transform: translateX(100%); } }
+@keyframes auth-pop { from { transform: scale(0.7); opacity: 0; } }
+@keyframes auth-grow { from { transform: scaleX(0.2); } }
+@keyframes auth-shake { 10%, 90% { transform: translateX(-2px); } 20%, 80% { transform: translateX(4px); } 30%, 50%, 70% { transform: translateX(-7px); } 40%, 60% { transform: translateX(7px); } }
+@keyframes auth-ring { 0% { transform: scale(0.9); opacity: 0.9; } 100% { transform: scale(1.35); opacity: 0; } }
+@keyframes auth-blip { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pm-green) 65%, transparent); } 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@keyframes auth-shimmer { to { background-position: -220% 0; } }
+@keyframes auth-scan { 0% { top: -140px; } 100% { top: 100%; } }
+@keyframes auth-spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   5. Responsive
+   ============================================================ */
+@media (max-width: 640px) {
+  .auth-page .pm-card { border-radius: 14px !important; }
+  .auth-page .pm-btn { padding: 0.5rem 0.8rem !important; font-size: 0.8rem !important; }
+  .auth-page .pm-btn-sm { padding: 0.35rem 0.6rem !important; font-size: 0.7rem !important; }
+  .auth-page .pm-otp { width: 2.5rem !important; height: 3rem !important; font-size: 1.2rem !important; }
+  .auth-page .pm-key { height: 2.6rem !important; font-size: 1rem !important; }
+  .auth-page .pm-panel { padding: 0.6rem !important; }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .auth-page .pm-card { border-radius: 16px !important; }
+}

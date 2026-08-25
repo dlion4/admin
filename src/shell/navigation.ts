@@ -72,6 +72,7 @@ export const NAV: NavGroup[] = [
   {
     id: "platform", label: "PLATFORM ADMINISTRATION", icon: "bi-shield-lock",
     pages: [
+      { id: "auth", page: 0, label: "Authentication", icon: "bi-lock-fill", ready: true, summary: "Multi-layer admin authentication with role-based access control.", sections: ["Identity verification", "Role selection", "Security gates", "Session management"] },
       { id: "admins", page: 29, label: "Admin Management", icon: "bi-person-gear", ready: true, summary: "18 admin accounts across 9 role tiers with passkeys.", sections: ["Admin list", "Invite flow", "Passkey registry", "Session control"] },
       { id: "roles", page: 30, label: "Permissions & Roles", icon: "bi-diagram-3", ready: true, summary: "Role tiers and the 64-cell permission matrix.", sections: ["Role tiers", "Permission matrix", "Custom roles", "Change history"] },
       { id: "audit", page: 31, label: "Audit Log", icon: "bi-list-check", ready: true, summary: "Immutable audit trail of every admin action.", sections: ["Search", "Actor filter", "Diff viewer", "Legal export"] },
@@ -102,6 +103,12 @@ export const NAV: NavGroup[] = [
     id: "analytics", label: "ANALYTICS & REPORTING", icon: "bi-bar-chart",
     pages: [
       { id: "analytics", page: 42, label: "Analytics Dashboard", icon: "bi-pie-chart", ready: true, summary: "Self-serve explorer, scheduled reports and warehouse sync.", sections: ["Explorer", "Saved reports", "Schedules", "Warehouse"] },
+    ],
+  },
+  {
+    id: "company", label: "COMPANY", icon: "bi-building",
+    pages: [
+      { id: "paymo-ltd", page: 44, label: "PayMo Digital Bank Ltd", icon: "bi-bank", ready: true, summary: "Company profile, treasury, P&L, cap table, budget, compliance and strategic governance.", sections: ["Company profile", "Treasury", "P&L statement", "Cap table & equity", "Budget & forecast", "Compliance", "Strategic governance", "Founders & stakeholders", "Board resolutions", "Dividends"] },
     ],
   },
 ];

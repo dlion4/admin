@@ -233,7 +233,7 @@ export function SessionModal({ open, onClose, secondsLeft, onExtend }: {
   ];
   return (
     <Modal open={open} onClose={onClose} tone="blue" icon="bi-shield-lock" size="lg"
-      title="Session & security" subtitle="Gate 1 PIN · Gate 2 Passkey · Gate 3 TOTP · Gate 4 Session PIN — all satisfied">
+      title="Session & security" subtitle="PIN · Passkey · TOTP · Session PIN — all satisfied">
       <div className="pm-modal-body">
         <div className="row g-2 mb-3">
           {[
@@ -287,7 +287,7 @@ export function SessionModal({ open, onClose, secondsLeft, onExtend }: {
 }
 
 /* ---------------------------------------------------------------- 5. Sign out confirm */
-export function SignOutModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function SignOutModal({ open, onClose, onNavigate }: { open: boolean; onClose: () => void; onNavigate?: (id: string) => void }) {
   const { push } = useToast();
   const [all, setAll] = useState(false);
   return (
@@ -305,6 +305,9 @@ export function SignOutModal({ open, onClose }: { open: boolean; onClose: () => 
         <button className="btn btn-danger btn-sm" onClick={() => {
           push({ kind: "info", title: "Signed out (demo)", body: all ? "All 3 sessions terminated." : "This session terminated." });
           onClose();
+          if (onNavigate) {
+            onNavigate("auth");
+          }
         }}><i className="bi bi-box-arrow-right me-1" />Sign out</button>
       </div>
     </Modal>

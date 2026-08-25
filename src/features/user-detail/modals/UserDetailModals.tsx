@@ -970,5 +970,379 @@ export function UserSwitcherDrawer({ users, current, open, onClose, onSelect }: 
   );
 }
 
+/* ============================ 21. Profile share modal ============================ */
+export function ProfileShareModal({ user, onClose }: { user: FeaturedUser | null; onClose: () => void }) {
+  const { push } = useToast();
+  const [expiry, setExpiry] = useState("24h");
+  const [perm, setPerm] = useState<"view" | "comment">("view");
+  if (!user) return null;
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-link-45deg" size="md"
+      title="Share profile" subtitle="Generate a read-only shareable link">
+      <div className="pm-modal-body">
+        <div className="pm-card pm-card-pad mb-3">
+          <div className="pm-kv"><span className="k">Link</span><span className="v mono" style={{ fontSize: ".76rem" }}>https://paymo.co.ke/share/{user.id.toLowerCase()}-{Date.now().toString(36)}</span></div>
+          <div className="pm-kv"><span className="k">Created</span><span className="v">{new Date().toLocaleDateString("en-GB")}</span></div>
+        </div>
+        <label className="form-label">Expiry</label>
+        <div className="d-flex gap-1 flex-wrap mb-3">
+          {["1h", "24h", "7d", "30d"].map((e) => (
+            <button key={e} className={`pm-chip ${expiry === e ? "active" : ""}`} onClick={() => setExpiry(e)}>{e}</button>
+          ))}
+        </div>
+        <label className="form-label">Permission</label>
+        <div className="d-flex gap-2 mb-3">
+          {[{ v: "view" as const, l: "View only" }, { v: "comment" as const, l: "View + comment" }].map((p) => (
+            <button key={p.v} className={`pm-opt flex-grow-1 ${perm === p.v ? "active" : ""}`} onClick={() => setPerm(p.v)}>
+              <span style={{ fontSize: ".84rem", fontWeight: 700 }}>{p.l}</span>
+            </button>
+          ))}
+        </div>
+        <div className="pm-note"><i className="bi bi-info-circle me-1" />Link is watermarked with your identity and logged in the audit trail.</div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { push({ kind: "success", title: "Link copied to clipboard", body: `Expires in ${expiry} · ${perm} access` }); onClose(); }}>
+          <i className="bi bi-clipboard me-1" />Copy link
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 22. Wallet detail modal ============================ */
+export function WalletDetailModal({ wallet, onClose }: { wallet: { name: string; balance: number; desc: string } | null; onClose: () => void }) {
+  if (!wallet) return null;
+  const txns = [
+    { id: "W-TXN-001", time: "24 Aug 14:28", type: "Credit", amount: 15000, desc: "M-Pesa deposit" },
+    { id: "W-TXN-002", time: "23 Aug 09:15", type: "Debit", amount: -4200, desc: "Bill payment" },
+    { id: "W-TXN-003", time: "22 Aug 16:05", type: "Credit", amount: 50000, desc: "Bank transfer" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-wallet2" tone="blue" title={wallet.name} subtitle={wallet.desc}>
+      <div className="pm-card pm-card-pad mb-3 text-center">
+        <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1.8rem" }}>{kes(wallet.balance)}</div>
+        <div style={{ fontSize: ".76rem", color: "var(--pm-muted)" }}>Available balance</div>
+      </div>
+      <div className="pm-card">
+        <div className="pm-card-head"><h6 className="pm-card-title">Recent activity</h6></div>
+        <div className="p-2 d-flex flex-column gap-1">
+          {txns.map((t) => (
+            <div key={t.id} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+              <div style={{ width: 32, height: 32, borderRadius: 8, background: t.amount > 0 ? "#e7f8ef" : "#fef2f2", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <i className={`bi ${t.amount > 0 ? "bi-arrow-down-left" : "bi-arrow-up-right"}`} style={{ color: t.amount > 0 ? "#12b76a" : "#f04438", fontSize: ".85rem" }} />
+              </div>
+              <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".82rem" }}>{t.desc}</div><div style={{ fontSize: ".7rem", color: "var(--pm-muted)" }}>{t.id} · {t.time}</div></div>
+              <div style={{ fontWeight: 700, fontSize: ".88rem", color: t.amount > 0 ? "#12b76a" : "var(--pm-ink)" }}>{t.amount > 0 ? "+" : ""}{kes(Math.abs(t.amount))}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 23. Risk rule detail modal ============================ */
+export function RiskRuleDetailModal({ rule, onClose }: { rule: { id: string; rule: string; score: number; action: string; note: string } | null; onClose: () => void }) {
+  if (!rule) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-shield-exclamation" tone={rule.score > 70 ? "red" : rule.score > 40 ? "amber" : "green"}
+      title={rule.rule} subtitle={rule.id}>
+      <div className="pm-card pm-card-pad mb-3 text-center">
+        <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "2rem", color: rule.score > 70 ? "#f04438" : rule.score > 40 ? "#f79009" : "#12b76a" }}>{rule.score}</div>
+        <div style={{ fontSize: ".76rem", color: "var(--pm-muted)" }}>Risk score</div>
+      </div>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Action</span><span className="v"><Badge tone={rule.action === "Block" ? "red" : rule.action === "Review" ? "amber" : "green"}>{rule.action}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Note</span><span className="v">{rule.note}</span></div>
+        <div className="pm-kv"><span className="k">Last triggered</span><span className="v">24 Aug 2026 14:32</span></div>
+        <div className="pm-kv"><span className="k">Trigger count (30d)</span><span className="v">12</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 24. Card eligibility modal ============================ */
+export function CardEligibilityModal({ user, onClose }: { user: FeaturedUser | null; onClose: () => void }) {
+  if (!user) return null;
+  const eligible = user.tier === "VIP" || user.tier === "Business";
+  const checks = [
+    { label: "KYC verified", pass: user.kyc === "Verified", detail: user.kyc },
+    { label: "Tier requirement", pass: eligible, detail: `${user.tier} tier` },
+    { label: "Risk score", pass: user.risk < 60, detail: `${user.risk}/100` },
+    { label: "Account active", pass: user.status === "Active", detail: user.status },
+    { label: "Age verified", pass: true, detail: "18+ confirmed" },
+  ];
+  return (
+    <Modal open onClose={onClose} tone={eligible ? "green" : "amber"} icon="bi-credit-card" size="md"
+      title="Card eligibility" subtitle={`${user.name} · ${eligible ? "eligible" : "not eligible"}`}>
+      <div className="pm-modal-body">
+        <div className="d-flex flex-column gap-2">
+          {checks.map((c) => (
+            <div key={c.label} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+              <i className={`bi ${c.pass ? "bi-check-circle-fill" : "bi-x-circle-fill"}`} style={{ color: c.pass ? "#12b76a" : "#f04438" }} />
+              <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{c.label}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{c.detail}</div></div>
+              <Badge tone={c.pass ? "green" : "red"}>{c.pass ? "Pass" : "Fail"}</Badge>
+            </div>
+          ))}
+        </div>
+        {!eligible && <div className="pm-note mt-3"><i className="bi bi-info-circle me-1" />Upgrade to VIP or Business tier to unlock card issuance.</div>}
+      </div>
+      <div className="pm-modal-foot"><button className="btn btn-primary btn-sm" onClick={onClose}>Close</button></div>
+    </Modal>
+  );
+}
+
+/* ============================ 25. Login detail modal ============================ */
+export function LoginDetailModal({ login, onClose }: { login: LoginRec | null; onClose: () => void }) {
+  if (!login) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-box-arrow-in-right" tone="blue" title="Session detail" subtitle={login.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Device</span><span className="v">{login.device}</span></div>
+        <div className="pm-kv"><span className="k">IP address</span><span className="v mono">{login.ip}</span></div>
+        <div className="pm-kv"><span className="k">Location</span><span className="v">{login.location}</span></div>
+        <div className="pm-kv"><span className="k">Time</span><span className="v">{login.time}</span></div>
+        <div className="pm-kv"><span className="k">Duration</span><span className="v">{login.duration}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={login.status === "Active" ? "green" : "grey"}>{login.status}</Badge></span></div>
+        <div className="pm-kv"><span className="k">MFA method</span><span className="v">{login.mfa}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 26. Transaction detail modal ============================ */
+export function TxnDetailModal({ txn, onClose }: { txn: TxnRec | null; onClose: () => void }) {
+  if (!txn) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-receipt" tone="blue" title="Transaction detail" subtitle={txn.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Type</span><span className="v">{txn.type}</span></div>
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700, color: txn.amount > 0 ? "#12b76a" : "var(--pm-ink)" }}>{txn.amount > 0 ? "+" : ""}{kes(Math.abs(txn.amount))}</span></div>
+        <div className="pm-kv"><span className="k">Time</span><span className="v">{txn.time}</span></div>
+        <div className="pm-kv"><span className="k">Channel</span><span className="v">{txn.channel}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={txn.status === "Completed" ? "green" : txn.status === "Failed" ? "red" : "amber"}>{txn.status}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Counterparty</span><span className="v">{txn.counterparty}</span></div>
+        <div className="pm-kv"><span className="k">Reference</span><span className="v mono">{txn.ref}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 27. Loan detail modal ============================ */
+export function LoanDetailModal({ loan, onClose }: { loan: LoanRec | null; onClose: () => void }) {
+  if (!loan) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-cash-stack" tone="blue" title="Loan detail" subtitle={loan.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Principal</span><span className="v pm-num">{kes(loan.principal)}</span></div>
+        <div className="pm-kv"><span className="k">Outstanding</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(loan.outstanding)}</span></div>
+        <div className="pm-kv"><span className="k">Rate</span><span className="v">{loan.rate}% p.a.</span></div>
+        <div className="pm-kv"><span className="k">Monthly instalment</span><span className="v pm-num">{kes(loan.monthly)}</span></div>
+        <div className="pm-kv"><span className="k">Next payment</span><span className="v">{loan.nextPayment}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={loan.status === "Current" ? "green" : loan.status === "Delinquent" ? "red" : "grey"}>{loan.status}</Badge></span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 28. Device detail modal ============================ */
+export function DeviceDetailModal({ device, onClose }: { device: DeviceRec | null; onClose: () => void }) {
+  if (!device) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-phone" tone="blue" title="Device detail" subtitle={device.model}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Model</span><span className="v">{device.model}</span></div>
+        <div className="pm-kv"><span className="k">OS</span><span className="v">{device.os}</span></div>
+        <div className="pm-kv"><span className="k">Fingerprint</span><span className="v mono" style={{ fontSize: ".72rem" }}>{device.fp}</span></div>
+        <div className="pm-kv"><span className="k">First seen</span><span className="v">{device.firstSeen}</span></div>
+        <div className="pm-kv"><span className="k">Last seen</span><span className="v">{device.lastSeen}</span></div>
+        <div className="pm-kv"><span className="k">Trust level</span><span className="v"><Badge tone={device.trust === "High" ? "green" : device.trust === "Medium" ? "amber" : "red"}>{device.trust}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Sessions (30d)</span><span className="v">{device.sessions}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 29. Account health modal ============================ */
+export function AccountHealthModal({ user, onClose }: { user: FeaturedUser | null; onClose: () => void }) {
+  if (!user) return null;
+  const health = user.risk < 40 ? 88 : user.risk < 70 ? 62 : 35;
+  const factors = [
+    { label: "Account age", score: 75, detail: "Since 15 Aug 2026" },
+    { label: "KYC status", score: user.kyc === "Verified" ? 95 : 30, detail: user.kyc },
+    { label: "Risk score", score: 100 - user.risk, detail: `${user.risk}/100` },
+    { label: "Activity level", score: user.txn30d > 20 ? 85 : 45, detail: `${user.txn30d} txns/30d` },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-heart-pulse" tone={health > 70 ? "green" : health > 50 ? "amber" : "red"}
+      title="Account health" subtitle={`${user.name} · ${health}/100`}>
+      <div className="pm-card pm-card-pad mb-3 text-center">
+        <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "2.5rem", color: health > 70 ? "#12b76a" : health > 50 ? "#f79009" : "#f04438" }}>{health}</div>
+        <div style={{ fontSize: ".76rem", color: "var(--pm-muted)" }}>Overall health</div>
+      </div>
+      <div className="d-flex flex-column gap-2">
+        {factors.map((f) => (
+          <div key={f.label} className="pm-card pm-card-pad">
+            <div className="d-flex justify-content-between align-items-center mb-1">
+              <span style={{ fontWeight: 700, fontSize: ".82rem" }}>{f.label}</span>
+              <span className="pm-num" style={{ fontWeight: 700, color: f.score > 70 ? "#12b76a" : f.score > 50 ? "#f79009" : "#f04438" }}>{f.score}</span>
+            </div>
+            <div style={{ height: 6, background: "#eaedf3", borderRadius: 3, overflow: "hidden" }}>
+              <div style={{ width: `${f.score}%`, height: "100%", background: f.score > 70 ? "#12b76a" : f.score > 50 ? "#f79009" : "#f04438", borderRadius: 3 }} />
+            </div>
+            <div style={{ fontSize: ".7rem", color: "var(--pm-muted)", marginTop: 4 }}>{f.detail}</div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 30. User insights modal ============================ */
+export function UserInsightModal({ user, onClose }: { user: FeaturedUser | null; onClose: () => void }) {
+  if (!user) return null;
+  const insights = [
+    { icon: "bi-graph-up", title: "Spending pattern", detail: `Avg ${kes(Math.round(user.volume30d / Math.max(user.txn30d, 1)))} per txn · ${user.txn30d > 20 ? "above" : "below"} average`, tone: user.txn30d > 20 ? "green" : "amber" },
+    { icon: "bi-geo-alt", title: "Location", detail: `${user.county} · primarily ${user.channel} channel`, tone: "blue" },
+    { icon: "bi-clock-history", title: "Activity", detail: `Last active ${user.lastActive} · Peak 08:00-12:00`, tone: "blue" },
+    { icon: "bi-person-check", title: "Engagement", detail: `${user.referrals} referrals · NPS ${user.nps ?? "not rated"}`, tone: user.referrals > 3 ? "green" : "blue" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-lightbulb" tone="blue" title="User insights" subtitle={`${user.name} · behavioral analysis`}>
+      <div className="d-flex flex-column gap-2">
+        {insights.map((ins) => (
+          <div key={ins.title} className="pm-alert-row" style={{ borderLeftColor: ins.tone === "green" ? "#12b76a" : ins.tone === "amber" ? "#f79009" : "#2e90fa" }}>
+            <i className={`bi ${ins.icon}`} style={{ color: ins.tone === "green" ? "#12b76a" : ins.tone === "amber" ? "#f79009" : "#2e90fa" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{ins.title}</div>
+              <div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{ins.detail}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 31. Compliance check modal ============================ */
+export function ComplianceCheckModal({ user, onClose }: { user: FeaturedUser | null; onClose: () => void }) {
+  if (!user) return null;
+  const checks = [
+    { label: "KYC Tier 1", status: user.kyc === "Verified" ? "Pass" : "Pending", date: "15 Aug 2026" },
+    { label: "PEP screening", status: "Clear", date: "15 Aug 2026" },
+    { label: "Sanctions check", status: "Clear", date: "15 Aug 2026" },
+    { label: "Adverse media", status: "No findings", date: "15 Aug 2026" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-shield-check" tone="green" title="Compliance status" subtitle={`${user.name} · ${user.id}`}>
+      <div className="d-flex flex-column gap-2">
+        {checks.map((c) => (
+          <div key={c.label} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className={`bi ${["Pass", "Clear", "No findings"].includes(c.status) ? "bi-check-circle-fill" : "bi-hourglass-split"}`}
+              style={{ color: ["Pass", "Clear", "No findings"].includes(c.status) ? "#12b76a" : "#f79009" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{c.label}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{c.date}</div></div>
+            <Badge tone={["Pass", "Clear", "No findings"].includes(c.status) ? "green" : "amber"}>{c.status}</Badge>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 32. Session management modal ============================ */
+export function SessionMgmtModal({ user, onClose }: { user: FeaturedUser | null; onClose: () => void }) {
+  const { push } = useToast();
+  if (!user) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-box-arrow-right" tone="amber" title="Session management" subtitle={`${user.name} · active sessions`}>
+      <div className="pm-note mb-3" style={{ borderColor: "#fef3cd", background: "#fffbeb", color: "#92400e" }}>
+        <i className="bi bi-info-circle me-1" />Revoking a session logs the user out immediately.
+      </div>
+      <div className="d-flex flex-column gap-2">
+        <div className="pm-card pm-card-pad d-flex align-items-center gap-3">
+          <i className="bi bi-phone" style={{ color: "#12b76a", fontSize: "1.2rem" }} />
+          <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>iPhone 15 Pro</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>Active now · Nairobi</div></div>
+          <Badge tone="green" dot>Current</Badge>
+        </div>
+        <div className="pm-card pm-card-pad d-flex align-items-center gap-3">
+          <i className="bi bi-laptop" style={{ color: "#667085", fontSize: "1.2rem" }} />
+          <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>Chrome / Windows</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>Last: 23 Aug 09:15</div></div>
+          <button className="btn btn-sm btn-outline-danger" onClick={() => push({ kind: "success", title: "Session revoked" })}>Revoke</button>
+        </div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 33. Account recovery modal ============================ */
+export function AccountRecoveryModal({ user, onClose }: { user: FeaturedUser | null; onClose: () => void }) {
+  if (!user) return null;
+  return (
+    <Modal open onClose={onClose} tone="amber" icon="bi-key" size="md" title="Account recovery" subtitle={`${user.name} · ${user.id}`}>
+      <div className="pm-modal-body">
+        <div className="pm-card pm-card-pad mb-3">
+          <div className="pm-kv"><span className="k">Recovery email</span><span className="v">{user.email}</span></div>
+          <div className="pm-kv"><span className="k">Recovery phone</span><span className="v mono">{user.phone}</span></div>
+          <div className="pm-kv"><span className="k">2FA status</span><span className="v"><Badge tone="green">Enabled</Badge></span></div>
+        </div>
+        <div className="d-flex flex-column gap-2">
+          <button className="pm-dd-item"><i className="bi bi-envelope" style={{ color: "#2e90fa" }} /><span className="flex-grow-1">Send password reset</span></button>
+          <button className="pm-dd-item"><i className="bi bi-phone" style={{ color: "#12b76a" }} /><span className="flex-grow-1">Send OTP via SMS</span></button>
+          <button className="pm-dd-item"><i className="bi bi-shield-lock" style={{ color: "#7a5af8" }} /><span className="flex-grow-1">Reset 2FA</span></button>
+          <button className="pm-dd-item danger"><i className="bi bi-x-octagon" style={{ color: "#d92d20" }} /><span className="flex-grow-1">Force logout all sessions</span></button>
+        </div>
+      </div>
+      <div className="pm-modal-foot"><button className="btn btn-primary btn-sm" onClick={onClose}>Done</button></div>
+    </Modal>
+  );
+}
+
+/* ============================ 34. User activity heatmap ============================ */
+export function ActivityHeatmapModal({ user, onClose }: { user: FeaturedUser | null; onClose: () => void }) {
+  if (!user) return null;
+  const hours = Array.from({ length: 24 }, (_, i) => ({ hour: i, activity: Math.round(10 + Math.random() * 90 * (i >= 8 && i <= 20 ? 1 : 0.2)) }));
+  return (
+    <Drawer open onClose={onClose} icon="bi-grid-3x3" tone="blue" title="Activity heatmap" subtitle={`${user.name} · hourly pattern`}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="p-3">
+          <div className="d-flex gap-1 flex-wrap">
+            {hours.map((h) => (
+              <div key={h.hour} title={`${h.hour}:00 — ${h.activity}%`} style={{ width: 28, height: 28, borderRadius: 4, background: `rgba(46,144,250,${h.activity / 100})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".6rem", color: h.activity > 50 ? "#fff" : "var(--pm-muted)" }}>
+                {h.hour}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="pm-note"><i className="bi bi-info-circle me-1" />Peak: 08:00-12:00 and 18:00-21:00</div>
+    </Drawer>
+  );
+}
+
+/* ============================ 35. Referral network modal ============================ */
+export function ReferralNetworkModal({ user, onClose }: { user: FeaturedUser | null; onClose: () => void }) {
+  if (!user) return null;
+  const refs = user.referrals > 0 ? [
+    { name: "Mary Wanjiku", joined: "12 Aug 2026", status: "Active", earned: 500 },
+    { name: "John Kipchoge", joined: "05 Aug 2026", status: "Active", earned: 500 },
+  ].slice(0, user.referrals) : [];
+  return (
+    <Drawer open onClose={onClose} icon="bi-diagram-3" tone="green" title="Referral network" subtitle={`${user.name} · ${user.referrals} referral(s)`}>
+      {refs.length === 0 ? (
+        <div className="pm-empty"><i className="bi bi-people" /><div style={{ fontWeight: 700 }}>No referrals yet</div></div>
+      ) : (
+        <div className="d-flex flex-column gap-2">
+          {refs.map((r, i) => (
+            <div key={i} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: "#e7f8ef", display: "flex", alignItems: "center", justifyContent: "center" }}><i className="bi bi-person" style={{ color: "#12b76a" }} /></div>
+              <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{r.name}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>Joined {r.joined} · Earned {kes(r.earned)}</div></div>
+              <Badge tone="green">{r.status}</Badge>
+            </div>
+          ))}
+        </div>
+      )}
+    </Drawer>
+  );
+}
+
 function pushNav() { window.location.hash = "user-directory"; }
 void jsonDownload;

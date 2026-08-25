@@ -1106,6 +1106,181 @@ export function SimulatorModal({
   );
 }
 
+/* ============================ 22. Withdrawal analytics modal ============================ */
+export function WithdrawalAnalyticsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const stats = [
+    { label: "Total withdrawals today", value: "KES 240M", color: "#12b76a" },
+    { label: "Blocked transactions", value: "23", color: "#f04438" },
+    { label: "High-value queue", value: "8", color: "#f79009" },
+    { label: "Override active", value: "12", color: "#7a5af8" },
+    { label: "Fraud blocks", value: "5", color: "#f04438" },
+    { label: "Avg processing time", value: "1.8s", color: "#2e90fa" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-graph-up" tone="blue" title="Withdrawal analytics" subtitle="Control performance metrics">
+      <div className="row g-2 mb-3">
+        {stats.map((s) => (
+          <div className="col-6" key={s.label}><div className="pm-stat" style={{ borderLeft: `3px solid ${s.color}` }}>
+            <div className="pm-stat-label">{s.label}</div>
+            <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem", color: s.color }}>{s.value}</div></div></div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 23. Rule comparison modal ============================ */
+export function RuleCompareModal({ rules, onClose }: { rules: { id: string; name: string; threshold: number; action: string }[]; onClose: () => void }) {
+  if (rules.length < 2) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-arrow-left-right" tone="blue" title="Compare rules" subtitle="Side-by-side comparison">
+      <div className="pm-card pm-table-wrap">
+        <table className="pm-table">
+          <thead><tr><th>Field</th><th>{rules[0].name}</th><th>{rules[1].name}</th></tr></thead>
+          <tbody>
+            {["threshold", "action"].map((k) => (
+              <tr key={k}><td className="pm-td-strong">{k}</td><td>{k === "threshold" ? kes(rules[0][k as keyof typeof rules[0]] as number) : rules[0][k as keyof typeof rules[0]]}</td><td>{k === "threshold" ? kes(rules[1][k as keyof typeof rules[0]] as number) : rules[1][k as keyof typeof rules[0]]}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 24. Withdrawal insights modal ============================ */
+export function WithdrawalInsightsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const insights = [
+    { icon: "bi-graph-up", title: "Withdrawal volume up", detail: "12% increase in daily volume vs last week", tone: "green" },
+    { icon: "bi-exclamation-triangle", title: "High-value queue elevated", detail: "8 transactions pending review", tone: "amber" },
+    { icon: "bi-check-circle", title: "Fraud rate stable", detail: "0.01% fraud rate, within target", tone: "green" },
+    { icon: "bi-clock-history", title: "Processing time improved", detail: "Avg 1.8s, down from 2.4s", tone: "green" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-lightbulb" tone="blue" title="Withdrawal insights" subtitle="AI-powered analysis">
+      <div className="d-flex flex-column gap-2">
+        {insights.map((ins) => (
+          <div key={ins.title} className="pm-alert-row" style={{ borderLeftColor: ins.tone === "green" ? "#12b76a" : "#f79009" }}>
+            <i className={`bi ${ins.icon}`} style={{ color: ins.tone === "green" ? "#12b76a" : "#f79009" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{ins.title}</div><div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{ins.detail}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 25. Limit history modal ============================ */
+export function LimitHistoryDetailModal({ limit, onClose }: { limit: { id: string; name: string; current: number; history: { date: string; from: number; to: number; who: string }[] } | null; onClose: () => void }) {
+  if (!limit) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-clock-history" tone="blue" title="Limit history" subtitle={limit.name}>
+      <div className="d-flex flex-column gap-2">
+        {limit.history.map((h, i) => (
+          <div key={i} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className="bi bi-pencil-square" style={{ color: "#2e90fa" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{h.who}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{h.date} · {kes(h.from)} → {kes(h.to)}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 26. Fraud control detail modal ============================ */
+export function FraudControlDetailInfoModal({ rule, onClose }: { rule: { id: string; name: string; status: string; threshold: number; triggers: number } | null; onClose: () => void }) {
+  if (!rule) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-shield-exclamation" tone="blue" title="Fraud control" subtitle={rule.name}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={rule.status === "Active" ? "green" : "grey"}>{rule.status}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Threshold</span><span className="v pm-num">{rule.threshold}</span></div>
+        <div className="pm-kv"><span className="k">Triggers (30d)</span><span className="v pm-num">{rule.triggers}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 27. Blocked user detail modal ============================ */
+export function BlockedUserDetailModal({ row, onClose }: { row: { id: string; userId: string; reason: string; since: string; status: string } | null; onClose: () => void }) {
+  if (!row) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-person-x" tone="red" title="Blocked user" subtitle={row.userId}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">User ID</span><span className="v mono">{row.userId}</span></div>
+        <div className="pm-kv"><span className="k">Reason</span><span className="v">{row.reason}</span></div>
+        <div className="pm-kv"><span className="k">Since</span><span className="v">{row.since}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone="red">{row.status}</Badge></span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 28. Override history modal ============================ */
+export function OverrideHistoryDetailModal({ user, onClose }: { user: { userId: string; overrides: { date: string; limit: number; reason: string }[] } | null; onClose: () => void }) {
+  if (!user) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-clock-history" tone="blue" title="Override history" subtitle={user.userId}>
+      <div className="d-flex flex-column gap-2">
+        {user.overrides.map((o, i) => (
+          <div key={i} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className="bi bi-pencil-square" style={{ color: "#7a5af8" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{kes(o.limit)}/day</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{o.reason} · {o.date}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 29. Simulation result modal ============================ */
+export function SimulationResultInfoModal({ result, onClose }: { result: { amount: number; blocked: boolean; verify: boolean; findings: { rule: string; ok: boolean }[] } | null; onClose: () => void }) {
+  if (!result) return null;
+  return (
+    <Modal open onClose={onClose} tone={result.blocked ? "red" : result.verify ? "amber" : "green"} icon="bi-calculator" size="md" title="Simulation result" subtitle={kes(result.amount)}>
+      <div className="pm-modal-body">
+        <div className="pm-card pm-card-pad mb-3 text-center">
+          <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1.5rem", color: result.blocked ? "#f04438" : result.verify ? "#f79009" : "#12b76a" }}>
+            {result.blocked ? "BLOCKED" : result.verify ? "VERIFY" : "PASS"}
+          </div>
+        </div>
+        <div className="d-flex flex-column gap-1">
+          {result.findings.map((f) => (
+            <div key={f.rule} className="d-flex align-items-center gap-2">
+              <i className={`bi ${f.ok ? "bi-check-circle" : "bi-x-circle"}`} style={{ color: f.ok ? "#12b76a" : "#f79009" }} />
+              <span style={{ fontSize: ".82rem" }}>{f.rule}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot"><button className="btn btn-primary btn-sm" onClick={onClose}>Close</button></div>
+    </Modal>
+  );
+}
+
+/* ============================ 30. Withdrawal forecast modal ============================ */
+export function WithdrawalForecastModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const forecast = [
+    { hour: "09:00", volume: "KES 28M", risk: "Low" },
+    { hour: "12:00", volume: "KES 42M", risk: "Medium" },
+    { hour: "15:00", volume: "KES 35M", risk: "Low" },
+    { hour: "18:00", volume: "KES 18M", risk: "Low" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-calendar-range" tone="blue" title="Withdrawal forecast" subtitle="Hourly projection">
+      <div className="d-flex flex-column gap-2">
+        {forecast.map((f) => (
+          <div key={f.hour} className="pm-card pm-card-pad d-flex align-items-center justify-content-between">
+            <div><div style={{ fontWeight: 700, fontSize: ".88rem" }}>{f.hour}</div></div>
+            <div className="text-end"><div style={{ fontWeight: 800, fontSize: ".95rem" }}>{f.volume}</div>
+              <Badge tone={f.risk === "Low" ? "green" : "amber"}>{f.risk}</Badge></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
 void GLOBAL_LIMITS;
 void POOL_RULES;
 void USER_OVERRIDES;

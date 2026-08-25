@@ -838,5 +838,837 @@ export function SignOffWizard({ open, onClose }: { open: boolean; onClose: () =>
   );
 }
 
+/* ============================ 16. Nudge owner modal ============================ */
+export function NudgeOwnerModal({ owner, kpiName, onClose }: { owner: string; kpiName?: string; onClose: () => void }) {
+  const { push } = useToast();
+  const [channel, setChannel] = useState<"slack" | "email" | "sms">("slack");
+  const [msg, setMsg] = useState("");
+  const templates = [
+    `Hi ${owner.split(" ")[0]}, friendly nudge on ${kpiName || "your KPI"} — we're tracking slightly behind target. Can we sync this week?`,
+    `${owner.split(" ")[0]}, just flagging that ${kpiName || "the KPI"} is amber this week. Would appreciate an update by Friday.`,
+    `Quick reminder: ${kpiName || "KPI"} review is due. Please update progress when you get a chance.`,
+  ];
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-envelope-paper" size="md"
+      title={`Nudge ${owner}`} subtitle={kpiName ? `About: ${kpiName}` : "Send a nudge via the chosen channel"}>
+      <div className="pm-modal-body">
+        <label className="form-label">Channel</label>
+        <div className="d-flex gap-2 mb-3">
+          {[{ v: "slack" as const, i: "bi-slack", l: "Slack" }, { v: "email" as const, i: "bi-envelope", l: "Email" }, { v: "sms" as const, i: "bi-phone", l: "SMS" }].map((c) => (
+            <button key={c.v} className={`pm-opt ${channel === c.v ? "active" : ""}`} style={{ flex: 1, flexDirection: "column", gap: ".3rem" }} onClick={() => setChannel(c.v)}>
+              <i className={`bi ${c.i}`} style={{ fontSize: "1.1rem" }} /><span style={{ fontSize: ".78rem", fontWeight: 700 }}>{c.l}</span>
+            </button>
+          ))}
+        </div>
+        <label className="form-label">Message</label>
+        <textarea className="form-control mb-2" rows={4} value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="Type a message or pick a template below." />
+        <div className="d-flex gap-1 flex-wrap mb-3">
+          {templates.map((t, i) => (
+            <button key={i} className="pm-chip" onClick={() => setMsg(t)} style={{ fontSize: ".72rem" }}>Template {i + 1}</button>
+          ))}
+        </div>
+        <div className="pm-note"><i className="bi bi-info-circle me-1" />This nudge is logged in the audit trail and visible in the owner's notification history.</div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" disabled={!msg.trim()} onClick={() => { push({ kind: "success", title: `Nudge sent via ${channel}`, body: `Message delivered to ${owner}.` }); onClose(); }}>
+          <i className="bi bi-send me-1" />Send nudge
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 17. Budget report modal ============================ */
+export function BudgetReportModal({ dept, onClose }: { dept: Department; onClose: () => void }) {
+  const { push } = useToast();
+  const items = [
+    { cat: "Headcount & payroll", budget: Math.round(dept.budget * 0.52), spend: Math.round(dept.spend * 0.54) },
+    { cat: "Software & tools", budget: Math.round(dept.budget * 0.18), spend: Math.round(dept.spend * 0.16) },
+    { cat: "Cloud infrastructure", budget: Math.round(dept.budget * 0.14), spend: Math.round(dept.spend * 0.15) },
+    { cat: "Training & events", budget: Math.round(dept.budget * 0.08), spend: Math.round(dept.spend * 0.07) },
+    { cat: "Travel & office", budget: Math.round(dept.budget * 0.05), spend: Math.round(dept.spend * 0.05) },
+    { cat: "Miscellaneous", budget: Math.round(dept.budget * 0.03), spend: Math.round(dept.spend * 0.03) },
+  ];
+  return (
+    <Modal open onClose={onClose} tone="violet" icon="bi-file-earmark-spreadsheet" size="lg"
+      title={`${dept.name} — Budget Report`} subtitle={`Led by ${dept.lead} · FY2026`}>
+      <div className="pm-modal-body">
+        <div className="row g-2 mb-3">
+          {[{ l: "Total budget", v: kes(dept.budget) }, { l: "Spent YTD", v: kes(dept.spend) },
+            { l: "Remaining", v: kes(dept.budget - dept.spend) }, { l: "Burn rate", v: `${Math.round((dept.spend / dept.budget) * 100)}%` }].map((x) => (
+            <div className="col-6" key={x.l}><div className="pm-stat"><div className="pm-stat-label">{x.l}</div>
+              <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: ".95rem" }}>{x.v}</div></div></div>
+          ))}
+        </div>
+        <div className="pm-card">
+          <div className="pm-card-head"><h6 className="pm-card-title">Line items</h6></div>
+          <div className="pm-table-wrap">
+            <table className="pm-table">
+              <thead><tr><th>Category</th><th className="text-end">Budget</th><th className="text-end">Spent</th><th className="text-end">% Used</th><th style={{ width: 140 }}>Progress</th></tr></thead>
+              <tbody>{items.map((it) => {
+                const pct = Math.round((it.spend / it.budget) * 100);
+                return (<tr key={it.cat}>
+                  <td className="pm-td-strong">{it.cat}</td>
+                  <td className="text-end pm-num">{kes(it.budget, { compact: true })}</td>
+                  <td className="text-end pm-num" style={{ fontWeight: 700 }}>{kes(it.spend, { compact: true })}</td>
+                  <td className="text-end pm-num" style={{ color: pct > 90 ? "#d92d20" : pct > 75 ? "#f79009" : "#0b8f52" }}>{pct}%</td>
+                  <td><Meter value={pct} tone={pct > 90 ? "#f04438" : pct > 75 ? "#f79009" : "#12b76a"} width={120} /></td>
+                </tr>);
+              })}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm me-auto" onClick={() => { csvDownload(`${dept.id}-budget.csv`, items); push({ kind: "success", title: "Budget exported" }); }}>
+          <i className="bi bi-download me-1" />Export CSV
+        </button>
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 18. Schedule 1:1 modal ============================ */
+export function ScheduleOneOnOneModal({ lead, deptName, onClose }: { lead: string; deptName: string; onClose: () => void }) {
+  const { push } = useToast();
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("10:00");
+  const [dur, setDur] = useState("30");
+  const [agenda, setAgenda] = useState("");
+  const quickTopics = ["KPI review & blockers", "Team capacity planning", "Budget reallocation", "OKR check-in", "Career development", "Process improvements"];
+  return (
+    <Modal open onClose={onClose} tone="green" icon="bi-calendar-event" size="md"
+      title={`1:1 with ${lead}`} subtitle={`${deptName} department`}>
+      <div className="pm-modal-body">
+        <div className="row g-2 mb-3">
+          <div className="col-6"><label className="form-label">Date</label>
+            <input type="date" className="form-control" value={date} onChange={(e) => setDate(e.target.value)} /></div>
+          <div className="col-3"><label className="form-label">Time</label>
+            <select className="form-select" value={time} onChange={(e) => setTime(e.target.value)}>
+              {["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "14:00", "14:30", "15:00", "15:30", "16:00"].map((t) => <option key={t}>{t}</option>)}</select></div>
+          <div className="col-3"><label className="form-label">Duration</label>
+            <select className="form-select" value={dur} onChange={(e) => setDur(e.target.value)}>
+              {["15", "30", "45", "60"].map((d) => <option key={d}>{d} min</option>)}</select></div>
+        </div>
+        <label className="form-label">Agenda</label>
+        <textarea className="form-control mb-2" rows={3} value={agenda} onChange={(e) => setAgenda(e.target.value)}
+          placeholder="What topics should we cover?" />
+        <div className="d-flex gap-1 flex-wrap">
+          {quickTopics.map((t) => (
+            <button key={t} className="pm-chip" onClick={() => setAgenda((a) => (a ? a + "\n• " : "• ") + t)} style={{ fontSize: ".72rem" }}>{t}</button>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" disabled={!date} onClick={() => { push({ kind: "success", title: "1:1 scheduled", body: `${lead} · ${date} at ${time} · ${dur} min` }); onClose(); }}>
+          <i className="bi bi-check-circle me-1" />Schedule meeting
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 19. Share link modal ============================ */
+export function ShareLinkModal({ open, title: t, onClose }: { open: boolean; title?: string; onClose: () => void }) {
+  const { push } = useToast();
+  const [expiry, setExpiry] = useState("30d");
+  const [perm, setPerm] = useState<"view" | "comment">("view");
+  const [pass, setPass] = useState(false);
+  const link = `https://paymo.co.ke/share/kpi-${Date.now().toString(36)}`;
+  return (
+    <Modal open={open} onClose={onClose} tone="blue" icon="bi-link-45deg" size="md"
+      title={t || "Share read-only link"} subtitle="Generate a secure shareable link">
+      <div className="pm-modal-body">
+        <div className="pm-card pm-card-pad mb-3">
+          <div className="pm-kv"><span className="k">Link</span><span className="v mono" style={{ fontSize: ".76rem", wordBreak: "break-all" }}>{link}</span></div>
+          <div className="pm-kv"><span className="k">Created</span><span className="v">{new Date().toLocaleDateString("en-GB")}</span></div>
+        </div>
+        <label className="form-label">Expiry</label>
+        <div className="d-flex gap-1 flex-wrap mb-3">
+          {["24h", "7d", "30d", "90d", "Never"].map((e) => (
+            <button key={e} className={`pm-chip ${expiry === e ? "active" : ""}`} onClick={() => setExpiry(e)}>{e}</button>
+          ))}
+        </div>
+        <label className="form-label">Permission</label>
+        <div className="d-flex gap-2 mb-3">
+          {[{ v: "view" as const, l: "View only" }, { v: "comment" as const, l: "View + comment" }].map((p) => (
+            <button key={p.v} className={`pm-opt flex-grow-1 ${perm === p.v ? "active" : ""}`} onClick={() => setPerm(p.v)}>
+              <span style={{ fontSize: ".84rem", fontWeight: 700 }}>{p.l}</span>
+            </button>
+          ))}
+        </div>
+        <label className="pm-opt mb-0">
+          <input type="checkbox" className="form-check-input mt-0" checked={pass} onChange={(e) => setPass(e.target.checked)} />
+          <span style={{ fontSize: ".84rem", fontWeight: 700 }}>Require password</span>
+        </label>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { push({ kind: "success", title: "Link copied to clipboard", body: `Expires in ${expiry} · ${perm} access` }); onClose(); }}>
+          <i className="bi bi-clipboard me-1" />Copy link
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 20. Download pack modal ============================ */
+export function DownloadPackModal({ pack, onClose }: { pack: BoardPack | null; onClose: () => void }) {
+  const { push } = useToast();
+  const [fmt, setFmt] = useState("pdf");
+  const [watermark, setWatermark] = useState(true);
+  if (!pack) return null;
+  return (
+    <Modal open onClose={onClose} tone="violet" icon="bi-download" size="md"
+      title={`Download ${pack.period}`} subtitle="Choose format and options">
+      <div className="pm-modal-body">
+        <label className="form-label">Format</label>
+        <div className="d-flex gap-2 mb-3">
+          {[{ v: "pdf", i: "bi-file-earmark-pdf", l: "PDF" }, { v: "pptx", i: "bi-file-earmark-slides", l: "PowerPoint" }, { v: "xlsx", i: "bi-file-earmark-spreadsheet", l: "Excel" }].map((f) => (
+            <button key={f.v} className={`pm-opt flex-grow-1 ${fmt === f.v ? "active" : ""}`} style={{ flexDirection: "column", gap: ".3rem" }} onClick={() => setFmt(f.v)}>
+              <i className={`bi ${f.i}`} style={{ fontSize: "1.3rem", color: fmt === f.v ? "var(--pm-green)" : "var(--pm-muted)" }} />
+              <span style={{ fontSize: ".72rem", fontWeight: 700 }}>{f.l}</span>
+            </button>
+          ))}
+        </div>
+        <label className="pm-opt mb-2">
+          <input type="checkbox" className="form-check-input mt-0" checked={watermark} onChange={(e) => setWatermark(e.target.checked)} />
+          <span style={{ fontSize: ".84rem", fontWeight: 700 }}>Watermark with my identity</span>
+        </label>
+        <div className="pm-note"><i className="bi bi-info-circle me-1" />{pack.pages} pages · {pack.status} · Owner: {pack.owner}</div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { push({ kind: "success", title: "Download started", body: `${pack.period} · ${fmt.toUpperCase()} · ${pack.pages} pages` }); onClose(); }}>
+          <i className="bi bi-download me-1" />Download
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 21. KPI Anomaly modal ============================ */
+export function KpiAnomalyModal({ kpi, onClose }: { kpi: KPI | null; onClose: () => void }) {
+  if (!kpi) return null;
+  const anomalies = kpi.trend.map((v, i) => {
+    const avg = kpi.trend.reduce((a, b) => a + b, 0) / kpi.trend.length;
+    const std = Math.sqrt(kpi.trend.reduce((a, b) => a + (b - avg) ** 2, 0) / kpi.trend.length);
+    const z = std > 0 ? Math.abs(v - avg) / std : 0;
+    return { period: `T-${kpi.trend.length - 1 - i}`, value: v, zScore: z, isAnomaly: z > 1.5 };
+  }).filter((a) => a.isAnomaly);
+  return (
+    <Modal open onClose={onClose} tone="red" icon="bi-lightning" size="md"
+      title={`Anomalies — ${kpi.name}`} subtitle={`${anomalies.length} statistical outliers detected`}>
+      <div className="pm-modal-body">
+        <div className="pm-card pm-card-pad mb-3">
+          <div className="pm-kv"><span className="k">Mean</span><span className="v pm-num">{fmtKpi({ ...kpi, value: kpi.trend.reduce((a, b) => a + b, 0) / kpi.trend.length })}</span></div>
+          <div className="pm-kv"><span className="k">Std dev</span><span className="v pm-num">{Math.sqrt(kpi.trend.reduce((a, b) => a + (b - kpi.trend.reduce((x, y) => x + y, 0) / kpi.trend.length) ** 2, 0) / kpi.trend.length).toFixed(2)}</span></div>
+          <div className="pm-kv"><span className="k">Threshold</span><span className="v">z-score &gt; 1.5</span></div>
+        </div>
+        {anomalies.length === 0 ? (
+          <div className="pm-empty"><i className="bi bi-check-circle" /><div style={{ fontWeight: 700 }}>No anomalies detected</div></div>
+        ) : (
+          <div className="d-flex flex-column gap-2">
+            {anomalies.map((a) => (
+              <div key={a.period} className="pm-alert-row crit">
+                <i className="bi bi-exclamation-triangle" style={{ color: "#f04438" }} />
+                <div className="flex-grow-1">
+                  <div style={{ fontWeight: 700, fontSize: ".84rem" }}>{a.period} — {fmtKpi({ ...kpi, value: a.value })}</div>
+                  <div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>z-score {a.zScore.toFixed(2)} · deviation from mean</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm me-auto" onClick={() => { csvDownload(`${kpi.id}-anomalies.csv`, anomalies); push({ kind: "success", title: "Anomalies exported" }); }}>
+          <i className="bi bi-download me-1" />Export
+        </button>
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 22. OKR detail drawer ============================ */
+export function OkrDetailDrawer({ okr, onClose }: { okr: OKR | null; onClose: () => void }) {
+  const { push } = useToast();
+  if (!okr) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-flag" tone={okr.status === "Off track" ? "red" : okr.status === "At risk" ? "amber" : "green"}
+      title={`${okr.id} — ${okr.title}`} subtitle={`${okr.dept} · ${okr.owner} · due ${okr.due}`}
+      footer={<>
+        <button className="btn btn-outline-secondary btn-sm flex-grow-1" onClick={() => push({ kind: "info", title: "Check-in reminder sent" })}>
+          <i className="bi bi-bell me-1" />Request check-in
+        </button>
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </>}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-eyebrow">Objective</div>
+        <div style={{ fontSize: ".88rem", fontWeight: 600 }}>{okr.objective}</div>
+        <div className="d-flex justify-content-between align-items-center mt-3">
+          <Badge tone={okr.status === "Done" ? "green" : okr.status === "On track" ? "blue" : okr.status === "At risk" ? "amber" : "red"}>{okr.status}</Badge>
+          <div style={{ fontWeight: 800, fontFamily: "Sora", fontSize: "1.3rem" }}>{okr.progress}%</div>
+        </div>
+        <Meter value={okr.progress} tone={okr.progress >= 70 ? "#12b76a" : okr.progress >= 40 ? "#f79009" : "#f04438"} width={500} />
+      </div>
+      <div className="pm-card mb-3">
+        <div className="pm-card-head"><h6 className="pm-card-title">Key results breakdown</h6></div>
+        <div className="p-2">
+          {okr.kr.map((k, i) => {
+            const pct = Math.round((k.current / k.target) * 100);
+            return (
+              <div key={i} className="p-3" style={{ borderBottom: i < okr.kr.length - 1 ? "1px dashed #eaedf3" : "none" }}>
+                <div style={{ fontWeight: 700, fontSize: ".84rem", marginBottom: 6 }}>{k.text}</div>
+                <div className="d-flex align-items-center gap-2 mb-2">
+                  <Meter value={Math.min(pct, 120)} tone={pct >= 90 ? "#12b76a" : pct >= 60 ? "#f79009" : "#f04438"} width={320} />
+                  <span className="pm-num" style={{ fontWeight: 800, fontSize: ".88rem" }}>{pct}%</span>
+                </div>
+                <div className="d-flex justify-content-between" style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>
+                  <span>Current: {k.current.toLocaleString("en-KE")} {k.unit}</span>
+                  <span>Target: {k.target.toLocaleString("en-KE")} {k.unit}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="pm-card">
+        <div className="pm-card-head"><h6 className="pm-card-title">Check-in history</h6></div>
+        <div className="p-3"><div className="pm-timeline">
+          {["Weekly progress review", "Risk flagged by CTO", "KR created", "Objective approved"].map((t, i) => (
+            <div key={i} className={`pm-tl-item ${i === 0 ? "done" : i === 1 ? "warn" : ""}`}>
+              <div style={{ fontWeight: 700, fontSize: ".82rem" }}>{t}</div>
+              <div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{i === 0 ? "22 Aug 2026" : i === 1 ? "15 Aug 2026" : i === 2 ? "01 Jul 2026" : "15 Jun 2026"}</div>
+            </div>
+          ))}
+        </div></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 23. Department budget detail modal ============================ */
+export function DepartmentBudgetDetailModal({ dept, onClose }: { dept: Department | null; onClose: () => void }) {
+  if (!dept) return null;
+  const monthly = Array.from({ length: 8 }, (_, i) => ({
+    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"][i],
+    budget: Math.round(dept.budget / 12),
+    actual: Math.round(dept.spend * (0.08 + Math.random() * 0.05)),
+  }));
+  return (
+    <Modal open onClose={onClose} tone="violet" icon="bi-cash-stack" size="lg"
+      title={`${dept.name} — Budget Detail`} subtitle="Monthly breakdown FY2026">
+      <div className="pm-modal-body">
+        <div className="pm-card pm-table-wrap mb-3">
+          <table className="pm-table">
+            <thead><tr><th>Month</th><th className="text-end">Budget</th><th className="text-end">Actual</th><th className="text-end">Variance</th><th style={{ width: 120 }}>Status</th></tr></thead>
+            <tbody>{monthly.map((m) => {
+              const v = m.actual - m.budget;
+              return (<tr key={m.month}>
+                <td className="pm-td-strong">{m.month}</td>
+                <td className="text-end pm-num">{kes(m.budget, { compact: true })}</td>
+                <td className="text-end pm-num" style={{ fontWeight: 700 }}>{kes(m.actual, { compact: true })}</td>
+                <td className="text-end pm-num" style={{ color: v > 0 ? "#d92d20" : "#0b8f52" }}>{v > 0 ? "+" : ""}{kes(v, { compact: true })}</td>
+                <td><Badge tone={v > 0 ? "red" : "green"}>{v > 0 ? "Over" : "Under"}</Badge></td>
+              </tr>);
+            })}</tbody>
+          </table>
+        </div>
+        <div className="pm-note"><i className="bi bi-info-circle me-1" />Next budget review: 15 Sep 2026 with CFO.</div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm me-auto" onClick={() => { csvDownload(`${dept.id}-monthly-budget.csv`, monthly); push({ kind: "success", title: "Exported" }); }}>
+          <i className="bi bi-download me-1" />Export
+        </button>
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 24. Quarter review modal ============================ */
+export function QuarterReviewModal({ open, period, onClose }: { open: boolean; period: string; onClose: () => void }) {
+  const { push } = useToast();
+  const highlights = [
+    { label: "TPV beat", detail: "103% of target driven by Visa BIN traction", icon: "bi-graph-up-arrow", color: "#12b76a" },
+    { label: "CAC above ceiling", detail: "KES 412 vs KES 380 target — paid acquisition cost rising", icon: "bi-exclamation-triangle", color: "#f79009" },
+    { label: "Fraud loss best-ever", detail: "4.2 bps vs 5.0 bps target after v4.2.1 model", icon: "bi-shield-check", color: "#12b76a" },
+    { label: "Day-30 retention improving", detail: "54.0% vs 51.4% prior quarter, onboarding refresh working", icon: "bi-arrow-up-right", color: "#12b76a" },
+    { label: "Visa certification", detail: "85% complete — final scheme review pending", icon: "bi-hourglass-split", color: "#f79009" },
+  ];
+  return (
+    <Modal open={open} onClose={onClose} tone="green" icon="bi-journal-text" size="lg"
+      title={`${period} Review`} subtitle="Executive summary with key highlights and watch items">
+      <div className="pm-modal-body">
+        <div className="d-flex flex-column gap-2">
+          {highlights.map((h) => (
+            <div key={h.label} className="pm-alert-row" style={{ borderLeftColor: h.color }}>
+              <i className={`bi ${h.icon}`} style={{ color: h.color }} />
+              <div className="flex-grow-1">
+                <div style={{ fontWeight: 700, fontSize: ".84rem" }}>{h.label}</div>
+                <div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{h.detail}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm me-auto" onClick={() => { push({ kind: "success", title: "Review exported" }); }}>
+          <i className="bi bi-download me-1" />Export summary
+        </button>
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 25. Audit trail modal ============================ */
+export function AuditTrailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const entries = [
+    { id: "AUD-88240", time: "24 Aug 2026 14:32", user: "Joseph Mwangi", action: "Board pack signed", detail: "Q3-2026 forecast · 2FA verified", tone: "green" as const },
+    { id: "AUD-88199", time: "22 Aug 2026 09:15", user: "Sarah Kamau", action: "Target changed", detail: "Platform uptime 99.9% → 99.95% · Board approval", tone: "blue" as const },
+    { id: "AUD-88156", time: "18 Aug 2026 11:44", user: "CFO", action: "Revenue target revised", detail: "Q3 net revenue KES 112M → KES 118M", tone: "blue" as const },
+    { id: "AUD-88102", time: "14 Aug 2026 16:20", user: "CRO", action: "Fraud ceiling tightened", detail: "6 bps → 5 bps after model v4.2.1 shadow run", tone: "amber" as const },
+    { id: "AUD-88045", time: "10 Aug 2026 08:00", user: "System", action: "KPI refresh completed", detail: "21 KPIs updated · 12 green, 7 amber, 2 red", tone: "" as const },
+    { id: "AUD-87988", time: "05 Aug 2026 14:10", user: "David Kiplagat", action: "OKR advanced", detail: "OKR-04 fraud losses 82% → 88%", tone: "green" as const },
+    { id: "AUD-87901", time: "01 Aug 2026 09:00", user: "System", action: "Quarter rolled", detail: "Q2-2026 → Q3-2026 · 21 KPIs carried forward", tone: "" as const },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-clock-history" tone="blue" title="Audit trail"
+      subtitle="Immutable log of all scorecard changes">
+      <div className="d-flex flex-column gap-2">
+        {entries.map((e) => (
+          <div key={e.id} className="pm-alert-row" style={{ borderLeftColor: e.tone === "green" ? "#12b76a" : e.tone === "amber" ? "#f79009" : e.tone === "blue" ? "#2e90fa" : "#c3cbd9" }}>
+            <i className="bi bi-clock-history" style={{ color: e.tone === "green" ? "#12b76a" : e.tone === "amber" ? "#f79009" : "#2e90fa" }} />
+            <div className="flex-grow-1">
+              <div style={{ fontWeight: 700, fontSize: ".82rem" }}>{e.action}</div>
+              <div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{e.detail}</div>
+              <div className="d-flex gap-2 mt-1 flex-wrap">
+                <Badge tone="grey">{e.user}</Badge>
+                <span style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{e.time} · {e.id}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 26. Scheduled report modal ============================ */
+export function ScheduledReportModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { push } = useToast();
+  const [reports, setReports] = useState([
+    { name: "Weekly KPI digest", freq: "Monday 08:00", active: true },
+    { name: "Monthly board summary", freq: "1st of month", active: true },
+    { name: "RAG change alerts", freq: "Immediate", active: true },
+    { name: "Quarterly deep-dive", freq: "End of quarter", active: false },
+  ]);
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-calendar-check" tone="green" title="Scheduled reports"
+      subtitle="Configure automated report delivery">
+      <div className="d-flex flex-column gap-2 mb-3">
+        {reports.map((r, i) => (
+          <div key={r.name} className="pm-card pm-card-pad d-flex align-items-center justify-content-between">
+            <div>
+              <div style={{ fontWeight: 700, fontSize: ".84rem" }}>{r.name}</div>
+              <div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{r.freq}</div>
+            </div>
+            <button className={`btn btn-sm ${r.active ? "btn-primary" : "btn-outline-secondary"}`}
+              onClick={() => setReports(reports.map((x, j) => j === i ? { ...x, active: !x.active } : x))}>
+              {r.active ? "Active" : "Enable"}
+            </button>
+          </div>
+        ))}
+      </div>
+      <button className="btn btn-outline-primary btn-sm w-100" onClick={() => push({ kind: "info", title: "New report wizard" })}>
+        <i className="bi bi-plus-lg me-1" />Add new scheduled report
+      </button>
+    </Drawer>
+  );
+}
+
+/* ============================ 27. Board meeting prep modal ============================ */
+export function BoardMeetingPrepModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { push } = useToast();
+  const checklist = [
+    { item: "Board pack published", done: true },
+    { item: "Executive commentary written", done: true },
+    { item: "Financial reconciliation verified", done: true },
+    { item: "Risk disclosures complete", done: false },
+    { item: "Legal review of slide deck", done: false },
+    { item: "CEO presentation rehearsed", done: false },
+  ];
+  return (
+    <Modal open={open} onClose={onClose} tone="violet" icon="bi-clipboard-check" size="md"
+      title="Board Meeting Prep" subtitle="27 Aug 2026 · Boardroom A · 10:00 EAT">
+      <div className="pm-modal-body">
+        <div className="d-flex flex-column gap-2">
+          {checklist.map((c) => (
+            <label key={c.item} className={`pm-opt ${c.done ? "active" : ""}`}>
+              <input type="checkbox" className="form-check-input mt-0" defaultChecked={c.done} />
+              <span style={{ fontSize: ".84rem", fontWeight: 700 }}>{c.item}</span>
+            </label>
+          ))}
+        </div>
+        <div className="pm-note mt-3"><i className="bi bi-info-circle me-1" />All items must be checked before the board pack is finalised.</div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Close</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { push({ kind: "success", title: "Checklist saved" }); onClose(); }}>
+          <i className="bi bi-save me-1" />Save
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 28. Team capacity modal ============================ */
+export function TeamCapacityModal({ dept, onClose }: { dept: Department | null; onClose: () => void }) {
+  if (!dept) return null;
+  const members = Array.from({ length: Math.min(dept.headcount, 8) }, (_, i) => ({
+    name: `${dept.name.split(" ")[0]} Member ${i + 1}`,
+    load: Math.round(60 + Math.random() * 40),
+    okrs: Math.floor(1 + Math.random() * 3),
+  }));
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-people" size="md"
+      title={`${dept.name} — Team Capacity`} subtitle={`${dept.headcount} members · ${dept.okrs} OKRs`}>
+      <div className="pm-modal-body">
+        <div className="d-flex flex-column gap-2">
+          {members.map((m) => (
+            <div key={m.name} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+              <Avatar name={m.name} size="sm" />
+              <div className="flex-grow-1">
+                <div style={{ fontWeight: 700, fontSize: ".82rem" }}>{m.name}</div>
+                <div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{m.okrs} OKRs assigned</div>
+              </div>
+              <div className="text-end">
+                <div style={{ fontWeight: 800, fontSize: ".88rem", color: m.load > 90 ? "#d92d20" : m.load > 75 ? "#f79009" : "#0b8f52" }}>{m.load}%</div>
+                <Meter value={m.load} tone={m.load > 90 ? "#f04438" : m.load > 75 ? "#f79009" : "#12b76a"} width={100} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 29. Cohort deep-dive modal ============================ */
+export function CohortDeepDiveModal({ cohort: c, onClose }: { cohort: CohortRow | null; onClose: () => void }) {
+  if (!c) return null;
+  const stages = [
+    { label: "Signups", value: c.signups, pct: 100 },
+    { label: "Day 1 active", value: Math.round(c.signups * c.d1 / 100), pct: c.d1 },
+    { label: "Day 7", value: Math.round(c.signups * c.d7 / 100), pct: c.d7 },
+    { label: "Day 14", value: Math.round(c.signups * c.d14 / 100), pct: c.d14 || 0 },
+    { label: "Day 30", value: Math.round(c.signups * c.d30 / 100), pct: c.d30 || 0 },
+    { label: "Day 60", value: Math.round(c.signups * c.d60 / 100), pct: c.d60 || 0 },
+    { label: "Day 90", value: Math.round(c.signups * c.d90 / 100), pct: c.d90 || 0 },
+  ].filter((s) => s.pct > 0 || s.label === "Signups");
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-funnel" size="md"
+      title={`Cohort Deep-Dive — ${c.cohort}`} subtitle={`${num(c.signups)} signups · funnel analysis`}>
+      <div className="pm-modal-body">
+        <div className="d-flex flex-column gap-2">
+          {stages.map((s, i) => (
+            <div key={s.label} className="d-flex align-items-center gap-3">
+              <span style={{ width: 100, fontSize: ".78rem", fontWeight: 600 }}>{s.label}</span>
+              <div style={{ flex: 1 }}>
+                <Meter value={s.pct} tone={s.pct >= 60 ? "#12b76a" : s.pct >= 40 ? "#f79009" : "#f04438"} width={300} />
+              </div>
+              <span className="pm-num" style={{ fontWeight: 700, width: 50, textAlign: "right" }}>{s.pct ? s.pct.toFixed(1) + "%" : "—"}</span>
+              <span className="pm-num" style={{ fontSize: ".72rem", color: "var(--pm-muted)", width: 60, textAlign: "right" }}>{s.value.toLocaleString()}</span>
+            </div>
+          ))}
+        </div>
+        <div className="pm-note mt-3"><i className="bi bi-info-circle me-1" />Drop-off from Day 1 to Day 7 is {(c.d1 - c.d7).toFixed(1)}pp. Focus on the onboarding week for retention gains.</div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm me-auto" onClick={() => { csvDownload(`cohort-${c.cohort}-deep.csv`, stages); push({ kind: "success", title: "Exported" }); }}>
+          <i className="bi bi-download me-1" />Export
+        </button>
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 30. KPI alert config modal ============================ */
+export function KpiAlertConfigModal({ kpi, onClose }: { kpi: KPI | null; onClose: () => void }) {
+  const { push } = useToast();
+  if (!kpi) return null;
+  return (
+    <Modal open onClose={onClose} tone="amber" icon="bi-bell" size="md"
+      title={`Alert Config — ${kpi.name}`} subtitle="Configure when alerts are triggered">
+      <div className="pm-modal-body">
+        <label className="form-label">Alert thresholds</label>
+        <div className="d-flex flex-column gap-2 mb-3">
+          {[{ label: "Red alert", value: kpi.direction === "up" ? "Below 80% of target" : "Above 120% of target", color: "#f04438" },
+            { label: "Amber alert", value: kpi.direction === "up" ? "Below 90% of target" : "Above 110% of target", color: "#f79009" },
+            { label: "Green restored", value: kpi.direction === "up" ? "At or above target" : "At or below target", color: "#12b76a" },
+          ].map((a) => (
+            <div key={a.label} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+              <span className="pm-dot" style={{ background: a.color, width: 10, height: 10 }} />
+              <div className="flex-grow-1">
+                <div style={{ fontWeight: 700, fontSize: ".82rem" }}>{a.label}</div>
+                <div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{a.value}</div>
+              </div>
+              <Badge tone={a.color === "#12b76a" ? "green" : a.color === "#f79009" ? "amber" : "red"}>Enabled</Badge>
+            </div>
+          ))}
+        </div>
+        <label className="form-label">Notification channels</label>
+        <div className="d-flex gap-2 mb-3">
+          {[{ l: "Slack", active: true }, { l: "Email", active: true }, { l: "Push", active: false }].map((ch) => (
+            <button key={ch.l} className={`pm-chip ${ch.active ? "active" : ""}`}>{ch.l}</button>
+          ))}
+        </div>
+        <div className="pm-note"><i className="bi bi-info-circle me-1" />Alerts are evaluated every {kpi.frequency.toLowerCase()} and compared against the current target.</div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { push({ kind: "success", title: "Alert config saved" }); onClose(); }}>
+          <i className="bi bi-check2 me-1" />Save config
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 31. Owner performance modal ============================ */
+export function OwnerPerformanceModal({ owner, kpis, onClose }: { owner: string; kpis: KPI[]; onClose: () => void }) {
+  const ownerKpis = kpis.filter((k) => k.owner === owner);
+  const onTrack = ownerKpis.filter((k) => (k.value / k.target) * 100 >= (k.direction === "up" ? 90 : 110)).length;
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-person-badge" size="lg"
+      title={`${owner} — KPI Portfolio`} subtitle={`${ownerKpis.length} KPIs · ${onTrack} on track`}>
+      <div className="pm-modal-body">
+        <div className="row g-2 mb-3">
+          <div className="col-4"><div className="pm-stat"><div className="pm-stat-label">Total KPIs</div><div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1.1rem" }}>{ownerKpis.length}</div></div></div>
+          <div className="col-4"><div className="pm-stat"><div className="pm-stat-label">On track</div><div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1.1rem", color: "#12b76a" }}>{onTrack}</div></div></div>
+          <div className="col-4"><div className="pm-stat"><div className="pm-stat-label">At risk</div><div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1.1rem", color: "#f79009" }}>{ownerKpis.length - onTrack}</div></div></div>
+        </div>
+        <div className="d-flex flex-column gap-2">
+          {ownerKpis.map((k) => {
+            const pct = Math.round((k.value / k.target) * 100);
+            return (
+              <div key={k.id} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+                <Badge tone={k.rag} dot>{k.rag}</Badge>
+                <div className="flex-grow-1">
+                  <div style={{ fontWeight: 700, fontSize: ".84rem" }}>{k.name}</div>
+                  <div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{k.category} · {k.frequency}</div>
+                </div>
+                <div className="text-end">
+                  <div style={{ fontWeight: 800, fontSize: ".88rem" }}>{fmtKpi(k)}</div>
+                  <div style={{ fontSize: ".68rem", color: "var(--pm-muted)" }}>{pct}% of target</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm me-auto" onClick={() => { csvDownload(`${owner.replace(/\s/g, "-")}-kpis.csv`, ownerKpis); push({ kind: "success", title: "Exported" }); }}>
+          <i className="bi bi-download me-1" />Export
+        </button>
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 32. Metric insight modal ============================ */
+export function MetricInsightModal({ kpi, onClose }: { kpi: KPI | null; onClose: () => void }) {
+  if (!kpi) return null;
+  const avg = kpi.trend.reduce((a, b) => a + b, 0) / kpi.trend.length;
+  const latest = kpi.trend[kpi.trend.length - 1];
+  const momentum = latest - kpi.trend[Math.max(0, kpi.trend.length - 3)];
+  const insights = [
+    { icon: "bi-graph-up", title: "Trend direction", detail: momentum > 0 ? "Positive momentum — value increasing over last 3 periods" : "Negative momentum — value declining over last 3 periods", tone: momentum > 0 ? "green" : "red" },
+    { icon: "bi-bullseye", title: "Target alignment", detail: `${Math.round((kpi.value / kpi.target) * 100)}% of target achieved. ${kpi.value >= kpi.target ? "Target met." : `${fmtKpi({ ...kpi, value: kpi.target - kpi.value })} gap remaining.`}`, tone: kpi.value >= kpi.target ? "green" : "amber" },
+    { icon: "bi-arrow-up-right", title: "Period-over-period", detail: `${momentum >= 0 ? "+" : ""}${momentum.toFixed(kpi.unit === "pct" || kpi.unit === "bps" ? 1 : 0)} change in last 3 periods. ${Math.abs(momentum) > avg * 0.05 ? "Significant movement." : "Stable range."}`, tone: "blue" },
+    { icon: "bi-speedometer2", title: "Volatility", detail: `Standard deviation: ${Math.sqrt(kpi.trend.reduce((a, b) => a + (b - avg) ** 2, 0) / kpi.trend.length).toFixed(2)}. ${kpi.trend.length > 3 ? (Math.max(...kpi.trend) - Math.min(...kpi.trend)) / avg * 100 < 10 ? "Low volatility — consistent performance." : "Moderate volatility — watch for spikes." : "Insufficient data."}`, tone: "blue" },
+  ];
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-lightbulb" size="md"
+      title={`Insights — ${kpi.name}`} subtitle="AI-powered metric analysis">
+      <div className="pm-modal-body">
+        <div className="d-flex flex-column gap-2">
+          {insights.map((ins) => (
+            <div key={ins.title} className="pm-alert-row" style={{ borderLeftColor: ins.tone === "green" ? "#12b76a" : ins.tone === "amber" ? "#f79009" : ins.tone === "red" ? "#f04438" : "#2e90fa" }}>
+              <i className={`bi ${ins.icon}`} style={{ color: ins.tone === "green" ? "#12b76a" : ins.tone === "amber" ? "#f79009" : ins.tone === "red" ? "#f04438" : "#2e90fa" }} />
+              <div className="flex-grow-1">
+                <div style={{ fontWeight: 700, fontSize: ".84rem" }}>{ins.title}</div>
+                <div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{ins.detail}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 33. RAG action modal ============================ */
+export function RagActionModal({ rag, onClose }: { rag: "green" | "amber" | "red" | null; onClose: () => void }) {
+  const { push } = useToast();
+  if (!rag) return null;
+  const actions = {
+    green: [
+      { icon: "bi-trophy", label: "Recognise owners", desc: "Send kudos to KPI owners performing well" },
+      { icon: "bi-arrow-up-right", label: "Stretch targets", desc: "Propose 5-10% target increases for next quarter" },
+      { icon: "bi-download", label: "Export green KPIs", desc: "Download detailed data for all green KPIs" },
+    ],
+    amber: [
+      { icon: "bi-envelope", label: "Nudge all owners", desc: "Send batch nudge to owners of amber KPIs" },
+      { icon: "bi-pencil-square", label: "Review targets", desc: "Check if targets need adjustment" },
+      { icon: "bi-calendar-event", label: "Schedule review", desc: "Book a review meeting for amber KPIs" },
+    ],
+    red: [
+      { icon: "bi-exclamation-octagon", label: "Escalate to board", desc: "Flag red KPIs for board attention" },
+      { icon: "bi-telephone", label: "Emergency sync", desc: "Call owners of red KPIs immediately" },
+      { icon: "bi-lightning", label: "Trigger intervention", desc: "Start a corrective action plan" },
+    ],
+  };
+  return (
+    <Modal open onClose={onClose} tone={rag} icon="bi-flag-fill" size="md"
+      title={`${rag.toUpperCase()} KPI Actions`} subtitle="Available actions for this RAG bucket">
+      <div className="pm-modal-body">
+        <div className="d-flex flex-column gap-2">
+          {actions[rag].map((a) => (
+            <button key={a.label} className="pm-card pm-card-pad text-start d-flex align-items-center gap-3 w-100" style={{ cursor: "pointer", border: "1px solid #eaedf3" }}
+              onClick={() => { push({ kind: "success", title: a.label, body: a.desc }); onClose(); }}>
+              <i className={`bi ${a.icon}`} style={{ fontSize: "1.2rem", color: rag === "green" ? "#12b76a" : rag === "amber" ? "#f79009" : "#f04438" }} />
+              <div>
+                <div style={{ fontWeight: 700, fontSize: ".84rem" }}>{a.label}</div>
+                <div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{a.desc}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 34. Bulk KPI action modal ============================ */
+export function BulkKpiActionModal({ open, kpis, onClose }: { open: boolean; kpis: KPI[]; onClose: () => void }) {
+  const { push } = useToast();
+  const [selected, setSelected] = useState<string[]>([]);
+  const toggle = (id: string) => setSelected((s) => s.includes(id) ? s.filter((x) => x !== id) : [...s, id]);
+  return (
+    <Modal open={open} onClose={onClose} tone="ink" icon="bi-check2-square" size="lg"
+      title="Bulk KPI Actions" subtitle="Select KPIs and choose an action">
+      <div className="pm-modal-body">
+        <div className="d-flex flex-column gap-1 mb-3" style={{ maxHeight: 280, overflowY: "auto" }}>
+          {kpis.map((k) => (
+            <label key={k.id} className={`pm-opt ${selected.includes(k.id) ? "active" : ""}`}>
+              <input type="checkbox" className="form-check-input mt-0" checked={selected.includes(k.id)} onChange={() => toggle(k.id)} />
+              <div className="flex-grow-1">
+                <span style={{ fontSize: ".84rem", fontWeight: 700 }}>{k.name}</span>
+                <span className="ms-2" style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{k.owner}</span>
+              </div>
+              <Badge tone={k.rag} dot>{k.rag}</Badge>
+            </label>
+          ))}
+        </div>
+        <div className="pm-note"><i className="bi bi-info-circle me-1" />{selected.length} KPI{selected.length !== 1 ? "s" : ""} selected</div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-outline-secondary btn-sm" disabled={selected.length === 0}
+          onClick={() => { push({ kind: "success", title: "Exported", body: `${selected.length} KPIs exported` }); }}>
+          <i className="bi bi-download me-1" />Export
+        </button>
+        <button className="btn btn-primary btn-sm" disabled={selected.length === 0}
+          onClick={() => { push({ kind: "info", title: "Nudge sent", body: `Nudged owners of ${selected.length} KPIs` }); onClose(); }}>
+          <i className="bi bi-envelope me-1" />Nudge owners
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 35. KPI trend analysis modal ============================ */
+export function KpiTrendAnalysisModal({ kpi, onClose }: { kpi: KPI | null; onClose: () => void }) {
+  if (!kpi) return null;
+  const avg = kpi.trend.reduce((a, b) => a + b, 0) / kpi.trend.length;
+  const max = Math.max(...kpi.trend);
+  const min = Math.min(...kpi.trend);
+  const recentAvg = kpi.trend.slice(-3).reduce((a, b) => a + b, 0) / 3;
+  const earlyAvg = kpi.trend.slice(0, 3).reduce((a, b) => a + b, 0) / 3;
+  const forecast = kpi.trend.map((v, i) => ({ period: `T-${kpi.trend.length - 1 - i}`, actual: v, forecast: null as number | null }));
+  // Simple linear forecast for next 3 periods
+  const slope = (kpi.trend[kpi.trend.length - 1] - kpi.trend[0]) / (kpi.trend.length - 1);
+  for (let i = 1; i <= 3; i++) {
+    forecast.push({ period: `T+${i}`, actual: null, forecast: Math.round(kpi.trend[kpi.trend.length - 1] + slope * i) });
+  }
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-graph-up" size="lg"
+      title={`Trend Analysis — ${kpi.name}`} subtitle="Historical trend and linear forecast">
+      <div className="pm-modal-body">
+        <div className="row g-2 mb-3">
+          <div className="col-3"><div className="pm-stat"><div className="pm-stat-label">Mean</div><div style={{ fontWeight: 800, fontSize: ".9rem" }}>{fmtKpi({ ...kpi, value: avg })}</div></div></div>
+          <div className="col-3"><div className="pm-stat"><div className="pm-stat-label">Max</div><div style={{ fontWeight: 800, fontSize: ".9rem" }}>{fmtKpi({ ...kpi, value: max })}</div></div></div>
+          <div className="col-3"><div className="pm-stat"><div className="pm-stat-label">Min</div><div style={{ fontWeight: 800, fontSize: ".9rem" }}>{fmtKpi({ ...kpi, value: min })}</div></div></div>
+          <div className="col-3"><div className="pm-stat"><div className="pm-stat-label">Slope</div><div style={{ fontWeight: 800, fontSize: ".9rem", color: slope > 0 ? "#12b76a" : "#f04438" }}>{slope > 0 ? "+" : ""}{slope.toFixed(2)}/period</div></div></div>
+        </div>
+        <div className="pm-card mb-3">
+          <div className="pm-card-head"><h6 className="pm-card-title">Period data</h6></div>
+          <div className="pm-table-wrap">
+            <table className="pm-table">
+              <thead><tr><th>Period</th><th className="text-end">Value</th><th className="text-end">vs Mean</th></tr></thead>
+              <tbody>{forecast.slice(0, kpi.trend.length).map((f) => (
+                <tr key={f.period}>
+                  <td className="pm-td-strong">{f.period}</td>
+                  <td className="text-end pm-num" style={{ fontWeight: 700 }}>{fmtKpi({ ...kpi, value: f.actual! })}</td>
+                  <td className="text-end pm-num" style={{ color: f.actual! >= avg ? "#0b8f52" : "#d92d20" }}>{f.actual! >= avg ? "+" : ""}{((f.actual! / avg - 1) * 100).toFixed(1)}%</td>
+                </tr>
+              ))}</tbody>
+            </table>
+          </div>
+        </div>
+        <div className="pm-card">
+          <div className="pm-card-head"><h6 className="pm-card-title">Forecast</h6></div>
+          <div className="p-3 d-flex flex-column gap-2">
+            {forecast.slice(kpi.trend.length).map((f) => (
+              <div key={f.period} className="pm-alert-row info">
+                <i className="bi bi-arrow-right-circle" style={{ color: "#2e90fa" }} />
+                <div className="flex-grow-1">
+                  <div style={{ fontWeight: 700, fontSize: ".82rem" }}>{f.period}</div>
+                  <div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>Projected: {fmtKpi({ ...kpi, value: f.forecast! })}</div>
+                </div>
+                <Badge tone={f.forecast! >= kpi.target ? "green" : "amber"}>{f.forecast! >= kpi.target ? "On track" : "Watch"}</Badge>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm me-auto" onClick={() => { csvDownload(`${kpi.id}-trend.csv`, forecast.map((f) => ({ period: f.period, actual: f.actual, forecast: f.forecast }))); push({ kind: "success", title: "Trend exported" }); }}>
+          <i className="bi bi-download me-1" />Export
+        </button>
+        <button className="btn btn-primary btn-sm" onClick={onClose}>Close</button>
+      </div>
+    </Modal>
+  );
+}
+
 // Used to avoid the Avatar unused import in this file when stripping
 void Avatar; void DDItem;

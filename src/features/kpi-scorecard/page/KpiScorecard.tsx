@@ -13,6 +13,10 @@ import {
   BoardPackModal, CohortModal, CommentaryDrawer, CompareModal, DepartmentDrawer, EditTargetWizard,
   KpiDrawer, NewKpiModal, NewOkrlWizard, OkrDrawer, RagDetailModal, SignOffWizard, SnapshotModal,
   SubscribeModal, TargetHistoryDrawer,
+  NudgeOwnerModal, BudgetReportModal, ScheduleOneOnOneModal, ShareLinkModal, DownloadPackModal,
+  KpiAnomalyModal, OkrDetailDrawer, DepartmentBudgetDetailModal, QuarterReviewModal, AuditTrailModal,
+  ScheduledReportModal, BoardMeetingPrepModal, TeamCapacityModal, CohortDeepDiveModal, KpiAlertConfigModal,
+  OwnerPerformanceModal, MetricInsightModal, RagActionModal, BulkKpiActionModal, KpiTrendAnalysisModal,
 } from "../modals/KpiModals";
 import { COHORT } from "../data/kpiData";
 
@@ -46,6 +50,27 @@ export function KpiScorecard({ signal, onNavigate }: { signal: { action: string;
   const [okrs, setOkrs] = useState<OKR[]>(OKRS);
   const [kpis, setKpis] = useState<KPI[]>(KPI_LIST);
   const [okrFilter, setOkrFilter] = useState<"All" | OKR["status"]>("All");
+
+  // New modal states
+  const [nudgeTarget, setNudgeTarget] = useState<{ owner: string; kpi?: string } | null>(null);
+  const [budgetDept, setBudgetDept] = useState<Department | null>(null);
+  const [oneOnOne, setOneOnOne] = useState<{ lead: string; dept: string } | null>(null);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [downloadPack, setDownloadPack] = useState<(typeof BOARD_PACKS)[number] | null>(null);
+  const [anomalyKpi, setAnomalyKpi] = useState<KPI | null>(null);
+  const [okrDetail, setOkrDetail] = useState<OKR | null>(null);
+  const [budgetDetail, setBudgetDetail] = useState<Department | null>(null);
+  const [quarterReview, setQuarterReview] = useState(false);
+  const [auditOpen, setAuditOpen] = useState(false);
+  const [scheduledOpen, setScheduledOpen] = useState(false);
+  const [boardPrepOpen, setBoardPrepOpen] = useState(false);
+  const [capacityDept, setCapacityDept] = useState<Department | null>(null);
+  const [cohortDetail, setCohortDetail] = useState<(typeof COHORT)[number] | null>(null);
+  const [alertKpi, setAlertKpi] = useState<KPI | null>(null);
+  const [ownerPerf, setOwnerPerf] = useState<string | null>(null);
+  const [insightKpi, setInsightKpi] = useState<KPI | null>(null);
+  const [bulkOpen, setBulkOpen] = useState(false);
+  const [trendKpi, setTrendKpi] = useState<KPI | null>(null);
 
   const overall = useMemo(() => {
     const onTrack = kpis.filter((k) => (k.value / k.target) * 100 >= (k.direction === "up" ? 90 : 110)).length;
@@ -110,6 +135,7 @@ export function KpiScorecard({ signal, onNavigate }: { signal: { action: string;
           <button className="btn btn-outline-secondary btn-sm" onClick={() => setHistoryOpen(true)}><i className="bi bi-clock-history me-1" />History</button>
           <button className="btn btn-outline-secondary btn-sm" onClick={() => setCompareOpen(true)}><i className="bi bi-arrow-left-right me-1" />Compare</button>
           <button className="btn btn-outline-secondary btn-sm" onClick={() => setSnapshotOpen(true)}><i className="bi bi-download me-1" />Export</button>
+          <button className="btn btn-outline-secondary btn-sm" onClick={() => setAuditOpen(true)}><i className="bi bi-clock-history me-1" />Audit</button>
           <Dropdown width={220} trigger={() => <button className="btn btn-outline-secondary btn-sm"><i className="bi bi-three-dots" /></button>}>
             {(close) => (<>
               <div className="pm-dd-head">Scorecard actions</div>
@@ -117,6 +143,10 @@ export function KpiScorecard({ signal, onNavigate }: { signal: { action: string;
               <DDItem icon="bi-pencil-square" label="Write exec commentary" onClick={() => { close(); setCommentaryOpen(true); }} />
               <DDItem icon="bi-plus-circle" label="Add custom KPI" onClick={() => { close(); setNewKpiOpen(true); }} />
               <DDItem icon="bi-flag" label="Create new OKR" onClick={() => { close(); setNewOkr(true); }} />
+              <DDItem icon="bi-check2-square" label="Bulk actions" onClick={() => { close(); setBulkOpen(true); }} />
+              <DDItem icon="bi-journal-text" label="Quarter review" onClick={() => { close(); setQuarterReview(true); }} />
+              <DDItem icon="bi-calendar-check" label="Scheduled reports" onClick={() => { close(); setScheduledOpen(true); }} />
+              <DDItem icon="bi-clipboard-check" label="Board meeting prep" onClick={() => { close(); setBoardPrepOpen(true); }} />
               <div className="pm-dd-sep" />
               <DDItem icon="bi-pen-fill" label="Sign board pack" onClick={() => { close(); setSignoffOpen(true); }} />
             </>)}
@@ -271,7 +301,9 @@ export function KpiScorecard({ signal, onNavigate }: { signal: { action: string;
                         {(close) => (<>
                           <DDItem icon="bi-eye" label="Open detail drawer" onClick={() => { close(); setKpi(k); }} />
                           <DDItem icon="bi-pencil" label="Edit target" hint={k.tier === 1 ? "Board approval" : "Super admin"} onClick={() => { close(); setEditTarget(k); }} />
-                          <DDItem icon="bi-envelope" label="Nudge owner" onClick={() => { close(); push({ kind: "info", title: `${k.owner} nudged`, body: `Slack DM sent about ${k.name}.` }); }} />
+                          <DDItem icon="bi-envelope" label="Nudge owner" onClick={() => { close(); setNudgeTarget({ owner: k.owner, kpi: k.name }); }} />
+                          <DDItem icon="bi-lightning" label="View insights" onClick={() => { close(); setInsightKpi(k); }} />
+                          <DDItem icon="bi-bell" label="Alert config" onClick={() => { close(); setAlertKpi(k); }} />
                           <div className="pm-dd-sep" />
                           <DDItem icon="bi-file-earmark-spreadsheet" label="Export series" onClick={() => { close(); csvDownload(`${k.id}.csv`, [{ kpi: k.name, current: k.value, target: k.target }]); }} />
                         </>)}
@@ -348,7 +380,11 @@ export function KpiScorecard({ signal, onNavigate }: { signal: { action: string;
                           <DDItem icon="bi-eye" label="Open KPI detail" onClick={() => { close(); setKpi(k); }} />
                           <DDItem icon="bi-pencil-square" label="Edit target" hint={k.tier === 1 ? "Board approval" : "Super admin"} onClick={() => { close(); setEditTarget(k); }} />
                           <DDItem icon="bi-clock-history" label="View target history" onClick={() => { close(); setHistoryOpen(true); }} />
-                          <DDItem icon="bi-envelope" label="Nudge owner" onClick={() => { close(); push({ kind: "info", title: `${k.owner} nudged` }); }} />
+                          <DDItem icon="bi-envelope" label="Nudge owner" onClick={() => { close(); setNudgeTarget({ owner: k.owner, kpi: k.name }); }} />
+                          <DDItem icon="bi-graph-up" label="Trend analysis" onClick={() => { close(); setTrendKpi(k); }} />
+                          <DDItem icon="bi-lightning" label="View insights" onClick={() => { close(); setInsightKpi(k); }} />
+                          <DDItem icon="bi-clock-history" label="View target history" onClick={() => { close(); setHistoryOpen(true); }} />
+                          <DDItem icon="bi-bell" label="Alert config" onClick={() => { close(); setAlertKpi(k); }} />
                           <div className="pm-dd-sep" />
                           <DDItem icon="bi-download" label="Export series" onClick={() => { close(); csvDownload(`${k.id}.csv`, [{ kpi: k.name, current: k.value, target: k.target }]); }} />
                         </>)}
@@ -412,7 +448,7 @@ export function KpiScorecard({ signal, onNavigate }: { signal: { action: string;
           <div className="pm-card mb-3">
             <div className="p-2 d-flex flex-column gap-2">
               {DEPARTMENTS.map((d) => (
-                <button key={d.id} className="pm-alert-row info text-start w-100" onClick={() => setDept(d)} style={{ cursor: "pointer" }}>
+                <button key={d.id} className="pm-alert-row info text-start w-100" onClick={() => setBudgetDetail(d)} style={{ cursor: "pointer" }}>
                   <span className="pm-dot" style={{ background: d.color, boxShadow: `0 0 0 3px ${d.color}26`, marginTop: 6 }} />
                   <div className="flex-grow-1">
                     <div className="d-flex align-items-center gap-2 flex-wrap">
@@ -449,7 +485,7 @@ export function KpiScorecard({ signal, onNavigate }: { signal: { action: string;
             </div>
             <div className="p-2 d-flex gap-1 flex-wrap">
               {COHORT.map((c) => (
-                <button key={c.cohort} className="pm-chip" onClick={() => setCohort(c.cohort)}>{c.cohort}</button>
+                <button key={c.cohort} className="pm-chip" onClick={() => setCohortDetail(c)}>{c.cohort}</button>
               ))}
             </div>
           </div>
@@ -481,8 +517,8 @@ export function KpiScorecard({ signal, onNavigate }: { signal: { action: string;
                     <Dropdown up width={200} trigger={() => <button className="pm-icon-btn" style={{ width: 28, height: 28 }}><i className="bi bi-three-dots-vertical" /></button>}>
                       {(close) => (<>
                         <DDItem icon="bi-eye" label="Open pack" onClick={() => { close(); setPack(b); }} />
-                        <DDItem icon="bi-download" label="Download PDF" onClick={() => { close(); push({ kind: "success", title: "Board pack downloaded", body: `${b.period} · ${b.pages} pages.` }); }} />
-                        <DDItem icon="bi-link-45deg" label="Share read-only" onClick={() => { close(); push({ kind: "info", title: "Share link copied" }); }} />
+                        <DDItem icon="bi-download" label="Download" onClick={() => { close(); setDownloadPack(b); }} />
+                        <DDItem icon="bi-link-45deg" label="Share read-only" onClick={() => { close(); setShareOpen(true); }} />
                         <DDItem icon="bi-pen-fill" label="Sign this pack" onClick={() => { close(); setSignoffOpen(true); }} />
                       </>)}
                     </Dropdown>
@@ -510,6 +546,26 @@ export function KpiScorecard({ signal, onNavigate }: { signal: { action: string;
       <SignOffWizard open={signoffOpen} onClose={() => setSignoffOpen(false)} />
       <RagDetailModal rag={ragDetail} onClose={() => setRagDetail(null)} />
       <NewKpiModal open={newKpiOpen} onClose={() => setNewKpiOpen(false)} onCreate={(k) => { setKpis((list) => [k, ...list]); push({ kind: "success", title: "Custom KPI added", body: k.name }); }} />
+      {nudgeTarget && <NudgeOwnerModal owner={nudgeTarget.owner} kpiName={nudgeTarget.kpi} onClose={() => setNudgeTarget(null)} />}
+      {budgetDept && <BudgetReportModal dept={budgetDept} onClose={() => setBudgetDept(null)} />}
+      {oneOnOne && <ScheduleOneOnOneModal lead={oneOnOne.lead} deptName={oneOnOne.dept} onClose={() => setOneOnOne(null)} />}
+      <ShareLinkModal open={shareOpen} onClose={() => setShareOpen(false)} title="Share scorecard" />
+      {downloadPack && <DownloadPackModal pack={downloadPack} onClose={() => setDownloadPack(null)} />}
+      {anomalyKpi && <KpiAnomalyModal kpi={anomalyKpi} onClose={() => setAnomalyKpi(null)} />}
+      {okrDetail && <OkrDetailDrawer okr={okrDetail} onClose={() => setOkrDetail(null)} />}
+      {budgetDetail && <DepartmentBudgetDetailModal dept={budgetDetail} onClose={() => setBudgetDetail(null)} />}
+      <QuarterReviewModal open={quarterReview} onClose={() => setQuarterReview(false)} period={period} />
+      <AuditTrailModal open={auditOpen} onClose={() => setAuditOpen(false)} />
+      <ScheduledReportModal open={scheduledOpen} onClose={() => setScheduledOpen(false)} />
+      <BoardMeetingPrepModal open={boardPrepOpen} onClose={() => setBoardPrepOpen(false)} />
+      {capacityDept && <TeamCapacityModal dept={capacityDept} onClose={() => setCapacityDept(null)} />}
+      {cohortDetail && <CohortDeepDiveModal cohort={cohortDetail} onClose={() => setCohortDetail(null)} />}
+      {alertKpi && <KpiAlertConfigModal kpi={alertKpi} onClose={() => setAlertKpi(null)} />}
+      {ownerPerf && <OwnerPerformanceModal owner={ownerPerf} kpis={kpis} onClose={() => setOwnerPerf(null)} />}
+      {insightKpi && <MetricInsightModal kpi={insightKpi} onClose={() => setInsightKpi(null)} />}
+      <BulkKpiActionModal kpis={kpis} onClose={() => setBulkOpen(false)} />
+      {trendKpi && <KpiTrendAnalysisModal kpi={trendKpi} onClose={() => setTrendKpi(null)} />}
+      <RagActionModal rag={ragDetail} onClose={() => setRagDetail(null)} />
     </>
   );
 }

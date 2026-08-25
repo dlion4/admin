@@ -1598,3 +1598,169 @@ export function ScenarioLibraryModal({
     </Modal>
   );
 }
+
+/* ============================ 23. Fee analytics modal ============================ */
+export function FeeAnalyticsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const stats = [
+    { label: "Total revenue today", value: "KES 24.8M", color: "#12b76a" },
+    { label: "Active fee lines", value: "47", color: "#2e90fa" },
+    { label: "Pending changes", value: "5", color: "#f79009" },
+    { label: "Overrides active", value: "12", color: "#7a5af8" },
+    { label: "Avg take rate", value: "0.67%", color: "#12b76a" },
+    { label: "Exemptions pending", value: "8", color: "#ee46bc" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-graph-up" tone="blue" title="Fee analytics" subtitle="Revenue and fee performance metrics">
+      <div className="row g-2 mb-3">
+        {stats.map((s) => (
+          <div className="col-6" key={s.label}><div className="pm-stat" style={{ borderLeft: `3px solid ${s.color}` }}>
+            <div className="pm-stat-label">{s.label}</div>
+            <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem", color: s.color }}>{s.value}</div></div></div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 24. Fee comparison modal ============================ */
+export function FeeCompareModal({ fees, onClose }: { fees: FeeSchedule[]; onClose: () => void }) {
+  if (fees.length < 2) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-arrow-left-right" tone="blue" title="Compare fees" subtitle="Side-by-side comparison">
+      <div className="pm-card pm-table-wrap">
+        <table className="pm-table">
+          <thead><tr><th>Field</th><th>{fees[0].name}</th><th>{fees[1].name}</th></tr></thead>
+          <tbody>
+            {["category", "rate", "model", "min", "max", "status"].map((k) => (
+              <tr key={k}><td className="pm-td-strong">{k}</td><td>{String(fees[0][k as keyof FeeSchedule])}</td><td>{String(fees[1][k as keyof FeeSchedule])}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 25. Fee insights modal ============================ */
+export function FeeInsightsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const insights = [
+    { icon: "bi-graph-up", title: "Revenue trending up", detail: "8% increase in fee revenue vs last month", tone: "green" },
+    { icon: "bi-exclamation-triangle", title: "Override volume elevated", detail: "12 active overrides, 3 above threshold", tone: "amber" },
+    { icon: "bi-check-circle", title: "Take rate stable", detail: "0.67% average, within target range", tone: "green" },
+    { icon: "bi-clock-history", title: "Change pipeline full", detail: "5 pending changes, 2 awaiting approval", tone: "amber" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-lightbulb" tone="blue" title="Fee insights" subtitle="AI-powered analysis">
+      <div className="d-flex flex-column gap-2">
+        {insights.map((ins) => (
+          <div key={ins.title} className="pm-alert-row" style={{ borderLeftColor: ins.tone === "green" ? "#12b76a" : "#f79009" }}>
+            <i className={`bi ${ins.icon}`} style={{ color: ins.tone === "green" ? "#12b76a" : "#f79009" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{ins.title}</div><div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{ins.detail}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 26. Fee forecast modal ============================ */
+export function FeeForecastModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const forecast = [
+    { month: "Sep 2026", revenue: 8900000, growth: "+5.2%" },
+    { month: "Oct 2026", revenue: 9200000, growth: "+3.4%" },
+    { month: "Nov 2026", revenue: 9500000, growth: "+3.3%" },
+    { month: "Dec 2026", revenue: 10100000, growth: "+6.3%" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-calendar-range" tone="blue" title="Revenue forecast" subtitle="Next 4 months projection">
+      <div className="d-flex flex-column gap-2">
+        {forecast.map((f) => (
+          <div key={f.month} className="pm-card pm-card-pad d-flex align-items-center justify-content-between">
+            <div><div style={{ fontWeight: 700, fontSize: ".88rem" }}>{f.month}</div></div>
+            <div className="text-end"><div style={{ fontWeight: 800, fontSize: ".95rem" }}>{kes(f.revenue, { compact: true })}</div>
+              <div style={{ fontSize: ".72rem", color: "#12b76a" }}>{f.growth}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 27. Override history modal ============================ */
+export function OverrideHistoryModal({ fee, onClose }: { fee: FeeSchedule | null; onClose: () => void }) {
+  if (!fee) return null;
+  const history = [
+    { date: "22 Aug 2026", user: "Mary Wanjiku", type: "Exemption", duration: "12 months" },
+    { date: "18 Aug 2026", user: "John Kipchoge", type: "Discount", duration: "6 months" },
+    { date: "10 Aug 2026", user: "Amina Hassan", type: "Waiver", duration: "3 months" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-clock-history" tone="blue" title="Override history" subtitle={fee.name}>
+      <div className="d-flex flex-column gap-2">
+        {history.map((h, i) => (
+          <div key={i} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className="bi bi-person" style={{ color: "#2e90fa" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{h.user}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{h.type} · {h.duration} · {h.date}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 28. Partner split detail modal ============================ */
+export function PartnerSplitDetailModal({ partner, onClose }: { partner: { partner: string; split: number; revenue: number } | null; onClose: () => void }) {
+  if (!partner) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-people" tone="blue" title="Partner split" subtitle={partner.partner}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Partner</span><span className="v">{partner.partner}</span></div>
+        <div className="pm-kv"><span className="k">Split</span><span className="v pm-num" style={{ fontWeight: 700 }}>{partner.split}%</span></div>
+        <div className="pm-kv"><span className="k">Revenue share</span><span className="v pm-num">{kes(partner.revenue, { compact: true })}</span></div>
+        <div className="pm-kv"><span className="k">Last updated</span><span className="v">15 Aug 2026</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 29. Fee simulation result modal ============================ */
+export function SimulationResultModal({ result, onClose }: { result: { fee: string; current: number; proposed: number; impact: number } | null; onClose: () => void }) {
+  if (!result) return null;
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-calculator" size="md" title="Simulation result" subtitle={result.fee}>
+      <div className="pm-modal-body">
+        <div className="row g-2 mb-3">
+          <div className="col-4"><div className="pm-stat"><div className="pm-stat-label">Current</div><div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem" }}>{result.current}%</div></div></div>
+          <div className="col-4"><div className="pm-stat"><div className="pm-stat-label">Proposed</div><div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem", color: "#2e90fa" }}>{result.proposed}%</div></div></div>
+          <div className="col-4"><div className="pm-stat"><div className="pm-stat-label">Impact</div><div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem", color: result.impact > 0 ? "#12b76a" : "#f04438" }}>{result.impact > 0 ? "+" : ""}{result.impact}%</div></div></div>
+        </div>
+        <div className="pm-note"><i className="bi bi-info-circle me-1" />Projected annual impact: {kes(Math.abs(result.impact) * 124000)}</div>
+      </div>
+      <div className="pm-modal-foot"><button className="btn btn-primary btn-sm" onClick={onClose}>Close</button></div>
+    </Modal>
+  );
+}
+
+/* ============================ 30. Fee policy modal ============================ */
+export function FeePolicyModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const policies = [
+    { label: "Max single fee", value: "KES 50,000", icon: "bi-cash-stack" },
+    { label: "Monthly cap per user", value: "KES 500,000", icon: "bi-person" },
+    { label: "Minimum fee", value: "KES 10", icon: "bi-arrow-down" },
+    { label: "Change notice period", value: "30 days", icon: "bi-clock-history" },
+    { label: "Override approval tier", value: "Tier 0", icon: "bi-shield-lock" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-gear" tone="blue" title="Fee policy" subtitle="Current configuration">
+      <div className="d-flex flex-column gap-2">
+        {policies.map((p) => (
+          <div key={p.label} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className={`bi ${p.icon}`} style={{ color: "#2e90fa", fontSize: "1.1rem" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{p.label}</div></div>
+            <span style={{ fontWeight: 700, fontSize: ".88rem" }}>{p.value}</span>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}

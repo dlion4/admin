@@ -1271,3 +1271,174 @@ export function PoolActionsModal({
     </Modal>
   );
 }
+
+/* ============================ 22. Pool analytics modal ============================ */
+export function PoolAnalyticsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const stats = [
+    { label: "Total liquidity", value: "KES 4.2B", color: "#12b76a" },
+    { label: "Active pools", value: "8", color: "#2e90fa" },
+    { label: "Reserve ratio", value: "32%", color: "#7a5af8" },
+    { label: "Daily transfers", value: "KES 890M", color: "#12b76a" },
+    { label: "Sweep rules active", value: "12", color: "#f79009" },
+    { label: "Alerts pending", value: "3", color: "#f04438" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-graph-up" tone="blue" title="Pool analytics" subtitle="Liquidity performance metrics">
+      <div className="row g-2 mb-3">
+        {stats.map((s) => (
+          <div className="col-6" key={s.label}><div className="pm-stat" style={{ borderLeft: `3px solid ${s.color}` }}>
+            <div className="pm-stat-label">{s.label}</div>
+            <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem", color: s.color }}>{s.value}</div></div></div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 23. Pool comparison modal ============================ */
+export function PoolCompareModal({ pools, onClose }: { pools: LiquidityPool[]; onClose: () => void }) {
+  if (pools.length < 2) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-arrow-left-right" tone="blue" title="Compare pools" subtitle="Side-by-side comparison">
+      <div className="pm-card pm-table-wrap">
+        <table className="pm-table">
+          <thead><tr><th>Field</th><th>{pools[0].name}</th><th>{pools[1].name}</th></tr></thead>
+          <tbody>
+            {["balance", "reserved", "reserveRatio", "status"].map((k) => (
+              <tr key={k}><td className="pm-td-strong">{k}</td><td>{typeof pools[0][k as keyof LiquidityPool] === "number" ? kes(pools[0][k as keyof LiquidityPool] as number) : String(pools[0][k as keyof LiquidityPool])}</td><td>{typeof pools[1][k as keyof LiquidityPool] === "number" ? kes(pools[1][k as keyof LiquidityPool] as number) : String(pools[1][k as keyof LiquidityPool])}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 24. Pool insights modal ============================ */
+export function PoolInsightsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const insights = [
+    { icon: "bi-graph-up", title: "Liquidity trending up", detail: "8% increase in total liquidity vs last week", tone: "green" },
+    { icon: "bi-exclamation-triangle", title: "Reserve ratio tight", detail: "Main Operating at 28%, below 30% target", tone: "amber" },
+    { icon: "bi-check-circle", title: "Transfer volume stable", detail: "KES 890M daily, within normal range", tone: "green" },
+    { icon: "bi-clock-history", title: "Sweep rules active", detail: "12 rules triggered today, 2 above threshold", tone: "amber" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-lightbulb" tone="blue" title="Pool insights" subtitle="AI-powered analysis">
+      <div className="d-flex flex-column gap-2">
+        {insights.map((ins) => (
+          <div key={ins.title} className="pm-alert-row" style={{ borderLeftColor: ins.tone === "green" ? "#12b76a" : "#f79009" }}>
+            <i className={`bi ${ins.icon}`} style={{ color: ins.tone === "green" ? "#12b76a" : "#f79009" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{ins.title}</div><div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{ins.detail}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 25. Transfer detail modal ============================ */
+export function TransferDetailInfoModal({ transfer, onClose }: { transfer: PoolTransfer | null; onClose: () => void }) {
+  if (!transfer) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-arrow-left-right" tone="blue" title="Transfer detail" subtitle={transfer.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(transfer.amount, { compact: true })}</span></div>
+        <div className="pm-kv"><span className="k">From</span><span className="v">{transfer.from}</span></div>
+        <div className="pm-kv"><span className="k">To</span><span className="v">{transfer.to}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={transfer.status === "Completed" ? "green" : transfer.status === "Pending" ? "amber" : "red"}>{transfer.status}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Initiated</span><span className="v">{transfer.initiated}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 26. Sweep rule detail modal ============================ */
+export function SweepRuleDetailModal({ sweep, onClose }: { sweep: SweepRule | null; onClose: () => void }) {
+  if (!sweep) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-arrow-down-circle" tone="blue" title="Sweep rule" subtitle={sweep.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Source pool</span><span className="v">{sweep.source}</span></div>
+        <div className="pm-kv"><span className="k">Destination</span><span className="v">{sweep.destination}</span></div>
+        <div className="pm-kv"><span className="k">Amount</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(sweep.amount, { compact: true })}</span></div>
+        <div className="pm-kv"><span className="k">Trigger</span><span className="v"><Badge tone="blue">{sweep.trigger}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={sweep.status === "Active" ? "green" : "grey"}>{sweep.status}</Badge></span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 27. Alert detail modal ============================ */
+export function AlertDetailModal({ alert, onClose }: { alert: { id: string; type: string; message: string; time: string; severity: string } | null; onClose: () => void }) {
+  if (!alert) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-exclamation-triangle" tone={alert.severity === "Critical" ? "red" : "amber"} title="Alert detail" subtitle={alert.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Type</span><span className="v"><Badge tone="blue">{alert.type}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Message</span><span className="v">{alert.message}</span></div>
+        <div className="pm-kv"><span className="k">Time</span><span className="v">{alert.time}</span></div>
+        <div className="pm-kv"><span className="k">Severity</span><span className="v"><Badge tone={alert.severity === "Critical" ? "red" : "amber"}>{alert.severity}</Badge></span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 28. Cashflow modal ============================ */
+export function CashflowDetailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const flows = [
+    { label: "Inflows today", value: "KES 1.2B", color: "#12b76a" },
+    { label: "Outflows today", value: "KES 890M", color: "#f04438" },
+    { label: "Net flow", value: "+KES 310M", color: "#12b76a" },
+    { label: "Projected EOD", value: "KES 4.5B", color: "#2e90fa" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-arrow-left-right" tone="blue" title="Cashflow" subtitle="Today's flow summary">
+      <div className="d-flex flex-column gap-2">
+        {flows.map((f) => (
+          <div key={f.label} className="pm-card pm-card-pad d-flex align-items-center justify-content-between">
+            <span style={{ fontWeight: 700, fontSize: ".88rem" }}>{f.label}</span>
+            <span style={{ fontWeight: 800, fontSize: "1rem", color: f.color }}>{f.value}</span>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 29. Reserve detail modal ============================ */
+export function ReserveDetailModal({ pool, onClose }: { pool: LiquidityPool | null; onClose: () => void }) {
+  if (!pool) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-shield" tone="blue" title="Reserve detail" subtitle={pool.name}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Total balance</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(pool.balance)}</span></div>
+        <div className="pm-kv"><span className="k">Reserved</span><span className="v pm-num" style={{ color: "#12b76a" }}>{kes(pool.reserved)}</span></div>
+        <div className="pm-kv"><span className="k">Available</span><span className="v pm-num" style={{ color: "#2e90fa" }}>{kes(pool.balance - pool.reserved)}</span></div>
+        <div className="pm-kv"><span className="k">Reserve ratio</span><span className="v pm-num">{pool.reserveRatio}%</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 30. Stress test modal ============================ */
+export function StressTestDetailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const scenarios = [
+    { name: "10% outflow spike", impact: "Reserve drops to 24%", severity: "amber" },
+    { name: "25% outflow spike", impact: "Reserve drops to 18%", severity: "red" },
+    { name: "Partner default", impact: "KES 200M gap", severity: "red" },
+    { name: "Settlement delay", impact: "4h reserve buffer", severity: "amber" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-lightning" tone="amber" title="Stress test scenarios" subtitle="Impact analysis">
+      <div className="d-flex flex-column gap-2">
+        {scenarios.map((s) => (
+          <div key={s.name} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className="bi bi-exclamation-triangle" style={{ color: s.severity === "red" ? "#f04438" : "#f79009" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{s.name}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{s.impact}</div></div>
+            <Badge tone={s.severity}>{s.severity}</Badge>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}

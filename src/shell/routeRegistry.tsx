@@ -63,6 +63,12 @@ import { DocumentTemplates } from "../features/document-templates/page/DocumentT
 // Analytics
 import { AnalyticsDashboard } from "../features/analytics-dashboard/page/AnalyticsDashboard";
 
+// Authentication
+import { AuthenticationPageWrapper } from "../authentication/page/AuthenticationPage";
+
+// Company
+import { PayMoLTDPage } from "../features/paymo-ltd/page/PayMoLTD";
+
 export type PageSignal = { action: string; n: number };
 export type PageProps = { signal: PageSignal; onNavigate: (id: string) => void };
 
@@ -139,6 +145,12 @@ export const ROUTE_REGISTRY: Record<string, ComponentType<PageProps>> = {
 
   // Analytics
   "analytics": AnalyticsDashboard,
+
+  // Authentication
+  "auth": AuthenticationPageWrapper,
+
+  // Company
+  "paymo-ltd": PayMoLTDPage,
 };
 
 /** All valid page IDs derived from the registry — use this instead of maintaining a separate PAGES array. */

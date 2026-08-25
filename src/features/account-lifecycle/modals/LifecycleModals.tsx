@@ -765,3 +765,318 @@ export function BulkSweepModal({ open, count, onClose, onDone }: { open: boolean
     </Modal>
   );
 }
+
+/* ============================ 17. User lifecycle detail ============================ */
+export function LifecycleDetailModal({ user, onClose }: { user: DormantUser | null; onClose: () => void }) {
+  if (!user) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-person-badge" tone="blue" title="Lifecycle detail" subtitle={user.name}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">User ID</span><span className="v mono">{user.userId}</span></div>
+        <div className="pm-kv"><span className="k">Current stage</span><span className="v"><Badge tone={user.stage === "Active" ? "green" : user.stage === "Dormant" ? "amber" : "red"}>{user.stage}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Last active</span><span className="v">{user.lastActive}</span></div>
+        <div className="pm-kv"><span className="k">Balance</span><span className="v pm-num">{kes(user.balance)}</span></div>
+        <div className="pm-kv"><span className="k">Days dormant</span><span className="v pm-num">{user.daysDormant}</span></div>
+        <div className="pm-kv"><span className="k">Win-back attempts</span><span className="v">{user.winbackCount}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 18. Campaign analytics modal ============================ */
+export function CampaignAnalyticsModal({ campaign, onClose }: { campaign: Campaign | null; onClose: () => void }) {
+  if (!campaign) return null;
+  const metrics = [
+    { label: "Open rate", value: "42.3%", change: "+5.2%", good: true },
+    { label: "Click rate", value: "18.7%", change: "+2.1%", good: true },
+    { label: "Conversion rate", value: "8.4%", change: "-1.2%", good: false },
+    { label: "Cost per reactivation", value: "KES 340", change: "-KES 25", good: true },
+    { label: "ROI", value: "3.2x", change: "+0.4x", good: true },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-graph-up" tone="blue" title="Campaign analytics" subtitle={campaign.name}>
+      <div className="d-flex flex-column gap-2">
+        {metrics.map((m) => (
+          <div key={m.label} className="pm-card pm-card-pad d-flex align-items-center justify-content-between">
+            <div><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{m.label}</div></div>
+            <div className="text-end"><div style={{ fontWeight: 800, fontSize: ".95rem" }}>{m.value}</div>
+              <div style={{ fontSize: ".72rem", color: m.good ? "#12b76a" : "#f04438" }}>{m.change}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 19. Stage detail modal ============================ */
+export function StageDetailModal({ stage, onClose }: { stage: FunnelStage | null; onClose: () => void }) {
+  if (!stage) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-funnel" tone="blue" title="Stage detail" subtitle={stage.name}>
+      <div className="row g-2 mb-3">
+        {[{ l: "Users", v: String(stage.users) }, { l: "Conversion", v: stage.conversion }, { l: "Avg time", v: stage.avgTime }, { l: "Revenue", v: kes(stage.revenue, { compact: true }) }].map((x) => (
+          <div className="col-6" key={x.l}><div className="pm-stat"><div className="pm-stat-label">{x.l}</div>
+            <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1rem" }}>{x.v}</div></div></div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 20. Closure detail modal ============================ */
+export function ClosureDetailModal({ req, onClose }: { req: ClosureRequest | null; onClose: () => void }) {
+  if (!req) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-x-octagon" tone="red" title="Closure request" subtitle={req.id}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">User</span><span className="v">{req.name}</span></div>
+        <div className="pm-kv"><span className="k">User ID</span><span className="v mono">{req.userId}</span></div>
+        <div className="pm-kv"><span className="k">Reason</span><span className="v">{req.reason}</span></div>
+        <div className="pm-kv"><span className="k">Requested</span><span className="v">{req.requested}</span></div>
+        <div className="pm-kv"><span className="k">Status</span><span className="v"><Badge tone={req.status === "Pending" ? "amber" : req.status === "Approved" ? "green" : "red"}>{req.status}</Badge></span></div>
+        <div className="pm-kv"><span className="k">Balance</span><span className="v pm-num">{kes(req.balance)}</span></div>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 21. Win-back status detail ============================ */
+export function WinbackStatusDetailModal({ user, onClose }: { user: DormantUser | null; onClose: () => void }) {
+  if (!user) return null;
+  const attempts = [
+    { time: "20 Aug 2026", channel: "SMS", template: "We miss you!", status: "Delivered" },
+    { time: "10 Aug 2026", channel: "Email", template: "Special offer inside", status: "Opened" },
+    { time: "01 Aug 2026", channel: "Push", template: "Come back for bonus", status: "Ignored" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-arrow-return-left" tone="blue" title="Win-back history" subtitle={user.name}>
+      <div className="pm-card pm-card-pad mb-3 text-center">
+        <div style={{ fontFamily: "Sora", fontWeight: 800, fontSize: "1.5rem" }}>{user.winbackCount}</div>
+        <div style={{ fontSize: ".76rem", color: "var(--pm-muted)" }}>Total attempts</div>
+      </div>
+      <div className="d-flex flex-column gap-2">
+        {attempts.map((a, i) => (
+          <div key={i} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className="bi bi-send" style={{ color: "#2e90fa", fontSize: "1rem" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{a.template}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{a.channel} · {a.time}</div></div>
+            <Badge tone={a.status === "Opened" ? "green" : a.status === "Delivered" ? "blue" : "grey"}>{a.status}</Badge>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 22. Account activity modal ============================ */
+export function AccountActivityModal({ user, onClose }: { user: DormantUser | null; onClose: () => void }) {
+  if (!user) return null;
+  const acts = [
+    { time: "24 Aug 14:32", action: "Last transaction", detail: `KES ${Math.round(user.balance * 0.1).toLocaleString()}`, icon: "bi-arrow-left-right", color: "#2e90fa" },
+    { time: "23 Aug 09:15", action: "Login", detail: "From App / Nairobi", icon: "bi-box-arrow-in-right", color: "#667085" },
+    { time: "22 Aug 16:05", action: "Profile update", detail: "Phone number changed", icon: "bi-pencil-square", color: "#2e90fa" },
+    { time: "21 Aug 11:20", action: "KYC verified", detail: "ID check passed", icon: "bi-shield-check", color: "#12b76a" },
+  ];
+  return (
+    <Drawer open onClose={onClose} icon="bi-activity" tone="blue" title="Account activity" subtitle={user.name}>
+      <div className="d-flex flex-column gap-2">
+        {acts.map((a, i) => (
+          <div key={i} className="d-flex align-items-start gap-3">
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: `${a.color}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <i className={`bi ${a.icon}`} style={{ color: a.color, fontSize: ".85rem" }} />
+            </div>
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".82rem" }}>{a.action}</div><div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{a.detail}</div><div style={{ fontSize: ".68rem", color: "var(--pm-muted)", marginTop: 2 }}>{a.time}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 23. Sweep detail modal ============================ */
+export function SweepDetailModal({ user, onClose }: { user: DormantUser | null; onClose: () => void }) {
+  if (!user) return null;
+  return (
+    <Drawer open onClose={onClose} icon="bi-cash-stack" tone="blue" title="Sweep detail" subtitle={user.name}>
+      <div className="pm-card pm-card-pad mb-3">
+        <div className="pm-kv"><span className="k">Balance</span><span className="v pm-num" style={{ fontWeight: 700 }}>{kes(user.balance)}</span></div>
+        <div className="pm-kv"><span className="k">Sweep threshold</span><span className="v">KES 100</span></div>
+        <div className="pm-kv"><span className="k">Dormancy</span><span className="v">{user.daysDormant} days</span></div>
+        <div className="pm-kv"><span className="k">Last sweep</span><span className="v">Never</span></div>
+      </div>
+      <div className="pm-note"><i className="bi bi-info-circle me-1" />Sweep will transfer the full balance to the dormant account pool.</div>
+    </Drawer>
+  );
+}
+
+/* ============================ 24. Lifecycle policy detail ============================ */
+export function PolicyDetailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const policies = [
+    { label: "Dormancy threshold", value: "90 days", icon: "bi-clock-history" },
+    { label: "Closure threshold", value: "365 days", icon: "bi-x-octagon" },
+    { label: "Sweep threshold", value: "> KES 100", icon: "bi-cash-stack" },
+    { label: "Win-back max attempts", value: "5", icon: "bi-arrow-return-left" },
+    { label: "Cooling period", value: "30 days", icon: "bi-hourglass-split" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-gear" tone="blue" title="Lifecycle policy" subtitle="Current configuration">
+      <div className="d-flex flex-column gap-2">
+        {policies.map((p) => (
+          <div key={p.label} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <i className={`bi ${p.icon}`} style={{ color: "#2e90fa", fontSize: "1.1rem" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{p.label}</div></div>
+            <span style={{ fontWeight: 700, fontSize: ".88rem" }}>{p.value}</span>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 25. Campaign list modal ============================ */
+export function CampaignListModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const campaigns = [
+    { name: "August win-back", status: "Active", recipients: 2400, conversions: 180 },
+    { name: "Dormant sweep notice", status: "Draft", recipients: 0, conversions: 0 },
+    { name: "July re-engagement", status: "Completed", recipients: 3100, conversions: 248 },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-megaphone" tone="blue" title="All campaigns" subtitle="Win-back and re-engagement">
+      <div className="d-flex flex-column gap-2">
+        {campaigns.map((c) => (
+          <div key={c.name} className="pm-card pm-card-pad d-flex align-items-center gap-3">
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{c.name}</div><div style={{ fontSize: ".72rem", color: "var(--pm-muted)" }}>{c.recipients} recipients · {c.conversions} conversions</div></div>
+            <Badge tone={c.status === "Active" ? "green" : c.status === "Draft" ? "grey" : "blue"}>{c.status}</Badge>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 26. Monthly flow detail ============================ */
+export function MonthlyFlowDetailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const months = [
+    { month: "Aug 2026", newUsers: 8412, dormant: 1200, reactivated: 340, closed: 85 },
+    { month: "Jul 2026", newUsers: 9200, dormant: 1450, reactivated: 290, closed: 72 },
+    { month: "Jun 2026", newUsers: 8800, dormant: 1100, reactivated: 310, closed: 68 },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-arrow-left-right" tone="blue" title="Monthly flow" subtitle="Account lifecycle transitions">
+      <div className="pm-card pm-table-wrap">
+        <table className="pm-table">
+          <thead><tr><th>Month</th><th className="text-end">New</th><th className="text-end">Dormant</th><th className="text-end">Reactivated</th><th className="text-end">Closed</th></tr></thead>
+          <tbody>{months.map((m) => (
+            <tr key={m.month}><td className="pm-td-strong">{m.month}</td><td className="text-end pm-num" style={{ color: "#12b76a" }}>+{num(m.newUsers)}</td><td className="text-end pm-num" style={{ color: "#f79009" }}>{num(m.dormant)}</td><td className="text-end pm-num" style={{ color: "#2e90fa" }}>+{num(m.reactivated)}</td><td className="text-end pm-num" style={{ color: "#f04438" }}>-{num(m.closed)}</td></tr>
+          ))}</tbody>
+        </table>
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 27. Nudge modal ============================ */
+export function NudgeModal({ user, onClose }: { user: DormantUser | null; onClose: () => void }) {
+  const { push } = useToast();
+  const [channel, setChannel] = useState<"sms" | "email" | "push" | "all">("all");
+  const [template, setTemplate] = useState("");
+  if (!user) return null;
+  return (
+    <Modal open onClose={onClose} tone="blue" icon="bi-bell" size="md" title={`Nudge ${user.name}`} subtitle="Send a re-engagement nudge">
+      <div className="pm-modal-body">
+        <label className="form-label">Channel</label>
+        <div className="d-flex gap-1 flex-wrap mb-3">
+          {["sms", "email", "push", "all"].map((c) => <button key={c} className={`pm-chip ${channel === c ? "active" : ""}`} onClick={() => setChannel(c as any)}>{c.toUpperCase()}</button>)}
+        </div>
+        <label className="form-label">Message</label>
+        <textarea className="form-control mb-2" rows={3} value={template} onChange={(e) => setTemplate(e.target.value)} placeholder="Type your nudge message." />
+        <div className="d-flex gap-1 flex-wrap">
+          {["We miss you!", "Special offer inside", "Come back for a bonus"].map((t) => <button key={t} className="pm-chip" onClick={() => setTemplate(t)}>{t}</button>)}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" disabled={!template.trim()} onClick={() => { push({ kind: "success", title: "Nudge sent" }); onClose(); }}>
+          <i className="bi bi-send me-1" />Send
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 28. Cohort detail modal ============================ */
+export function CohortDetailModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const cohorts = [
+    { cohort: "Aug 2026", signups: 8412, retained: 72, dormant: 12 },
+    { cohort: "Jul 2026", signups: 9200, retained: 68, dormant: 18 },
+    { cohort: "Jun 2026", signups: 8800, retained: 65, dormant: 22 },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-people" tone="blue" title="Cohort analysis" subtitle="Retention by signup month">
+      <div className="d-flex flex-column gap-2">
+        {cohorts.map((c) => (
+          <div key={c.cohort} className="pm-card pm-card-pad">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span style={{ fontWeight: 700, fontSize: ".88rem" }}>{c.cohort}</span>
+              <span className="pm-num" style={{ fontWeight: 700 }}>{num(c.signups)} signups</span>
+            </div>
+            <div className="d-flex gap-2">
+              <div className="flex-grow-1"><div style={{ fontSize: ".7rem", color: "var(--pm-muted)" }}>Retained</div>
+                <div style={{ height: 6, background: "#eaedf3", borderRadius: 3, overflow: "hidden" }}><div style={{ width: `${c.retained}%`, height: "100%", background: "#12b76a", borderRadius: 3 }} /></div>
+                <div style={{ fontSize: ".72rem", fontWeight: 700 }}>{c.retained}%</div></div>
+              <div className="flex-grow-1"><div style={{ fontSize: ".7rem", color: "var(--pm-muted)" }}>Dormant</div>
+                <div style={{ height: 6, background: "#eaedf3", borderRadius: 3, overflow: "hidden" }}><div style={{ width: `${c.dormant}%`, height: "100%", background: "#f79009", borderRadius: 3 }} /></div>
+                <div style={{ fontSize: ".72rem", fontWeight: 700 }}>{c.dormant}%</div></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
+
+/* ============================ 29. Re-engagement report modal ============================ */
+export function ReengagementReportModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { push } = useToast();
+  return (
+    <Modal open={open} onClose={onClose} tone="blue" icon="bi-file-earmark-bar-graph" size="md" title="Re-engagement report" subtitle="Generate lifecycle report">
+      <div className="pm-modal-body">
+        <label className="form-label">Report type</label>
+        <div className="d-flex flex-column gap-2 mb-3">
+          {["Dormancy overview", "Win-back effectiveness", "Sweep impact", "Cohort retention"].map((r) => (
+            <button key={r} className="pm-card pm-card-pad text-start" style={{ cursor: "pointer" }}>
+              <div style={{ fontWeight: 700, fontSize: ".84rem" }}>{r}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="pm-modal-foot">
+        <button className="btn btn-outline-secondary btn-sm" onClick={onClose}>Cancel</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { push({ kind: "success", title: "Report generated" }); onClose(); }}>
+          <i className="bi bi-download me-1" />Generate
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ============================ 30. Lifecycle insights modal ============================ */
+export function LifecycleInsightsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const insights = [
+    { icon: "bi-graph-up", title: "Dormancy trending down", detail: "12% fewer dormant accounts vs last month", tone: "green" },
+    { icon: "bi-arrow-return-left", title: "Win-back rate improving", detail: "8.4% conversion vs 7.2% last month", tone: "green" },
+    { icon: "bi-cash-stack", title: "Sweep pool growing", detail: "KES 2.4M in sweep pool, up 15% MoM", tone: "amber" },
+    { icon: "bi-exclamation-triangle", title: "Closure backlog", detail: "24 requests pending review, avg 5 days wait", tone: "red" },
+  ];
+  return (
+    <Drawer open={open} onClose={onClose} icon="bi-lightbulb" tone="blue" title="Lifecycle insights" subtitle="AI-powered analysis">
+      <div className="d-flex flex-column gap-2">
+        {insights.map((ins) => (
+          <div key={ins.title} className="pm-alert-row" style={{ borderLeftColor: ins.tone === "green" ? "#12b76a" : ins.tone === "amber" ? "#f79009" : "#f04438" }}>
+            <i className={`bi ${ins.icon}`} style={{ color: ins.tone === "green" ? "#12b76a" : ins.tone === "amber" ? "#f79009" : "#f04438" }} />
+            <div className="flex-grow-1"><div style={{ fontWeight: 700, fontSize: ".84rem" }}>{ins.title}</div><div style={{ fontSize: ".74rem", color: "var(--pm-muted)" }}>{ins.detail}</div></div>
+          </div>
+        ))}
+      </div>
+    </Drawer>
+  );
+}
