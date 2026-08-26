@@ -1,1 +1,367 @@
-.roles-page .roles-hero{background:radial-gradient(760px 260px at 90% -30%,rgba(18,183,106,.45),transparent 60%),radial-gradient(520px 240px at 0% 120%,rgba(46,144,250,.24),transparent 60%),linear-gradient(135deg,#0b1322,#11283a 62%,#0c2a1f)}.roles-page .text-green{color:#0b8f52!important}.roles-page .text-blue{color:#175cd3!important}.roles-page .text-violet{color:#5925dc!important}.roles-page .text-amber{color:#b54708!important}.roles-page .bg-green-soft{background:#e7f8ef!important}.roles-page .bg-blue-soft{background:#eff8ff!important}.roles-page .bg-violet-soft{background:#f4f1ff!important}.roles-page .bg-amber-soft{background:#fff5e6!important}.permission-cell{width:30px;height:30px;border:1px solid #e2e6ee;border-radius:8px;background:#f8fafc;color:#98a2b3}.permission-cell.granted{background:#e7f8ef;border-color:#b7e6cf;color:#0b8f52}.permission-cell:hover{transform:scale(1.08)}.permission-row{font-size:.78rem;color:#475467;padding:.34rem 0;border-bottom:1px solid #f0f2f6}.permission-row i{width:20px}.roles-page .pm-table td .pm-eyebrow{display:block;min-height:14px}@media(max-width:700px){.roles-page .pm-tabs{overflow-x:auto;flex-wrap:nowrap}.roles-page .pm-tab{white-space:nowrap}.roles-page .pm-hero-value{font-size:1.8rem}}
+/* ================================================================
+   Permissions & Roles — Page Styles
+   ================================================================ */
+
+/* Hero */
+.roles-page .roles-hero {
+  background: radial-gradient(760px 260px at 90% -30%, rgba(18, 183, 106, .45), transparent 60%),
+    radial-gradient(520px 240px at 0% 120%, rgba(46, 144, 250, .24), transparent 60%),
+    linear-gradient(135deg, #0b1322, #11283a 62%, #0c2a1f);
+}
+
+/* Text helpers */
+.roles-page .text-green { color: #0b8f52 !important; }
+.roles-page .text-blue { color: #175cd3 !important; }
+.roles-page .text-violet { color: #5925dc !important; }
+.roles-page .text-amber { color: #b54708 !important; }
+
+/* Soft backgrounds */
+.roles-page .bg-green-soft { background: #e7f8ef !important; }
+.roles-page .bg-blue-soft { background: #eff8ff !important; }
+.roles-page .bg-violet-soft { background: #f4f1ff !important; }
+.roles-page .bg-amber-soft { background: #fff5e6 !important; }
+.roles-page .bg-red-soft { background: #fef2f2 !important; }
+.roles-page .bg-grey-soft { background: #f2f4f7 !important; }
+
+/* Permission matrix cell */
+.permission-cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #e2e6ee;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #98a2b3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.permission-cell.granted {
+  background: #e7f8ef;
+  border-color: #b7e6cf;
+  color: #0b8f52;
+}
+.permission-cell:hover { transform: scale(1.12); }
+
+/* Permission catalogue row */
+.permission-row {
+  font-size: .78rem;
+  color: #475467;
+  padding: .34rem 0;
+  border-bottom: 1px solid #f0f2f6;
+  transition: background 0.1s;
+  padding-left: 4px;
+  border-radius: 4px;
+}
+.permission-row:hover { background: #f8fafc; }
+.permission-row i { width: 20px; }
+
+/* Table eyebrow inside cells */
+.roles-page .pm-table td .pm-eyebrow {
+  display: block;
+  min-height: 14px;
+}
+
+/* ================================================================
+   Document Cards
+   ================================================================ */
+.doc-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.doc-card:hover {
+  border-color: #175cd3;
+  box-shadow: 0 4px 12px rgba(23, 92, 211, 0.08);
+  transform: translateY(-1px);
+}
+.doc-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #175cd3, #5925dc);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.doc-card:hover::before { opacity: 1; }
+
+.doc-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #eff8ff, #f4f1ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #175cd3;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ================================================================
+   Document Preview (Letterhead)
+   ================================================================ */
+.doc-preview-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem .75rem;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 0;
+}
+
+.doc-preview-page {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 2rem 2.5rem;
+  max-height: 420px;
+  overflow-y: auto;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #101828;
+}
+
+.doc-preview-letterhead {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.doc-preview-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0b8f52, #12b76a);
+  color: white;
+  font-weight: 800;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doc-preview-company {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #101828;
+}
+
+.doc-preview-address {
+  font-size: .72rem;
+  color: #667085;
+}
+
+.doc-preview-divider {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 1rem 0;
+}
+
+.doc-preview-body {
+  font-size: .82rem;
+  line-height: 1.7;
+  color: #344054;
+  white-space: pre-wrap;
+}
+
+/* Template variable highlight */
+.doc-var {
+  background: #e7f8ef;
+  color: #0b8f52;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: .78rem;
+  font-weight: 600;
+}
+
+/* ================================================================
+   Security Event Severity Indicators
+   ================================================================ */
+.severity-critical { border-left: 3px solid #d92d20; }
+.severity-high { border-left: 3px solid #f79009; }
+.severity-medium { border-left: 3px solid #2e90fa; }
+.severity-low { border-left: 3px solid #d0d5dd; }
+
+/* ================================================================
+   Admin Assignment Card
+   ================================================================ */
+.admin-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+.admin-card:hover {
+  border-color: #175cd3;
+  box-shadow: 0 2px 8px rgba(23, 92, 211, 0.06);
+}
+.admin-card.suspended {
+  opacity: 0.65;
+  border-color: #fda29b;
+  background: #fef3f2;
+}
+
+/* ================================================================
+   Role Hierarchy Visual
+   ================================================================ */
+.role-tier-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+.role-tier-bar .fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* ================================================================
+   Wizard Progress Indicator
+   ================================================================ */
+.roles-page .pm-wizard-progress span {
+  transition: width 0.3s ease;
+}
+
+/* ================================================================
+   Enhanced Tab Styles
+   ================================================================ */
+.roles-page .pm-tabs {
+  gap: 0;
+}
+.roles-page .pm-tab {
+  position: relative;
+}
+.roles-page .pm-tab::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.2s;
+}
+.roles-page .pm-tab.active::after {
+  background: var(--pm-primary, #175cd3);
+}
+
+/* ================================================================
+   Enhanced Table Row Hover
+   ================================================================ */
+.roles-page .pm-table tbody tr {
+  transition: background 0.1s;
+}
+.roles-page .pm-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ================================================================
+   Status Dot Pulse Animation
+   ================================================================ */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.roles-page .pm-badge.red .pm-dot {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* ================================================================
+   Stat Card Hover Effect
+   ================================================================ */
+.roles-page .pm-stat {
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+}
+.roles-page .pm-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ================================================================
+   MFA Status Indicator
+   ================================================================ */
+.mfa-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .72rem;
+  font-weight: 600;
+}
+.mfa-badge.enabled { color: #0b8f52; }
+.mfa-badge.disabled { color: #d92d20; }
+
+/* ================================================================
+   Classification Badge
+   ================================================================ */
+.classification-badge {
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.classification-badge.secret {
+  background: #fef2f2;
+  color: #d92d20;
+}
+.classification-badge.confidential {
+  background: #fff5e6;
+  color: #b54708;
+}
+.classification-badge.internal {
+  background: #f2f4f7;
+  color: #667085;
+}
+
+/* ================================================================
+   Emergency Access Banner
+   ================================================================ */
+.emergency-banner {
+  background: linear-gradient(135deg, #fef2f2, #fff5e6);
+  border: 1px solid #fda29b;
+  border-radius: 10px;
+  padding: .75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  animation: emergencyPulse 3s ease-in-out infinite;
+}
+@keyframes emergencyPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(253, 162, 155, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(253, 162, 155, 0); }
+}
+
+/* ================================================================
+   Responsive
+   ================================================================ */
+@media (max-width: 700px) {
+  .roles-page .pm-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  .roles-page .pm-tab {
+    white-space: nowrap;
+  }
+  .roles-page .pm-hero-value {
+    font-size: 1.8rem;
+  }
+  .doc-preview-page {
+    padding: 1rem 1.25rem;
+  }
+  .roles-page .pm-hero-chip {
+    font-size: .7rem;
+  }
+}
