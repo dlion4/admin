@@ -1,1 +1,102 @@
-.sysconfig-page .sysconfig-hero{background:radial-gradient(760px 260px at 90% -30%,rgba(18,183,106,.45),transparent 60%),radial-gradient(520px 240px at 0% 120%,rgba(46,144,250,.24),transparent 60%),linear-gradient(135deg,#0b1322,#11283a 62%,#0c2a1f)}.sysconfig-page .text-green{color:#0b8f52!important}.sysconfig-page .text-blue{color:#175cd3!important}.sysconfig-page .text-violet{color:#5925dc!important}.sysconfig-page .text-amber{color:#b54708!important}.sysconfig-page .bg-green-soft{background:#e7f8ef!important}.sysconfig-page .bg-blue-soft{background:#eff8ff!important}.sysconfig-page .bg-violet-soft{background:#f4f1ff!important}.sysconfig-page .bg-amber-soft{background:#fff5e6!important}.sysconfig-page .config-row{display:flex;flex-direction:column;gap:.2rem;padding:.8rem;border:1px solid var(--pm-border);border-radius:12px;background:#fff;height:100%}.sysconfig-page .config-row b{font-size:.86rem}.sysconfig-page .pm-tabs{overflow-x:auto}@media(max-width:700px){.sysconfig-page .pm-tab{white-space:nowrap}.sysconfig-page .pm-hero-value{font-size:1.8rem}}
+.sysconfig-page .sysconfig-hero{background:radial-gradient(760px 260px at 90% -30%,rgba(18,183,106,.45),transparent 60%),radial-gradient(520px 240px at 0% 120%,rgba(46,144,250,.24),transparent 60%),linear-gradient(135deg,#0b1322,#11283a 62%,#0c2a1f)}.sysconfig-page .text-green{color:#0b8f52!important}.sysconfig-page .text-blue{color:#175cd3!important}.sysconfig-page .text-violet{color:#5925dc!important}.sysconfig-page .text-amber{color:#b54708!important}.sysconfig-page .bg-green-soft{background:#e7f8ef!important}.sysconfig-page .bg-blue-soft{background:#eff8ff!important}.sysconfig-page .bg-violet-soft{background:#f4f1ff!important}.sysconfig-page .bg-amber-soft{background:#fff5e6!important}.sysconfig-page .bg-red-soft{background:#fef2f2!important}.sysconfig-page .text-red{color:#f04438!important}.sysconfig-page .config-row{display:flex;flex-direction:column;gap:.2rem;padding:.8rem;border:1px solid var(--pm-border);border-radius:12px;background:#fff;height:100%}.sysconfig-page .config-row b{font-size:.86rem}.sysconfig-page .pm-tabs{overflow-x:auto}@media(max-width:700px){.sysconfig-page .pm-tab{white-space:nowrap}.sysconfig-page .pm-hero-value{font-size:1.8rem}}
+
+/* ================================================================
+   Document Preview Styles
+   ================================================================ */
+.sysconfig-page .doc-preview-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;padding:.75rem 1rem;background:var(--pm-bg,#f7f8fa);border:1px solid var(--pm-border);border-radius:12px 12px 0 0;margin-bottom:-1px}
+.sysconfig-page .doc-preview-page{background:#fff;border:1px solid var(--pm-border);border-radius:0 0 12px 12px;padding:2rem 2.5rem;min-height:400px;font-size:.85rem;line-height:1.75;color:#1a1a2e;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow-y:auto;max-height:500px}
+.sysconfig-page .doc-preview-page::before{content:"";position:absolute;top:0;left:2rem;right:2rem;height:3px;background:linear-gradient(90deg,var(--bs-primary,#175cd3),var(--bs-success,#12b76a));border-radius:0 0 4px 4px}
+.sysconfig-page .doc-preview-letterhead{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--pm-border)}
+.sysconfig-page .doc-preview-logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--bs-primary,#175cd3),var(--bs-success,#12b76a));color:#fff;display:grid;place-items:center;font-weight:900;font-size:1.3rem;flex-shrink:0}
+.sysconfig-page .doc-preview-company{font-weight:800;font-size:1.05rem;letter-spacing:-.02em}
+.sysconfig-page .doc-preview-address{font-size:.78rem;color:#667085}
+.sysconfig-page .doc-preview-meta{display:flex;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.sysconfig-page .doc-preview-meta-item{display:inline-flex;align-items:center;font-size:.78rem;color:#667085}
+.sysconfig-page .doc-preview-divider{border:none;border-top:1px solid #e4e7ec;margin:1rem 0 1.5rem}
+.sysconfig-page .doc-preview-body{margin-bottom:2rem}
+.sysconfig-page .doc-preview-body p{margin-bottom:.75rem}
+.sysconfig-page .doc-var{color:#0b8f52;font-weight:600;background:#e7f8ef;padding:1px 5px;border-radius:4px;font-size:.82rem}
+
+/* ================================================================
+   Health Status Indicator
+   ================================================================ */
+.sysconfig-page .health-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:.4rem}
+.sysconfig-page .health-dot.healthy{background:#12b76a}
+.sysconfig-page .health-dot.degraded{background:#f79009}
+.sysconfig-page .health-dot.down{background:#f04438}
+
+/* ================================================================
+   Quick Action Card Enhancements
+   ================================================================ */
+.sysconfig-page .pm-qa{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:.9rem .6rem;border:1px solid var(--pm-border);border-radius:12px;background:#fff;cursor:pointer;transition:all .15s ease;text-align:center;min-width:0;flex:1}
+.sysconfig-page .pm-qa:hover{border-color:var(--bs-primary);box-shadow:0 2px 8px rgba(0,0,0,.06);transform:translateY(-1px)}
+.sysconfig-page .pm-qa i{font-size:1.1rem;color:var(--bs-primary)}
+.sysconfig-page .pm-qa .t{font-size:.72rem;font-weight:600;color:var(--pm-ink,#101828);line-height:1.2}
+
+/* ================================================================
+   Config Row Grid
+   ================================================================ */
+.sysconfig-page .config-grid{display:grid;grid-template-columns:1fr;gap:.5rem}
+@media(min-width:768px){.sysconfig-page .config-grid{grid-template-columns:1fr 1fr}}
+
+/* ================================================================
+   Security Policy Severity Badge
+   ================================================================ */
+.sysconfig-page .severity-badge{display:inline-flex;align-items:center;gap:.3rem;padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:600}
+.sysconfig-page .severity-badge.critical{background:#fef2f2;color:#d92d20}
+.sysconfig-page .severity-badge.high{background:#fff5e6;color:#b54708}
+.sysconfig-page .severity-badge.medium{background:#eff8ff;color:#175cd3}
+.sysconfig-page .severity-badge.low{background:#f7f8fa;color:#667085}
+
+/* ================================================================
+   API Key Display
+   ================================================================ */
+.sysconfig-page .api-key-display{font-family:monospace;font-size:.82rem;background:#f7f8fa;padding:.4rem .7rem;border-radius:8px;border:1px solid var(--pm-border);letter-spacing:.5px}
+
+/* ================================================================
+   Audit Log Row
+   ================================================================ */
+.sysconfig-page .audit-row{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--pm-border)}
+.sysconfig-page .audit-row:last-child{border-bottom:none}
+.sysconfig-page .audit-row .audit-dot{width:8px;height:8px;border-radius:50%;margin-top:.35rem;flex-shrink:0}
+.sysconfig-page .audit-row .audit-dot.info{background:#2e90fa}
+.sysconfig-page .audit-row .audit-dot.warning{background:#f79009}
+.sysconfig-page .audit-row .audit-dot.critical{background:#f04438}
+.sysconfig-page .audit-row .audit-content{flex-grow:1;min-width:0}
+.sysconfig-page .audit-row .audit-action{font-size:.82rem;font-weight:600;color:var(--pm-ink,#101828)}
+.sysconfig-page .audit-row .audit-detail{font-size:.76rem;color:var(--pm-muted,#667085);margin-top:.15rem}
+.sysconfig-page .audit-row .audit-meta{font-size:.72rem;color:var(--pm-muted,#667085);flex-shrink:0;text-align:right}
+
+/* ================================================================
+   Template Card
+   ================================================================ */
+.sysconfig-page .template-card{background:#fff;border:1px solid var(--pm-border);border-radius:14px;padding:1.1rem;transition:all .15s ease;cursor:pointer}
+.sysconfig-page .template-card:hover{border-color:var(--bs-primary);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.sysconfig-page .template-card .template-icon{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem;flex-shrink:0}
+.sysconfig-page .template-card .template-name{font-weight:700;font-size:.86rem;color:var(--pm-ink,#101828)}
+.sysconfig-page .template-card .template-desc{font-size:.76rem;color:var(--pm-muted,#667085);margin-top:.2rem;line-height:1.4}
+
+/* ================================================================
+   Notification Rule Row
+   ================================================================ */
+.sysconfig-page .rule-row{display:flex;align-items:center;gap:.75rem;padding:.75rem;border:1px solid var(--pm-border);border-radius:12px;background:#fff;transition:all .15s ease}
+.sysconfig-page .rule-row:hover{border-color:var(--bs-primary);box-shadow:0 2px 6px rgba(0,0,0,.04)}
+.sysconfig-page .rule-row .rule-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:1rem;flex-shrink:0}
+
+/* ================================================================
+   Export Section Card
+   ================================================================ */
+.sysconfig-page .export-section{display:flex;align-items:center;gap:1rem;padding:.85rem 1rem;border:1px solid var(--pm-border);border-radius:12px;background:#fff;cursor:pointer;transition:all .15s ease}
+.sysconfig-page .export-section:hover{border-color:var(--bs-primary);background:#f0f7ff}
+.sysconfig-page .export-section .export-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex-shrink:0}
+
+/* ================================================================
+   Section divider
+   ================================================================ */
+.sysconfig-page .section-divider{border:none;border-top:1px solid var(--pm-border);margin:1rem 0}
+
+/* ================================================================
+   Stacked bar for uptime display
+   ================================================================ */
+.sysconfig-page .uptime-bar{display:flex;height:6px;border-radius:4px;overflow:hidden;background:#eef1f6}
+.sysconfig-page .uptime-bar span{display:block;height:100%}
