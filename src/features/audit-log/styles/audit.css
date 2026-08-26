@@ -1,1 +1,155 @@
-.audit-page .audit-hero{background:radial-gradient(760px 260px at 90% -30%,rgba(18,183,106,.45),transparent 60%),radial-gradient(520px 240px at 0% 120%,rgba(46,144,250,.24),transparent 60%),linear-gradient(135deg,#0b1322,#11283a 62%,#0c2a1f)}.audit-page .text-green{color:#0b8f52!important}.audit-page .text-blue{color:#175cd3!important}.audit-page .text-violet{color:#5925dc!important}.audit-page .text-amber{color:#b54708!important}.audit-page .bg-green-soft{background:#e7f8ef!important}.audit-page .bg-blue-soft{background:#eff8ff!important}.audit-page .bg-violet-soft{background:#f4f1ff!important}.audit-page .bg-amber-soft{background:#fff5e6!important}@media(max-width:700px){.audit-page .pm-tabs{overflow-x:auto;flex-wrap:nowrap}.audit-page .pm-tab{white-space:nowrap}.audit-page .pm-hero-value{font-size:1.8rem}}
+/* ================================================================
+   Audit Log — Page Styles
+   ================================================================ */
+
+/* Hero */
+.audit-page .audit-hero {
+  background: radial-gradient(760px 260px at 90% -30%, rgba(18, 183, 106, .45), transparent 60%),
+    radial-gradient(520px 240px at 0% 120%, rgba(46, 144, 250, .24), transparent 60%),
+    linear-gradient(135deg, #0b1322, #11283a 62%, #0c2a1f);
+}
+
+/* Text helpers */
+.audit-page .text-green { color: #0b8f52 !important; }
+.audit-page .text-blue { color: #175cd3 !important; }
+.audit-page .text-violet { color: #5925dc !important; }
+.audit-page .text-amber { color: #b54708 !important; }
+.audit-page .text-red { color: #d92d20 !important; }
+
+/* Soft backgrounds */
+.audit-page .bg-green-soft { background: #e7f8ef !important; }
+.audit-page .bg-blue-soft { background: #eff8ff !important; }
+.audit-page .bg-violet-soft { background: #f4f1ff !important; }
+.audit-page .bg-amber-soft { background: #fff5e6 !important; }
+.audit-page .bg-red-soft { background: #fef2f2 !important; }
+.audit-page .bg-grey-soft { background: #f2f4f7 !important; }
+
+/* Table row hover */
+.audit-page .pm-table tbody tr {
+  transition: background 0.1s;
+}
+.audit-page .pm-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* Stat card hover */
+.audit-page .pm-stat {
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.audit-page .pm-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Severity indicators */
+.severity-critical { border-left: 3px solid #d92d20; }
+.severity-high { border-left: 3px solid #f79009; }
+.severity-medium { border-left: 3px solid #2e90fa; }
+.severity-low { border-left: 3px solid #d0d5dd; }
+
+/* Status dot pulse */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.audit-page .pm-badge.red .pm-dot {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* Real-time feed live indicator */
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(18, 183, 106, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(18, 183, 106, 0); }
+}
+.live-indicator {
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+/* Session card */
+.session-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+.session-card:hover {
+  border-color: #175cd3;
+  box-shadow: 0 2px 8px rgba(23, 92, 211, 0.06);
+}
+.session-card.terminated {
+  opacity: 0.5;
+}
+
+/* Export section card */
+.export-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+.export-card:hover {
+  border-color: #175cd3;
+  box-shadow: 0 4px 12px rgba(23, 92, 211, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Incident severity badge */
+.incident-badge {
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.incident-badge.critical { background: #fef2f2; color: #d92d20; }
+.incident-badge.high { background: #fff5e6; color: #b54708; }
+
+/* Timeline */
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.timeline-line {
+  width: 1px;
+  flex: 1;
+  background: #e5e7eb;
+  margin-top: 4px;
+}
+
+/* Export progress */
+.export-progress {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.export-progress .fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #175cd3, #12b76a);
+  transition: width 0.5s ease;
+}
+
+/* Compliance checklist */
+.checklist-done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Wizard progress */
+.audit-page .pm-wizard-progress span {
+  transition: width 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .audit-page .pm-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  .audit-page .pm-tab {
+    white-space: nowrap;
+  }
+  .audit-page .pm-hero-value {
+    font-size: 1.8rem;
+  }
+}
