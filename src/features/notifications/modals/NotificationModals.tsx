@@ -66,7 +66,7 @@ export function DeliveryFailureModal({ open, onClose }: { open: boolean; onClose
       <div className="pm-modal-body">
         <div className="row g-3 mb-3">{[["Channel", "SMS"], ["User", "PAY-89012"], ["Template", "Security alert"], ["Error", "Device token expired"], ["Retries", "0 / 3"], ["Status", "Permanent fail"]].map(x => <div className="col-md-4" key={x[0]}><label className="form-label">{x[0]}</label><input className="form-control" value={x[1]} readOnly /></div>)}</div>
         <h6>Failure timeline</h6>
-        {[["14:28:00", "Queued for delivery"], ["14:28:01", "Sent to FCM"], ["14:28:02", "FCM error: InvalidRegistration", ["14:28:03", "Marked as permanent failure"]].map(t => <div className="d-flex gap-2 py-1 border-bottom small" key={t[0]}><span className="mono text-muted" style={{ width: 80 }}>{t[0]}</span><span>{t[1]}</span></div>)}
+        {[["14:28:00", "Queued for delivery"], ["14:28:01", "Sent to FCM"], ["14:28:02", "FCM error: InvalidRegistration"], ["14:28:03", "Marked as permanent failure"]].map(t => <div className="d-flex gap-2 py-1 border-bottom small" key={t[0]}><span className="mono text-muted" style={{ width: 80 }}>{t[0]}</span><span>{t[1]}</span></div>)}
         <div className="mt-3"><label className="form-label">Resolution</label><select className="form-select"><option>Re-register device token</option><option>Fallback to SMS</option><option>Mark as resolved</option></select></div>
       </div>
       <div className="pm-modal-foot"><button className="btn btn-outline-secondary" onClick={onClose}>Close</button><button className="btn btn-primary" onClick={() => { push({ kind: "success", title: "Resolution queued" }); onClose(); }}>Resolve</button></div>

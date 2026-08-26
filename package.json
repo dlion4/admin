@@ -10,6 +10,8 @@
     "validate-routes": "node src/scripts/validate-routes.mjs"
   },
   "dependencies": {
+    "@tanstack/react-router": "^1.170.32",
+    "@tanstack/router-plugin": "^1.168.35",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "clsx": "2.1.1",

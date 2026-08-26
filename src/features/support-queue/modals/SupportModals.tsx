@@ -65,7 +65,7 @@ export function EscalateTicketModal({ open, onClose }: { open: boolean; onClose:
       <div className="pm-modal-body">
         <div className="row g-3">
           <div className="col-12"><label className="form-label">Escalate to</label><select className="form-select"><option>Support Lead</option><option>Compliance team</option><option>Finance team</option><option>Tech Lead</option><option>Platform Admin</option></select></div>
-          <div className="col-md-6"><label className="form-label">Reason</label><select className="form-select"><option>SLA breach imminent</option><option>Complex issue</option><option>Customer complaint</option><option>Security concern</option><option>Refund >KES 100K</option></select></div>
+          <div className="col-md-6"><label className="form-label">Reason</label><select className="form-select"><option>SLA breach imminent</option><option>Complex issue</option><option>Customer complaint</option><option>Security concern</option><option>Refund &gt;KES 100K</option></select></div>
           <div className="col-md-6"><label className="form-label">Urgency</label><select className="form-select"><option>Immediate</option><option>Within 1 hour</option><option>Within 4 hours</option></select></div>
           <div className="col-12"><label className="form-label">Context</label><textarea className="form-control" rows={3} defaultValue="Customer debited KES 500 more than intended. Possible system error. Needs finance review." /></div>
         </div>
