@@ -1,1 +1,63 @@
-.api-page .api-hero{background:radial-gradient(760px 260px at 90% -30%,rgba(18,183,106,.45),transparent 60%),radial-gradient(520px 240px at 0% 120%,rgba(46,144,250,.24),transparent 60%),linear-gradient(135deg,#0b1322,#11283a 62%,#0c2a1f)}.api-page .text-green{color:#0b8f52!important}.api-page .text-blue{color:#175cd3!important}.api-page .text-violet{color:#5925dc!important}.api-page .text-amber{color:#b54708!important}.api-page .bg-green-soft{background:#e7f8ef!important}.api-page .bg-blue-soft{background:#eff8ff!important}.api-page .bg-violet-soft{background:#f4f1ff!important}.api-page .bg-amber-soft{background:#fff5e6!important}@media(max-width:700px){.api-page .pm-tabs{overflow-x:auto;flex-wrap:nowrap}.api-page .pm-tab{white-space:nowrap}.api-page .pm-hero-value{font-size:1.8rem}}
+.api-page .api-hero{background:radial-gradient(760px 260px at 90% -30%,rgba(18,183,106,.45),transparent 60%),radial-gradient(520px 240px at 0% 120%,rgba(46,144,250,.24),transparent 60%),linear-gradient(135deg,#0b1322,#11283a 62%,#0c2a1f)}.api-page .text-green{color:#0b8f52!important}.api-page .text-blue{color:#175cd3!important}.api-page .text-violet{color:#5925dc!important}.api-page .text-amber{color:#b54708!important}.api-page .text-red{color:#f04438!important}.api-page .bg-green-soft{background:#e7f8ef!important}.api-page .bg-blue-soft{background:#eff8ff!important}.api-page .bg-violet-soft{background:#f4f1ff!important}.api-page .bg-amber-soft{background:#fff5e6!important}.api-page .bg-red-soft{background:#fef2f2!important}@media(max-width:700px){.api-page .pm-tabs{overflow-x:auto;flex-wrap:nowrap}.api-page .pm-tab{white-space:nowrap}.api-page .pm-hero-value{font-size:1.8rem}}
+
+/* ================================================================
+   Document Preview Styles
+   ================================================================ */
+.api-page .doc-preview-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;padding:.75rem 1rem;background:var(--pm-bg,#f7f8fa);border:1px solid var(--pm-border);border-radius:12px 12px 0 0;margin-bottom:-1px}
+.api-page .doc-preview-page{background:#fff;border:1px solid var(--pm-border);border-radius:0 0 12px 12px;padding:2rem 2.5rem;min-height:400px;font-size:.85rem;line-height:1.75;color:#1a1a2e;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow-y:auto;max-height:500px}
+.api-page .doc-preview-page::before{content:"";position:absolute;top:0;left:2rem;right:2rem;height:3px;background:linear-gradient(90deg,var(--bs-primary,#175cd3),var(--bs-success,#12b76a));border-radius:0 0 4px 4px}
+.api-page .doc-preview-letterhead{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--pm-border)}
+.api-page .doc-preview-logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--bs-primary,#175cd3),var(--bs-success,#12b76a));color:#fff;display:grid;place-items:center;font-weight:900;font-size:1.3rem;flex-shrink:0}
+.api-page .doc-preview-company{font-weight:800;font-size:1.05rem;letter-spacing:-.02em}
+.api-page .doc-preview-address{font-size:.78rem;color:#667085}
+.api-page .doc-preview-meta{display:flex;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.api-page .doc-preview-meta-item{display:inline-flex;align-items:center;font-size:.78rem;color:#667085}
+.api-page .doc-preview-divider{border:none;border-top:1px solid #e4e7ec;margin:1rem 0 1.5rem}
+.api-page .doc-preview-body{margin-bottom:2rem}
+.api-page .doc-preview-body p{margin-bottom:.75rem}
+.api-page .doc-var{color:#0b8f52;font-weight:600;background:#e7f8ef;padding:1px 5px;border-radius:4px;font-size:.82rem}
+
+/* ================================================================
+   Security Policy Severity
+   ================================================================ */
+.api-page .severity-badge{display:inline-flex;align-items:center;gap:.3rem;padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:600}
+.api-page .severity-badge.critical{background:#fef2f2;color:#d92d20}
+.api-page .severity-badge.high{background:#fff5e6;color:#b54708}
+.api-page .severity-badge.medium{background:#eff8ff;color:#175cd3}
+.api-page .severity-badge.low{background:#f7f8fa;color:#667085}
+
+/* ================================================================
+   API Key Display
+   ================================================================ */
+.api-page .api-key-display{font-family:monospace;font-size:.82rem;background:#f7f8fa;padding:.4rem .7rem;border-radius:8px;border:1px solid var(--pm-border);letter-spacing:.5px}
+
+/* ================================================================
+   Audit Log Row
+   ================================================================ */
+.api-page .audit-row{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--pm-border)}
+.api-page .audit-row:last-child{border-bottom:none}
+.api-page .audit-row .audit-dot{width:8px;height:8px;border-radius:50%;margin-top:.35rem;flex-shrink:0}
+.api-page .audit-row .audit-dot.info{background:#2e90fa}
+.api-page .audit-row .audit-dot.warning{background:#f79009}
+.api-page .audit-row .audit-dot.critical{background:#f04438}
+.api-page .audit-row .audit-content{flex-grow:1;min-width:0}
+.api-page .audit-row .audit-action{font-size:.82rem;font-weight:600;color:var(--pm-ink,#101828)}
+.api-page .audit-row .audit-detail{font-size:.76rem;color:var(--pm-muted,#667085);margin-top:.15rem}
+.api-page .audit-row .audit-meta{font-size:.72rem;color:var(--pm-muted,#667085);flex-shrink:0;text-align:right}
+
+/* ================================================================
+   Rate Limit Bar
+   ================================================================ */
+.api-page .rate-limit-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:#eef1f6}
+.api-page .rate-limit-bar span{display:block;height:100%;border-radius:4px}
+
+/* ================================================================
+   Endpoint Card
+   ================================================================ */
+.api-page .endpoint-card{background:#fff;border:1px solid var(--pm-border);border-radius:12px;padding:1rem;transition:all .15s ease}
+.api-page .endpoint-card:hover{border-color:var(--bs-primary);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.api-page .endpoint-card .ep-method{font-family:monospace;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:6px;letter-spacing:.5px}
+.api-page .endpoint-card .ep-method.get{background:#e7f8ef;color:#0b8f52}
+.api-page .endpoint-card .ep-method.post{background:#eff8ff;color:#175cd3}
+.api-page .endpoint-card .ep-method.put{background:#fff5e6;color:#b54708}
+.api-page .endpoint-card .ep-method.delete{background:#fef2f2;color:#f04438}
