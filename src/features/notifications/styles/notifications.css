@@ -1,1 +1,301 @@
-.notification-page .notification-hero{background:radial-gradient(760px 260px at 90% -30%,rgba(18,183,106,.45),transparent 60%),radial-gradient(520px 240px at 0% 120%,rgba(46,144,250,.24),transparent 60%),linear-gradient(135deg,#0b1322,#11283a 62%,#0c2a1f)}.notification-page .text-green{color:#0b8f52!important}.notification-page .text-blue{color:#175cd3!important}.notification-page .text-violet{color:#5925dc!important}.notification-page .text-amber{color:#b54708!important}.notification-page .bg-green-soft{background:#e7f8ef!important}.notification-page .bg-blue-soft{background:#eff8ff!important}.notification-page .bg-violet-soft{background:#f4f1ff!important}.notification-page .bg-amber-soft{background:#fff5e6!important}.notification-page .config-row{display:flex;flex-direction:column;gap:.2rem;padding:.8rem;border:1px solid var(--pm-border);border-radius:12px;background:#fff;margin-bottom:.65rem}.notification-page .config-row b{font-size:.84rem}@media(max-width:700px){.notification-page .pm-tabs{overflow-x:auto;flex-wrap:nowrap}.notification-page .pm-tab{white-space:nowrap}.notification-page .pm-hero-value{font-size:1.8rem}}
+/* ---- Notification Page Overrides ---- */
+.notification-page .notification-hero {
+  background:
+    radial-gradient(760px 260px at 90% -30%, rgba(18, 183, 106, 0.45), transparent 60%),
+    radial-gradient(520px 240px at 0% 120%, rgba(46, 144, 250, 0.24), transparent 60%),
+    linear-gradient(135deg, #0b1322, #11283a 62%, #0c2a1f);
+}
+.notification-page .text-green { color: #0b8f52 !important; }
+.notification-page .text-blue { color: #175cd3 !important; }
+.notification-page .text-violet { color: #5925dc !important; }
+.notification-page .text-amber { color: #b54708 !important; }
+.notification-page .bg-green-soft { background: #e7f8ef !important; }
+.notification-page .bg-blue-soft { background: #eff8ff !important; }
+.notification-page .bg-violet-soft { background: #f4f1ff !important; }
+.notification-page .bg-amber-soft { background: #fff5e6 !important; }
+.notification-page .config-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.8rem;
+  border: 1px solid var(--pm-border);
+  border-radius: 12px;
+  background: #fff;
+  margin-bottom: 0.65rem;
+}
+.notification-page .config-row b { font-size: 0.84rem; }
+
+/* ---- Document Preview Styles ---- */
+.doc-preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background: #f7f9fc;
+  border: 1px solid var(--pm-border);
+  border-radius: 10px;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+}
+.doc-preview-page {
+  background: #fff;
+  border: 1px solid var(--pm-border);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  min-height: 320px;
+}
+.doc-preview-letterhead {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+.doc-preview-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--pm-green), #0b8f52);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.2rem;
+  flex: none;
+  box-shadow: 0 4px 12px -4px rgba(18, 183, 106, 0.5);
+}
+.doc-preview-company {
+  font-family: "Sora", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--pm-ink);
+}
+.doc-preview-address {
+  font-size: 0.72rem;
+  color: var(--pm-muted);
+}
+.doc-preview-divider {
+  border: 0;
+  border-top: 2px solid var(--pm-border);
+  margin: 0.75rem 0;
+}
+.doc-preview-body {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: #344054;
+}
+.doc-preview-body h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.doc-var {
+  background: var(--pm-green-soft);
+  color: var(--pm-green-dark);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid #b7e6cf;
+}
+
+/* ---- Document Card Grid ---- */
+.notification-page .pm-doc-card {
+  border: 1px solid var(--pm-border);
+  border-radius: 14px;
+  padding: 1rem;
+  background: #fff;
+  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+.notification-page .pm-doc-card:hover {
+  border-color: #d3d9e4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+.notification-page .pm-doc-card .doc-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  flex: none;
+  margin-bottom: 0.65rem;
+}
+.notification-page .pm-doc-card .doc-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--pm-ink);
+  margin-bottom: 0.25rem;
+}
+.notification-page .pm-doc-card .doc-meta {
+  font-size: 0.72rem;
+  color: var(--pm-muted);
+}
+
+/* ---- Analytics Progress Bars ---- */
+.notification-page .analytics-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.notification-page .analytics-bar .bar-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--pm-ink);
+  min-width: 100px;
+}
+.notification-page .analytics-bar .bar-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  background: #eef1f6;
+  overflow: hidden;
+}
+.notification-page .analytics-bar .bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--pm-green);
+  transition: width 0.4s ease;
+}
+.notification-page .analytics-bar .bar-value {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--pm-muted);
+  min-width: 60px;
+  text-align: right;
+}
+
+/* ---- Compliance Status Card ---- */
+.notification-page .compliance-status {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--pm-border);
+  border-radius: 10px;
+  background: #fff;
+  margin-bottom: 0.5rem;
+}
+.notification-page .compliance-status .status-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 0.8rem;
+  flex: none;
+}
+.notification-page .compliance-status .status-label {
+  flex: 1;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--pm-ink);
+}
+.notification-page .compliance-status .status-value {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--pm-muted);
+}
+
+/* ---- Queue Alert Row ---- */
+.notification-page .queue-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--pm-border);
+  border-radius: 10px;
+  background: #fff;
+  margin-bottom: 0.4rem;
+  transition: background 0.12s ease;
+}
+.notification-page .queue-alert:hover {
+  background: #fafbfd;
+}
+.notification-page .queue-alert .alert-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+  flex: none;
+}
+
+/* ---- Quick Action Hover States ---- */
+.notification-page .pm-qa:active {
+  transform: translateY(0);
+}
+
+/* ---- Mobile Responsive ---- */
+@media (max-width: 700px) {
+  .notification-page .pm-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  .notification-page .pm-tab {
+    white-space: nowrap;
+  }
+  .notification-page .pm-hero-value {
+    font-size: 1.8rem;
+  }
+  .notification-page .pm-hero-chip {
+    padding: 0.4rem 0.55rem;
+  }
+  .notification-page .pm-hero-chip .v {
+    font-size: 0.85rem;
+  }
+  .doc-preview-page {
+    padding: 1rem 1.25rem;
+  }
+  .doc-preview-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ---- Dark theme overrides for document preview ---- */
+html[data-pm-theme="dark"] .doc-preview-page {
+  background: #0f1726;
+  border-color: #1e2839;
+  box-shadow: none;
+}
+html[data-pm-theme="dark"] .doc-preview-letterhead {
+  border-color: #1e2839;
+}
+html[data-pm-theme="dark"] .doc-preview-body {
+  color: #b6c2d4;
+}
+html[data-pm-theme="dark"] .doc-preview-divider {
+  border-color: #1e2839;
+}
+html[data-pm-theme="dark"] .doc-var {
+  background: #0e2b1e;
+  color: #7ee2b0;
+  border-color: #1c5d40;
+}
+html[data-pm-theme="dark"] .doc-preview-toolbar {
+  background: #0b1220;
+  border-color: #1e2839;
+}
+html[data-pm-theme="dark"] .notification-page .pm-doc-card {
+  background: #0f1726;
+  border-color: #1e2839;
+}
+html[data-pm-theme="dark"] .notification-page .compliance-status {
+  background: #0f1726;
+  border-color: #1e2839;
+}
+html[data-pm-theme="dark"] .notification-page .queue-alert {
+  background: #0f1726;
+  border-color: #1e2839;
+}
+html[data-pm-theme="dark"] .notification-page .config-row {
+  background: #0f1726;
+  border-color: #1e2839;
+}
